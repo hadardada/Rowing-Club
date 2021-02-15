@@ -1,8 +1,8 @@
 package bms.engine.boatsManagement;
 
-import boat.Boat;
-import activity.Activity;
-import boat.boatsListsExceptions.*;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;

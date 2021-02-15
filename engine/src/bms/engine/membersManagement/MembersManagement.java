@@ -1,9 +1,9 @@
 package bms.engine.membersManagement;
 
-import member.Member;
-import member.memberListsExceptions.*;
-import reservation.Reservation;
-import boat.boatsListsExceptions.*;
+import bms.engine.membersManagement.member.Member;
+import bms.engine.membersManagement.member.memberListsExceptions.*;
+import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
 
 import bms.engine.boatsManagement.BoatsManagement;
 import bms.engine.reservationsManagment.ReservationsManagement;

@@ -1,8 +1,8 @@
 package bms.engine.activitiesManagement;
 
-import boat.Boat;
-import activity.Activity;
-import activity.ActivityExceptions.*;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
 
 
 import java.io.Serializable;

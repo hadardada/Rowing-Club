@@ -1,11 +1,11 @@
 package bms.engine.reservationsManagment;
 
-import boat.Boat;
-import boat.boatsListsExceptions.*;
-import member.Member;
-import activity.Activity;
-import reservation.Reservation;
-import reservation.reservationsExceptions.*;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
+import bms.engine.membersManagement.member.Member;
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.engine.reservationsManagment.reservation.reservationsExceptions.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
