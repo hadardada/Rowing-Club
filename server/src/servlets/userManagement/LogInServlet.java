@@ -18,8 +18,8 @@ import static constants.Constants.USERNAME;
 
 public class LogInServlet  extends HttpServlet {
 
-    private final String MANAGER_MENU = "managerIndex.html";
-    private final String MEMBER_MENU = "memberIndex.html";
+    private final String MANAGER_MENU = "managerMenu.html";
+    private final String MEMBER_MENU = "menu.html";
     private final String SIGN_UP_URL = "login.html";
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,8 +47,8 @@ public class LogInServlet  extends HttpServlet {
             //normalize the username value
             usernameFromParameter = usernameFromParameter.trim();
 
-            if (userManager.isUserExists(usernameFromParameter)) {
-                String errorMessage = "Username " + usernameFromParameter + " already exists. Please enter a different username.";
+            if (userManager.isUserLogged(usernameFromParameter)) {
+                String errorMessage = "Username " + usernameFromParameter + " already logged in. Please enter a different username.";
                 // username already exists, forward the request back to index.jsp
                 // with a parameter that indicates that an error should be displayed
                 // the request dispatcher obtained from the servlet context is one that MUST get an absolute path (starting with'/')
@@ -57,21 +57,26 @@ public class LogInServlet  extends HttpServlet {
                 // http://timjansen.github.io/jarfiller/guide/servlet25/requestdispatcher.xhtml
                 request.setAttribute(Constants.USER_NAME_ERROR, errorMessage);
                // getServletContext().getRequestDispatcher(LOGIN_ERROR_URL).forward(request, response);
+
             } else {
-                //add the new user to the users list
-                userManager.addUser(usernameFromParameter);
-                //set the username in a session so it will be available on each request
-                //the true parameter means that if a session object does not exists yet
-                //create a new one
+                if (userManager.isUserExists(usernameFromParameter)) // if user is a memeber in this club
+                {
+                    //add the new user to the users list
+                    userManager.addUser(usernameFromParameter);
+                    //set the username in a session so it will be available on each request
+                    //the true parameter means that if a session object does not exists yet
+                    //create a new one
 
-                request.getSession(true).setAttribute(Constants.USERNAME, usernameFromParameter.trim());
+                    request.getSession(true).setAttribute(Constants.USERNAME, usernameFromParameter.trim());
 
-                //redirect the request to the chat room - in order to actually change the URL
-                System.out.println("On login, request URI is: " + request.getRequestURI());
-                if(userManager.isUserManager(usernameFromParameter.trim()))
-                    response.sendRedirect(MANAGER_MENU);
-                else // redirect to non-manager member menu
-                    response.sendRedirect(MEMBER_MENU);
+                    //redirect the request to the chat room - in order to actually change the URL
+                    System.out.println("On login, request URI is: " + request.getRequestURI());
+                    if (userManager.isUserManager(usernameFromParameter.trim()))
+                        response.sendRedirect(MANAGER_MENU);
+                    else // redirect to non-manager member menu
+                        response.sendRedirect(MEMBER_MENU);
+                }
+                //else
             }
         }
     }

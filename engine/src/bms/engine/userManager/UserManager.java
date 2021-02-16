@@ -29,8 +29,12 @@ public class UserManager {
         return Collections.unmodifiableSet(usersOnline);
     }
 
-    public boolean isUserExists(String username) {
+    public boolean isUserLogged(String username) {
         return usersOnline.contains(username);
+    }
+
+    public boolean isUserExists(String username) {
+        return bmsEngine.loginTest(username);
     }
 
     public boolean isUserManager(String username) {return (bmsEngine.getMemberByEmail(username)).getIsManager();}
