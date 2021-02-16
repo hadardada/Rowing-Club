@@ -1,11 +1,12 @@
 
 const privateCheckBoxEl = document.querySelector('#checkPrivate');
-privateCheckBoxEl.addEventListener('checkbox', )
+privateCheckBoxEl.addEventListener('change', privateChecked);
+
 function privateChecked() {
     // Get the checkbox
     let checkBox = document.getElementById("checkPrivate");
     // Get the output text
-    let boatOwner = document.getElementById("boatOwner");
+    let boatOwner = document.getElementById("boatOwnerform");
 
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true){
@@ -13,4 +14,5 @@ function privateChecked() {
     } else {
         boatOwner.style.display = "none";
     }
+
 }
