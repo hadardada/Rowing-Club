@@ -1,10 +1,10 @@
 package bms.engine.xmlStateExport;
 
 import bms.engine.Engine;
-import boat.Boat;
-import member.Member;
-import activity.Activity;
-import reservation.Reservation;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.membersManagement.member.Member;
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.reservationsManagment.reservation.Reservation;
 
 
 import org.w3c.dom.Document;

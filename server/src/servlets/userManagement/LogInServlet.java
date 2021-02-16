@@ -59,7 +59,6 @@ public class LogInServlet  extends HttpServlet {
                // getServletContext().getRequestDispatcher(LOGIN_ERROR_URL).forward(request, response);
             } else {
                 //add the new user to the users list
-
                 userManager.addUser(usernameFromParameter);
                 //set the username in a session so it will be available on each request
                 //the true parameter means that if a session object does not exists yet
@@ -69,9 +68,12 @@ public class LogInServlet  extends HttpServlet {
 
                 //redirect the request to the chat room - in order to actually change the URL
                 System.out.println("On login, request URI is: " + request.getRequestURI());
-                response.sendRedirect(CHAT_ROOM_URL);
+                if(userManager.isUserManager(usernameFromParameter.trim()))
+                    response.sendRedirect(MANAGER_MENU);
+                else // redirect to non-manager member menu
+                    response.sendRedirect(MEMBER_MENU);
             }
         }
     }
 
-}
+    }

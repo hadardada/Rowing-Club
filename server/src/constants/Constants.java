@@ -2,7 +2,8 @@ package constants;
 
 public class Constants {
     public static final String USER_MANAGER_ATTRIBUTE_NAME = "userManager";
-    public static final String CHAT_MANAGER_ATTRIBUTE_NAME = "chatManager";
+    public static final String ENGINE_ATTRIBUTE_NAME = "engine";
+    //public static final String CHAT_MANAGER_ATTRIBUTE_NAME = "chatManager";
 
     public static final String USERNAME = "username";
     public static final String USER_NAME_ERROR = "username_error";

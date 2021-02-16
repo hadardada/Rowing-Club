@@ -1,28 +1,23 @@
 package bms.engine;
 
-import engine.multipleExceptions.XmlMultipleExceptions;
-import engine.BmsEngine;
+import bms.engine.engine.multipleExceptions.XmlMultipleExceptions;
+import bms.engine.engine.BmsEngine;
 
-import boat.Boat;
-import boat.boatsListsExceptions.*;
-
-import member.Member;
-import member.memberListsExceptions.*;
-
-import activity.Activity;
-import activity.ActivityExceptions.*;
-
-import reservation.Reservation;
-import reservation.reservationsExceptions.*;
-
-
-import bms.engine.activitiesManagement.ActivitiesManagement;
-
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
 import bms.engine.boatsManagement.BoatsManagement;
 
-import bms.engine.reservationsManagment.ReservationsManagement;
-
+import bms.engine.membersManagement.member.Member;
+import bms.engine.membersManagement.member.memberListsExceptions.*;
 import bms.engine.membersManagement.MembersManagement;
+
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
+import bms.engine.activitiesManagement.ActivitiesManagement;
+
+import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.engine.reservationsManagment.reservation.reservationsExceptions.*;
+import bms.engine.reservationsManagment.ReservationsManagement;
 
 import bms.engine.XMLImportAndExport.XMLImportAndExport;
 import bms.engine.xmlStateExport.XmlStateExport;

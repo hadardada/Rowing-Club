@@ -2,16 +2,17 @@ package bms.engine.xmlStateImport;
 
 import bms.engine.Engine;
 
-import boat.Boat;
-import boat.boatsListsExceptions.*;
-import member.Member;
-import member.memberListsExceptions.*;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
 
-import activity.Activity;
-import activity.ActivityExceptions.*;
+import bms.engine.membersManagement.member.Member;
+import bms.engine.membersManagement.member.memberListsExceptions.*;
 
-import reservation.Reservation;
-import reservation.reservationsExceptions.*;
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
+
+import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.engine.reservationsManagment.reservation.reservationsExceptions.*;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

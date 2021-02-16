@@ -1,9 +1,10 @@
-package userManager;
+package bms.engine.userManager;
+
+import bms.engine.Engine;
 
 import java.util.Collections;
-import java.util.Set;
 import java.util.HashSet;
-import bms.engine.Engine;
+import java.util.Set;
 
 public class UserManager {
 

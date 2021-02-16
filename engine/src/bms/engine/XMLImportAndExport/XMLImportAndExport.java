@@ -1,13 +1,16 @@
 package bms.engine.XMLImportAndExport;
 
-import engine.multipleExceptions.XmlMultipleExceptions;
+import bms.engine.engine.multipleExceptions.XmlMultipleExceptions;
 import bms.engine.Engine;
-import boat.Boat;
-import boat.boatsListsExceptions.*;
-import member.Member;
-import activity.Activity;
-import member.memberListsExceptions.*;
-import activity.ActivityExceptions.*;
+
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.*;
+
+import bms.engine.membersManagement.member.Member;
+import bms.engine.membersManagement.member.memberListsExceptions.*;
+
+import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
 
 import jaxb.activities.generated.Activities;
 import jaxb.boats.generated.BoatType;
