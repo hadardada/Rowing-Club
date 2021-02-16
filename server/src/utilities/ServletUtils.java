@@ -1,7 +1,7 @@
 package utilities;
 
 import constants.Constants;
-import userManager.UserManager;
+import bms.engine.userManager.UserManager;
 
 import javax.servlet.ServletContext;
 
