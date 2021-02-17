@@ -52,9 +52,9 @@ public class BoatsManagement implements Serializable {
         if ((newBoatType.getBoatSize().equals(Boat.BoatType.BoatSize.EIGHT)) && (!newBoatType.hasHelmsman())) //no helmsman but 8 rowers
             throw new HelmsmanException(8);
         if (newBoatType.getBoatSize().equals(Boat.BoatType.BoatSize.SOLO)) {
-            if (newBoatType.isSingleOar())  //solo bms.engine.boatsManagement.boat with one oar - impossible!
+            if (newBoatType.isSingleOar())  //solo boat with one oar - impossible!
                 throw new SingleWithTwoOarsException();
-            else if (newBoatType.hasHelmsman()) //solo bms.engine.boatsManagement.boat with coxswain - impossible!
+            else if (newBoatType.hasHelmsman()) //solo boat with coxswain - impossible!
                 throw new HelmsmanException(1);
         }
 

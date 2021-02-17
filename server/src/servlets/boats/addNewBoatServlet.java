@@ -23,5 +23,9 @@ public class addNewBoatServlet extends HttpServlet {
         String newBoatJsonString = reader.lines().collect(Collectors.joining());
 
         Boat newBoat = gson.fromJson(newBoatJsonString, Boat.class);
+
     }
+
+
+    //public void addNewBoat
 }
