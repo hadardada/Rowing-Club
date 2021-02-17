@@ -10,9 +10,9 @@ const oneOarRadioEl = document.querySelector('#singleOar');
 const formErrorEl = document.querySelector('#errorSpan');
 boatFormEl.addEventListener('submit', validateForm);
 
-const ONE_ROWER_ONE_OAR = "A boat with only one rower cannot be with single oar";
-const ONE_ROWER_WITH_COXS = "A boat with only one rower cannot have a coxswain";
-const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers cannot be coxless";
+const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
+const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
+const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
 const NO_ERROR = '';
 
 //
@@ -48,7 +48,8 @@ function validateForm(event) {
         showError(EIGHT_ROWERS_NO_COXS);
     }
 
-    showError(NO_ERROR);
+    else
+        showError(NO_ERROR);
         }
 
 
@@ -70,5 +71,8 @@ async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, widt
 }
 
 function showError(errorMsg) {
-    formErrorEl.textContent = "Cannot Add Boat: "+ errorMsg;
+    let initMsg = "";
+    if (errorMsg !== NO_ERROR)
+        initMsg ="Cannot Add Boat: "
+    formErrorEl.textContent = initMsg+ errorMsg;
 }
