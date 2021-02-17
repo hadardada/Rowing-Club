@@ -1,7 +1,12 @@
 package servlets.activity;
 
 import bms.engine.activitiesManagement.activity.Activity;
+import bms.engine.boatsManagement.boat.Boat;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatAlreadyExistsException;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.HelmsmanException;
+import bms.engine.boatsManagement.boat.boatsListsExceptions.SingleWithTwoOarsException;
 import com.google.gson.Gson;
+import servlets.boats.BoatsParameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,4 +28,6 @@ public class displayActivity {
 
         Activity newActivity = gson.fromJson(newBoatJsonString, Activity.class);
     }
+
+
 }

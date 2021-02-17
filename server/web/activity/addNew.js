@@ -5,24 +5,12 @@ privateCheckBoxEl.addEventListener('change', privateChecked);
 const activityName = document.querySelector('#activityName');
 const startTime = document.querySelector('#StartTime');
 const endTime = document.querySelector('#EndTime');
+const boatTypes = document.querySelector('#EndTime');
+
 boatFormEl.addEventListener('submit', validateForm);
 
 const END_BEFORE_START = "End Time before Start Time ";
 const NO_ERROR = '';
-
-function privateChecked() {
-    // Get the checkbox
-    let checkBox = privateCheckBoxEl;
-    // Get the output text
-    let boatOwner = document.getElementById("boatOwnerform");
-
-    // If the checkbox is checked, display the output text
-    if (checkBox.checked == true){
-        boatOwner.style.display = "block";
-    } else {
-        boatOwner.style.display = "none";
-    }
-}
 
 function validateForm(event) {
 
@@ -44,6 +32,20 @@ async function submitActivity (name, startTime, endTime, boatTypes)
         boatType: boatTypes
     }
 }
+    const response = await fetch('/activity/addNew', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(newBoat)
+    });
+
+    const result = await response.status;
+    if (result === 200)
+    {
+        boatFormEl.style.display = "none";
+        addedMsgEl.textContent = "A new activity was successfully added to the Club Calendar!"
+    }
 
 function showError(errorMsg) {
     let initMsg = "";
