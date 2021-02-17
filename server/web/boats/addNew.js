@@ -2,12 +2,21 @@
 const privateCheckBoxEl = document.querySelector('#checkPrivate');
 privateCheckBoxEl.addEventListener('change', privateChecked);
 
+//radios consts
 const boatFormEl = document.querySelector('#addNewBoatForm');
+const boatNameEl = document.querySelector('#boatName');
 const oneRowerRadioEl = document.querySelector('#solo');
+const twoRowerRadioEl = document.querySelector('#pair');
 const eightRowerRadioEl = document.querySelector('#eight');
 const coxswainRadioEl = document.querySelector('#coxswain');
 const oneOarRadioEl = document.querySelector('#singleOar');
+const coastalRadioEl = document.querySelector('#coastal');
+const widthRadioEl = document.querySelector('#wide');
+const outOfOrderEl = document.querySelector('#outof');
+
+
 const formErrorEl = document.querySelector('#errorSpan');
+const addedMsgEl = document.querySelector('#addedMsgSpan')
 boatFormEl.addEventListener('submit', validateForm);
 
 const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
@@ -47,32 +56,59 @@ function validateForm(event) {
         event.preventDefault();
         showError(EIGHT_ROWERS_NO_COXS);
     }
-
-    else
-        showError(NO_ERROR);
+    else{
+        let boatSize;
+        if (oneRowerRadioEl.checked)
+            boatSize = oneRowerRadioEl.value;
+        else if (twoRowerRadioEl.checked)
+            boatSize = twoRowerRadioEl.value;
+        else if (eightRowerRadioEl.checked)
+            boatSize = eightRowerRadioEl.value;
+        else
+            boatSize = 'four';
+        submitBoat(boatNameEl.value, privateCheckBoxEl.checked, outOfOrderEl.checked, boatSize, oneOarRadioEl.checked, widthRadioEl.checked, coxswainRadioEl.checked, coastalRadioEl.checked);
+        //resetForm();
+        //refreshListUsesAsyncAwait();
         }
+    event.preventDefault();
+
+}
 
 
 
 async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, width, coxswain, coastalboat)
 {
-    const newBoatType ={
+    const newBoat = {
+        boatName:name,
+        privateProperty:isPrivate,
+        status:isOutOfOrder,
         rowersNum:boatSize,
         singleOar:oneOar,
         wide:width,
         helmsman:coxswain,
         coastal:coastalboat
     }
-    const newBoat = {
-        boatName:name,
-        privateProperty:isPrivate,
-        type: newBoatType
+
+    const response = await fetch('/boats/addNew', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(newBoat)
+    });
+
+    const result = await response.status;
+    if (result === 200)
+    {
+        boatFormEl.style.display = "none";
+        addedMsgEl.textContent = "A new boat was successfully added to the club!"
     }
+
 }
 
 function showError(errorMsg) {
     let initMsg = "";
     if (errorMsg !== NO_ERROR)
-        initMsg ="Cannot Add Boat: "
+        initMsg ="Cannot Add Boat: ";
     formErrorEl.textContent = initMsg+ errorMsg;
 }
