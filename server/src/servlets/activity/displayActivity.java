@@ -12,8 +12,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "addNewActivityServlet", urlPatterns = {"/activity/addNew"})
-public class addNewActivity extends HttpServlet {
+@WebServlet(name = "displayActivityServlet", urlPatterns = {"/activity/showAll"})
+public class displayActivity {
     private Gson gson = new Gson();
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
