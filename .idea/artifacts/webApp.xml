@@ -6,10 +6,11 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="server" />
+          <element id="module-output" name="usersEngine" />
         </element>
         <element id="directory" name="lib">
           <element id="artifact" artifact-name="engine:jar" />
-          <element id="file-copy" path="$PROJECT_DIR$/server/web/WEB-INF/library/gson-2.8.6.jar" />
+          <element id="file-copy" path="$USER_HOME$/Downloads/gson-2.8.6.jar" />
         </element>
       </element>
     </root>
