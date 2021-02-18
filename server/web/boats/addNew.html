@@ -6,7 +6,8 @@
 </head>
 <body>
 <h1>Add A New Boat To BoatHouse</h1>
-<form style="display:block" method="post" action="addBoat" id="addNewBoatForm">
+<form  method="post" action="addBoat" id="addNewBoatForm">
+    <div style="display:block" id="formBlock">
     <p>Please fill out the fields:</p>
     <p> Boat Name:
         <input type="text" id ="boatName" name="boatName" autofocus/></p>
@@ -59,6 +60,7 @@
 
     <input type="submit" value="Add Boat"/>
     <span style="color:red" class="error" id = "errorSpan" > </span>
+    </div>
 </form>
 <span class="added" style="color:green" id = "addedMsgSpan"> </span>
 <script src="/boats/addNew.js"></script>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Boat Details</title>
+</head>
+<body>
+    <h>Boat No#<span id =serialNum> </span> Details:</h>
+    <div>
+    <p> Boat Name:<span id = currBoatName> </span></p>
+    <p> Update Name:
+        <input  type="text" id ="boatName" name="boatName"/>
+        <button id="updateName">Update</button>
+    </p>
+    </div>
+
+    <div><p> Status: <span id = boatStatus> </span></p>
+        <p>Update Status:
+        <input type="radio" id="outof" name="status" value="true" >
+        <label for="outof">Out Of Order</label>
+        <input type="radio" id="active" name="status" value="false">
+        <label for="active">Active </label>
+        <button id="updateStatus">Update</button>
+        </p>
+    </div>
+
+    <div><p> Boat Type: <span id = shortName> </span></p>
+        <p>Update Oars:
+            <input type="radio" id="singleOar" name="oars" value="true" >
+            <label for="singleOar">one (sweep)</label>
+            <input type="radio" id="doublwOar" name="oars" value="false">
+            <label for="doublwOar">two (sculls)</label>
+            <button id="updateOars">Update</button>
+            <div class = "error" id = "oarsError"></div>
+        </p>
+        <p>Update Coastal:
+        <input type="radio" id="coastal" name="coastal" value="true" required>
+        <label for="coastal">coastal</label>
+        <input type="radio" id="nocoastal" name="coastal" value="false">
+        <label for="nocoastal">not coastal </label>
+        <button id="updateCoastal">Update</button>
+        </p>
+
+        <p>Update Coxswain:
+            <input type="radio" id="coxswain" name="coxswain" value="true" >
+            <label for="coxswain">coxswain</label>
+            <input type="radio" id="coxless" name="coxswain" value="false">
+            <label for="coxless">coxless </label>
+            <button id="updateCoxswain">Update</button>
+        </p>
+    </div>
+
+    <p>Update Ownership:
+        <input type="radio" id="private" name="ownership" value="true" >
+        <label for="private">private</label>
+        <input type="radio" id="publicBoat" name="ownership" value="false">
+        <label for="publicBoat">club's property </label>
+    <span style="display:none" id="boatOwnerform">Boat owner's Email Address: <input type="text"  id="boatOwner" name="boatOwner"/></span>
+    <button id="updateOwnership">Update</button></p><br>
+
+
+    <script src="/boats/edit.js"></script>
+
+</body>
+</html>

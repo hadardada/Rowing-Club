@@ -4,6 +4,7 @@ privateCheckBoxEl.addEventListener('change', privateChecked);
 
 //radios consts
 const boatFormEl = document.querySelector('#addNewBoatForm');
+const divFormBlock = document.querySelector('#formBlock');
 const boatNameEl = document.querySelector('#boatName');
 const oneRowerRadioEl = document.querySelector('#solo');
 const twoRowerRadioEl = document.querySelector('#pair');
@@ -23,6 +24,7 @@ const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
 const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
 const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
 const NO_ERROR = '';
+
 
 //
 //privateCheckBoxEl.addEventListener('change', )
@@ -74,20 +76,22 @@ function validateForm(event) {
 
 }
 
-
+function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide, helmsman, coastal) {
+    this.boatName = boatName;
+    this.privateProperty = privateProperty;
+    this.status = status;
+    this.rowersNum = rowersNum;
+    this.singleOar = singleOar;
+    this.wide = wide;
+    this.helmsman = helmsman;
+    this.coastal = coastal;
+    this.shortName = '';
+}
+export { BoatJson };
 
 async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, width, coxswain, coastalboat)
 {
-    const newBoat = {
-        boatName:name,
-        privateProperty:isPrivate,
-        status:isOutOfOrder,
-        rowersNum:boatSize,
-        singleOar:oneOar,
-        wide:width,
-        helmsman:coxswain,
-        coastal:coastalboat
-    }
+    const newBoat = new BoatJson(name, isPrivate, isOutOfOrder, boatSize, oneOar, width, coxswain, coastalboat);
 
     const response = await fetch('/boats/addNew', {
         method: 'post',
@@ -98,9 +102,9 @@ async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, widt
     });
 
     const result = await response.status;
-    if (result === 200)
+    if (result.ok)
     {
-        boatFormEl.style.display = "none";
+        divFormBlock.style.display = "none";
         addedMsgEl.textContent = "A new boat was successfully added to the club!"
     }
 

@@ -8,7 +8,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-//import static constants.Constants.CHAT_MANAGER_ATTRIBUTE_NAME;
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 import static constants.Constants.USER_MANAGER_ATTRIBUTE_NAME;
 

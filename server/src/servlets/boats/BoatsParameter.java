@@ -9,7 +9,7 @@ package servlets.boats;
      boolean wide;
      boolean helmsman;
      boolean coastal;
-
+     String shortName;
 
      public BoatsParameter(){}
  }
