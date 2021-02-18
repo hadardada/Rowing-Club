@@ -78,6 +78,7 @@ function validateForm(event) {
 
 function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide, helmsman, coastal) {
     this.boatName = boatName;
+    this.idNum = 0;
     this.privateProperty = privateProperty;
     this.status = status;
     this.rowersNum = rowersNum;
@@ -87,7 +88,7 @@ function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide,
     this.coastal = coastal;
     this.shortName = '';
 }
-export { BoatJson };
+
 
 async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, width, coxswain, coastalboat)
 {
@@ -101,8 +102,8 @@ async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, widt
         body: JSON.stringify(newBoat)
     });
 
-    const result = await response.status;
-    if (result.ok)
+    //const result = await response.status;
+    if (response.ok)
     {
         divFormBlock.style.display = "none";
         addedMsgEl.textContent = "A new boat was successfully added to the club!"

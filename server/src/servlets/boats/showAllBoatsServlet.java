@@ -1,5 +1,4 @@
 package servlets.boats;
-package servlets.boats;
 
 import bms.engine.Engine;
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
