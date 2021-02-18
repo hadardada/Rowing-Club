@@ -42,6 +42,8 @@ public class addNewActivity extends HttpServlet {
 
     }
     private void addNewActivity(activityParameters parameters) throws EndTimeIsLowerException  {
-        bmsEngine.addNewActivity(parameters.startTime, parameters.endTime,parameters.activityName, parameters.boatTypes,true);
+        Boat.BoatType.BoatSize size = Boat.BoatType.BoatSize.valueOf(parameters.rowersNum.toUpperCase());
+        Boat.BoatType newBoatType = new Boat.BoatType(size,parameters.singleOar, parameters.wide, parameters.helmsman, parameters.coastal);
+        bmsEngine.addNewActivity(parameters.startTime, parameters.endTime,parameters.activityName, newBoatType,true);
     }
 }

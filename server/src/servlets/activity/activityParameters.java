@@ -7,7 +7,11 @@ public class activityParameters {
     String activityName;
     LocalTime startTime;
     LocalTime endTime;
-    Boat.BoatType boatTypes;
+    String rowersNum;
+    boolean singleOar;
+    boolean wide;
+    boolean helmsman;
+    boolean coastal;
 
     public activityParameters(){}
 }
