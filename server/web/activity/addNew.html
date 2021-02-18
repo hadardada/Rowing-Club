@@ -7,7 +7,7 @@
 <body>
 
 <h1>Please fill out the fields:</h1>
-<form method="post" action="addBoat" id="addNewBoatForm">
+<form method="post" action="addActivity" id="addNewActivityForm">
     <p> Activity Name:
         <input type="text" id="activityName" name="activityName" autofocus/></p>
     <p> Start Time:
@@ -15,12 +15,45 @@
     <p> End Time:
         <input type="text"  id="EndTime" name="activityName" autofocus/></p>
     <p> Boat Types (not mandatory):
-        <input type="text" name="activityName" id="BoatTypes" autofocus/></p>
-    <p style="display:none" id="boatOwnerform">Boat owner's Email Address: <input type="text"  id="boatOwner" name="boatOwner"/></p>
+    <p> Boat size:
+        <input type="radio" id="solo" name="boatSize" value="solo" required>
+        <label for="solo">1</label>
+        <input type="radio" id="pair" name="boatSize" value="pair">
+        <label for="pair">2</label>
+        <input type="radio" id="four" name="boatSize" value="four">
+        <label for="pair">4</label>
+        <input type="radio" id="eight" name="boatSize" value="eight">
+        <label for="eight">8</label><br>
+    </p>
+    <p> Oars number:
+        <input type="radio" id="singleOar" name="oars" value="true" required>
+        <label for="singleOar">one (sweep)</label>
+        <input type="radio" id="doublwOar" name="oars" value="false">
+        <label for="doublwOar">two (sculls)</label><br>
+    </p>
+    <p> Boat Width:
+        <input type="radio" id="wide" name="width" value="true" required>
+        <label for="wide">wide</label>
+        <input type="radio" id="notWide" name="width" value="false">
+        <label for="notWide">normal</label><br>
+    </p>
+    <p> Coxswain On Boat:
+        <input type="radio" id="coxswain" name="coxswain" value="true" required>
+        <label for="coxswain">coxswain</label>
+        <input type="radio" id="coxless" name="coxswain" value="false">
+        <label for="coxless">coxless </label><br>
+    </p>
+    <p> Coastal Boat:
+        <input type="radio" id="coastal" name="coastal" value="true" required>
+        <label for="coastal">coastal</label>
+        <input type="radio" id="nocoastal" name="coastal" value="false">
+        <label for="nocoastal">not coastal </label><br>
+    </p>
 
     <input type="submit" value="Add Activity"/>
     <span style="color:red" class="error" id = "errorSpan" > </span>
 </form>
+<span class="added" style="color:green" id = "addedMsgSpan"> </span>
 <script src="/activity/addNew.js"></script>
 </body>
 </html>
