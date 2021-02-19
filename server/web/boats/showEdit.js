@@ -41,16 +41,23 @@ async function injectParameters(){
     serialNumEl.textContent = boatJson.idNum;
     boatNameEl.textContent = boatJson.boatName;
     shortNameEl.textContent = boatJson.shortName;
-    if (boatJson.privateProperty)
-        privateStatusEl.textContent = 'Private Boat';
-    else
-        privateStatusEl.textContent = "Club's Property";
+    showStatus(boatJson.status);
+    showOwnership(boatJson.privateProperty);
+}
 
-    if (boatJson.status)
+function showStatus(boolStatus)
+{
+    if (boolStatus== true)
         boatStatusEl.textContent = 'Out of Order';
     else
         boatStatusEl.textContent = 'Active';
+}
 
+function showOwnership(boolPrivate){
+    if (boolPrivate)
+        privateStatusEl.textContent = 'Private Boat';
+    else
+        privateStatusEl.textContent = "Club's Property";
 
 }
 

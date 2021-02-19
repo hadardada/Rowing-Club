@@ -38,7 +38,7 @@ function createUpdateReqObj() {
         data = new updateReq(UPDATE_NAME, newNameEl.value, boatSerialNumber);
         console.log(data.whatToUpdate);
     }
-    else if (this === createUpdateReqObj){
+    else if (this === updateStatusButtonEl){
         const updateBoatStatusOutOfEl = document.querySelector('#outof');
         let statusVal;
         //const updateBoatStatusActiveEl = document.querySelector('#active');
@@ -52,7 +52,7 @@ function createUpdateReqObj() {
      sendUpdateReq(data);
 }
 
-async function sendUpdateReq (data){
+async function sendUpdateReq (data) {
 
     const response = await fetch('/boats/edit',
         {
@@ -64,27 +64,25 @@ async function sendUpdateReq (data){
         });
     const updatedReq = await response.json();
 
-    if (data.whatToUpdate ===UPDATE_NAME ) {
+    if (data.whatToUpdate === UPDATE_NAME) {
         if (response.ok) {
             boatNameEl.textContent = updatedReq.updateTo;
             boatNameEl.style = "color:green";
         } else {
-            boatNameEl.textContent = "Somthing Went Wrong. Could not update name";
-            boatNameEl.style = "color:red";
+            errorMsgEl.textContent = "Somthing Went Wrong. Could not update name";
+            errorMsgEl.style = "color:red";
 
         }
-    }
-    else if (data.whatToUpdate ===UPDATE_STATUS){
+    } else if (data.whatToUpdate === UPDATE_STATUS) {
         if (response.ok) {
 
-            boatNameEl.textContent = updatedReq.updateTo;
-            boatNameEl.style = "color:green";
+            showStatus(updatedReq.updateTo);
+            boatStatusEl.style = "color:green";
         } else {
-            boatNameEl.textContent = "Something Went Wrong. Could not update name";
-            boatNameEl.style = "color:red";
+            errorMsgEl.textContent = "Something Went Wrong. Could not update status";
+            errorMsgEl.style = "color:red";
 
         }
-
-
     }
+
 }

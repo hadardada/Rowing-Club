@@ -19,9 +19,13 @@ public class UpdateRequestObject {
 
     public void detectUpdate (Engine bmsEngine){
         switch (this.whatToUpdate){
-            case (UPDATE_NAME):
-            {
+            case (UPDATE_NAME): {
                 bmsEngine.updateBoatName(boatIdNum, updateTo);
+                return;
+            }
+            case (UPDATE_STATUS):{
+                Boolean newStatus = Boolean.parseBoolean(updateTo);
+                bmsEngine.changeBoatStatus(boatIdNum, newStatus);
                 return;
             }
         }
