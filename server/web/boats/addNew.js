@@ -27,7 +27,7 @@ const NO_ERROR = '';
 
 
 //
-//privateCheckBoxEl.addEventListener('change', )
+privateCheckBoxEl.addEventListener('change',privateChecked );
 
 function privateChecked() {
     // Get the checkbox
@@ -104,6 +104,7 @@ async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, widt
 
     //const result = await response.status;
     if (response.ok)
+
     {
         divFormBlock.style.display = "none";
         addedMsgEl.textContent = "A new boat was successfully added to the club!"

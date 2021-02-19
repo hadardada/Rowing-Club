@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "addNewBoatServlet", urlPatterns = {"/boats/addNew"})
-public class addNewBoatServlet extends HttpServlet {
+public class AddNewBoatServlet extends HttpServlet {
 
     private Gson gson = new Gson();
     Engine bmsEngine;

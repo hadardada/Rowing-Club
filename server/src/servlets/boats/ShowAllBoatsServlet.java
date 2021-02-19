@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "showAllBoatsServlet", urlPatterns = {"/boats/show-all"})
-public class showAllBoatsServlet extends HttpServlet {
+public class ShowAllBoatsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp){

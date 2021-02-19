@@ -5,6 +5,7 @@
     <title>Edit Boat Details</title>
 </head>
 <body>
+<div id = "allButtons">
     <h>Boat No#<span id =serialNum> </span> Details:</h>
     <div>
     <p> Boat Name:<span id = currBoatName> </span></p>
@@ -16,7 +17,7 @@
 
     <div><p> Status: <span id = boatStatus> </span></p>
         <p>Update Status:
-        <input type="radio" id="outof" name="status" value="true" >
+        <input type="radio" id="outof" name="status" value="true" required>
         <label for="outof">Out Of Order</label>
         <input type="radio" id="active" name="status" value="false">
         <label for="active">Active </label>
@@ -49,6 +50,7 @@
             <button id="updateCoxswain">Update</button>
         </p>
     </div>
+    <div><p> Ownership: <span id = privateStatus> </span></p>
 
     <p>Update Ownership:
         <input type="radio" id="private" name="ownership" value="true" >
@@ -56,10 +58,13 @@
         <input type="radio" id="publicBoat" name="ownership" value="false">
         <label for="publicBoat">club's property </label>
     <span style="display:none" id="boatOwnerform">Boat owner's Email Address: <input type="text"  id="boatOwner" name="boatOwner"/></span>
-    <button id="updateOwnership">Update</button></p><br>
+    <button id="updateOwnership">Update</button></p></div><br>
+</div>
 
+<p><span class = "error" id = "errorMsg"></span></p>>
 
-    <script src="/boats/edit.js"></script>
+    <script src="/boats/showEdit.js"></script>
+    <script src="/boats/sendEdit.js"></script>
 
 </body>
 </html>

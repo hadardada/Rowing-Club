@@ -11,23 +11,26 @@ function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide,
     this.shortName = '';
 }
 
-const UPDATE_NAME = 1;
-const UPDATE_STATUS = 2;
-const UPDATE_PRIVATE = 3;
-const UPDATE_OARS = 4;
-const UPDATE_COXSWAIN = 5;
-const UPDATE_COASTAL = 6;
+
+
 
 const serialNumEl = document.querySelector('#serialNum');
+const boatNameEl = document.querySelector('#currBoatName');
+const boatStatusEl = document.querySelector('#boatStatus');
+const shortNameEl = document.querySelector('#shortName');
+const privateStatusEl = document.querySelector('#privateStatus');
+
+// buttons
+const allButtonEl = document.querySelector('#allButtons');
+//const updateNameButtonEl = document.querySelector('#updateName');
 const updateOarsButtonEl = document.querySelector('updateOars');
 const updateOarsErrorEl = document.querySelector('#oarsError');
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const boatSerialNumber = urlParams.get('boatId')
+const boatSerialNumber = urlParams.get('boatId');
 
-window.addEventListener('DOMContentLoaded',injectParameters)
-
+window.addEventListener('DOMContentLoaded',injectParameters);
 async function injectParameters(){
 
     //const editUrl = new URLSearchParams();
@@ -35,5 +38,22 @@ async function injectParameters(){
     const response = await fetch('/boats/edit?boatId='+boatSerialNumber);
     const boatJson = await response.json();
 
-    serialNumEl.value = boatJson.idNum;
+    serialNumEl.textContent = boatJson.idNum;
+    boatNameEl.textContent = boatJson.boatName;
+    shortNameEl.textContent = boatJson.shortName;
+    if (boatJson.privateProperty)
+        privateStatusEl.textContent = 'Private Boat';
+    else
+        privateStatusEl.textContent = "Club's Property";
+
+    if (boatJson.status)
+        boatStatusEl.textContent = 'Out of Order';
+    else
+        boatStatusEl.textContent = 'Active';
+
+
 }
+
+
+
+
