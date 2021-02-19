@@ -47,7 +47,7 @@ async function injectParameters(){
 
 function showStatus(boolStatus)
 {
-    if (boolStatus== true)
+    if ((boolStatus=== true)||(boolStatus === 'true'))
         boatStatusEl.textContent = 'Out of Order';
     else
         boatStatusEl.textContent = 'Active';
