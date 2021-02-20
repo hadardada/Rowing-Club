@@ -6,16 +6,21 @@
 </head>
 <body>
 
-<h1>Please fill out the fields:</h1>
+<h1>Add A New Activity To BoatHouse</h1>
 <form method="post" action="addActivity" id="addNewActivityForm">
+    <div style="display:block" id="formBlock">
+    <p>Please fill out the fields:</p>
     <p> Activity Name:
         <input type="text" id="activityName" name="activityName" autofocus/></p>
     <p> Start Time:
-        <input type="text" id="StartTime" name="activityName" autofocus/></p>
+        <input type="text" id="StartTime" name="activityName" /></p>
     <p> End Time:
-        <input type="text"  id="EndTime" name="activityName" autofocus/></p>
+        <input type="text"  id="EndTime" name="activityName" /></p>
     <p> Boat Types (not mandatory):
-    <p> Boat size:
+        <input type="checkbox" id="checkBoatType">
+        </p>
+        <p style="display:none" id="boatTypeform">
+            Boat size:
         <input type="radio" id="solo" name="boatSize" value="solo" required>
         <label for="solo">1</label>
         <input type="radio" id="pair" name="boatSize" value="pair">
@@ -24,34 +29,34 @@
         <label for="pair">4</label>
         <input type="radio" id="eight" name="boatSize" value="eight">
         <label for="eight">8</label><br>
-    </p>
-    <p> Oars number:
+        Oars number:
         <input type="radio" id="singleOar" name="oars" value="true" required>
         <label for="singleOar">one (sweep)</label>
         <input type="radio" id="doublwOar" name="oars" value="false">
         <label for="doublwOar">two (sculls)</label><br>
-    </p>
-    <p> Boat Width:
+
+        Boat Width:
         <input type="radio" id="wide" name="width" value="true" required>
         <label for="wide">wide</label>
         <input type="radio" id="notWide" name="width" value="false">
         <label for="notWide">normal</label><br>
-    </p>
-    <p> Coxswain On Boat:
+
+        Coxswain On Boat:
         <input type="radio" id="coxswain" name="coxswain" value="true" required>
         <label for="coxswain">coxswain</label>
         <input type="radio" id="coxless" name="coxswain" value="false">
         <label for="coxless">coxless </label><br>
-    </p>
-    <p> Coastal Boat:
+
+        Coastal Boat:
         <input type="radio" id="coastal" name="coastal" value="true" required>
         <label for="coastal">coastal</label>
         <input type="radio" id="nocoastal" name="coastal" value="false">
         <label for="nocoastal">not coastal </label><br>
-    </p>
+        </p>
 
     <input type="submit" value="Add Activity"/>
-    <span style="color:red" class="error" id = "errorSpan" > </span>
+    <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+    </div>
 </form>
 <span class="added" style="color:green" id = "addedMsgSpan"> </span>
 <script src="/activity/addNew.js"></script>

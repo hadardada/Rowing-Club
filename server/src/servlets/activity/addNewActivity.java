@@ -1,4 +1,6 @@
 package servlets.activity;
+import java.time.LocalTime;
+
 
 import bms.engine.Engine;
 import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
@@ -20,6 +22,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
+import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
+
 @WebServlet(name = "addNewActivityServlet", urlPatterns = {"/activity/addNew"})
 public class addNewActivity extends HttpServlet {
     private Gson gson = new Gson();
@@ -27,7 +31,7 @@ public class addNewActivity extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //super.doPost(req, resp);
+        bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newActivityJsonString = reader.lines().collect(Collectors.joining());
         activityParameters newActivityParameters = gson.fromJson(newActivityJsonString, activityParameters.class);
@@ -42,8 +46,13 @@ public class addNewActivity extends HttpServlet {
 
     }
     private void addNewActivity(activityParameters parameters) throws EndTimeIsLowerException  {
-        Boat.BoatType.BoatSize size = Boat.BoatType.BoatSize.valueOf(parameters.rowersNum.toUpperCase());
-        Boat.BoatType newBoatType = new Boat.BoatType(size,parameters.singleOar, parameters.wide, parameters.helmsman, parameters.coastal);
-        bmsEngine.addNewActivity(parameters.startTime, parameters.endTime,parameters.activityName, newBoatType,true);
+        Boat.BoatType newBoatType = null;
+        if (parameters.hasBoat) {
+            Boat.BoatType.BoatSize size = Boat.BoatType.BoatSize.valueOf(parameters.rowersNum.toUpperCase());
+            newBoatType = new Boat.BoatType(size, parameters.singleOar, parameters.wide, parameters.helmsman, parameters.coastal);
+        }
+        LocalTime from = LocalTime.parse(parameters.startTime);
+        LocalTime to = LocalTime.parse(parameters.endTime);
+        bmsEngine.addNewActivity(from, to,parameters.activityName, newBoatType,false);
     }
 }
