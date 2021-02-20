@@ -2,13 +2,35 @@
 const privateCheckBoxEl = document.querySelector('#checkPrivate');
 privateCheckBoxEl.addEventListener('change', privateChecked);
 
-const activityName = document.querySelector('#activityName');
-const startTime = document.querySelector('#StartTime');
-const endTime = document.querySelector('#EndTime');
+//radios consts
+const boatFormEl = document.querySelector('#addNewBoatForm');
+const divFormBlock = document.querySelector('#formBlock');
+const memberAge = document.querySelector('#MemberAge');
+const memberEmail = document.querySelector('#MemberEmail');
+const memberPhoneNum = document.querySelector('#MemberPhoneNum');
+const memberPassword = document.querySelector('#MemberPassword');
+const memberName = document.querySelector('#MemberName');
+const memberLevel1 = document.querySelector('#Beginner');
+const memberLevel2 = document.querySelector('#Mid');
+const managerYesEl = document.querySelector('#managerYes');
+const memberNotes = document.querySelector('#MemberNotes');
+const serNumEl = document.querySelector('#boatSerNum');
+
+
+
+
+const formErrorEl = document.querySelector('#errorSpan');
+const addedMsgEl = document.querySelector('#addedMsgSpan')
 boatFormEl.addEventListener('submit', validateForm);
 
-const END_BEFORE_START = "End Time before Start Time ";
+const EMAIL_FORMAT = "Email Address is wrong";
+const MEMBER_AGE = "Members age is from 10 to 120";
+const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
+const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
 const NO_ERROR = '';
+
+
+privateCheckBoxEl.addEventListener('change',privateChecked );
 
 function privateChecked() {
     // Get the checkbox
@@ -26,28 +48,74 @@ function privateChecked() {
 
 function validateForm(event) {
 
-    if (startTime.value > endTime.value)
-    {
+    if (!(memberEmail.nodeValue.includes('@'))) {
         event.preventDefault();
-        showError(END_BEFORE_START);
+        showError(EMAIL_FORMAT);
+
+    }else if (memberAge.nodeValue < '10' || memberAge.nodeValue > '120') {
+        event.preventDefault();
+        showError(MEMBER_AGE);
+
+    }else if (memberPhoneNum.nodeValue.length !== 10) {
+        event.preventDefault();
+        showError(PHONE_NUM_DIGITS);
     }
-    else
-        showError(NO_ERROR);
+    else if (memberPhoneNum.nodeValue.match(/^[0-9]+$/) == null){
+        event.preventDefault();
+        showError(PHONE_NUM_FORMAT);
+    }
+    else{
+        let level = '3';
+        let serNum = '-1';
+        if (memberLevel1.checked)
+            level = memberLevel1.value;
+        else if (memberLevel2.checked)
+            level = memberLevel2.value;
+        if (privateCheckBoxEl.checked)
+            serNum = serNumEl.nodeValue;
+        submitMember(memberName,memberNotes,memberEmail,memberPassword,memberAge,memberPhoneNum,privateCheckBoxEl.checked,serNum,level,managerYesEl.checked);
+    }
+    event.preventDefault();
+
 }
 
-async function submitActivity (name, startTime, endTime, boatTypes)
+function MemberJson(name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager) {
+    this.name = name;
+    this.notes = notes;
+    this.email = email;
+    this.password = password;
+    this.age = age;
+    this.phoneNumber = phoneNumber;
+    this.havePrivateBoat = havePrivateBoat;
+    this.privateBoatSerialNumber = privateBoatSerialNumber;
+    this.rowingLevel = rowingLevel;
+    this.isManager = isManager;
+}
+
+
+async function submitMember (name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager)
 {
-    const newActivity = {
-        activityName:name,
-        startTime:startTime,
-        endTime: endTime,
-        boatType: boatTypes
+    const newMember = new MemberJson(name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager);
+
+    const response = await fetch('/member/addNew', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(newMember)
+    });
+
+    if (response.ok)
+    {
+        divFormBlock.style.display = "none";
+        addedMsgEl.textContent = "A new boat was successfully added to the club!"
     }
+
 }
 
 function showError(errorMsg) {
     let initMsg = "";
     if (errorMsg !== NO_ERROR)
-        initMsg ="Cannot Add Activity: "
+        initMsg ="Cannot Add Boat: ";
     formErrorEl.textContent = initMsg+ errorMsg;
 }

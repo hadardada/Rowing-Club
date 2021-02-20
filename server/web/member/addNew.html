@@ -2,56 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add New Boat</title>
+    <title>Add New Member</title>
 </head>
 <body>
 
-<h1>Please fill out the fields:</h1>
-<form method="post" action="addMember" id="addNewMemberForm">
-    <p> Member Name:
-        <input type="text" name="boatName" autofocus/></p>
-    <p> Boat size:
-        <input type="radio" id="solo" name="boatSize" value="solo">
-        <label for="solo">1</label>
-        <input type="radio" id="pair" name="boatSize" value="pair">
-        <label for="pair">2</label>
-        <input type="radio" id="four" name="boatSize" value="four">
-        <label for="pair">4</label>
-        <input type="radio" id="eight" name="boatSize" value="eight">
-        <label for="eight">8</label><br>
-    </p>
-    <p> Oars number:
-        <input type="radio" id="singleOar" name="oars" value="true">
-        <label for="singleOar">one (sweep)</label>
-        <input type="radio" id="doublwOar" name="oars" value="false">
-        <label for="doublwOar">two (sculls)</label><br>
-    </p>
-    <p> Boat Width:
-        <input type="radio" id="wide" name="width" value="true">
-        <label for="wide">wide</label>
-        <input type="radio" id="notWide" name="width" value="false">
-        <label for="notWide">normal</label><br>
-    </p>
-    <p> Coxswain On Boat:
-        <input type="radio" id="coxswain" name="coxswain" value="true">
-        <label for="coxswain">coxswain</label>
-        <input type="radio" id="coxless" name="coxswain" value="false">
-        <label for="coxless">coxless </label><br>
-    </p>
-    <p> Coastal Boat:
-        <input type="radio" id="coastal" name="coastal" value="true">
-        <label for="coastal">coastal</label>
-        <input type="radio" id="nocoastal" name="coastal" value="false">
-        <label for="nocoastal">not coastal </label><br>
-    </p>
-    <p>Private boat:
-        <input type="checkbox" id="checkPrivate">
-    </p>
-    <p style="display:none" id="boatOwnerform">Boat owner's Email Address: <input type="text"  id="boatOwner" name="boatOwner"/></p>
+<h1>Add New Member To BoatHouse</h1>
+<form method="post" action="/member/addNew" id="addNewMemberForm">
+    <div style="display:block" id="formBlock">
+        <p>Please fill out the fields:</p>
+        <p> Name:
+            <input type="text" id="MemberName" name="MemberName" autofocus required/></p>
+        <p> Email Address:
+            <input type="text" id="MemberEmail" name="Member" required/></p>
+        <p> Password:
+            <input type="text"  id="MemberPassword" name="Member" required/></p>
+        <p> Age:
+            <input type="text"  id="MemberAge" name="Member" /></p>
+        <p> Phone Number:
+            <input type="text"  id="MemberPhoneNum" name="Member" required/></p>
+        <p> Rowing Level:
+            <input type="radio" id="Beginner" name="oars" value="1" required>
+            <label for="Beginner">Beginner</label>
+            <input type="radio" id="Mid" name="oars" value="2">
+            <label for="Mid">Mid</label>
+            <input type="radio" id="Expert" name="oars" value="3">
+            <label for="Expert">Expert</label><br>
+        </p>
+        <p>Private boat:
+            <input type="checkbox" id="checkPrivate">
+        </p>
+        <p style="display:none" id="boatOwnerform">Boat Serial Number: <input type="text"  id="boatSerNum" name="boatOwner"/></p>
+        <p> Manager?:
+            <input type="radio" id="managerYes" name="oars" value="true" required>
+            <label for="Beginner">Yes</label>
+            <input type="radio" id="managerNo" name="oars" value="false">
+            <label for="Mid">No</label><br>
+        </p>
+        <p> Notes:
+            <input type="text"  id="MemberNotes" name="Member" /></p>
 
-    <input type="submit" value="Add Boat"/>
-    <span style="color:red" class="error" id = "errorSpan" > </span>
+        <input type="submit" value="Add Member"/>
+        <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+    </div>
 </form>
-<script src="/boats/addNew.js"></script>
+<span class="added" style="color:green" id = "addedMsgSpan"> </span>
+<script src="/member/addNew.js"></script>
 </body>
 </html>
