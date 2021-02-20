@@ -1,8 +1,6 @@
 package servlets.activity;
-import java.time.LocalTime;
-
-
 import bms.engine.Engine;
+import bms.engine.activitiesManagement.activity.Activity;
 import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
 import bms.engine.activitiesManagement.ActivitiesManagement;
 
@@ -20,12 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
+@WebServlet(name = "deleteActivityServlet", urlPatterns = {"/activity/delete"})
 
-@WebServlet(name = "addNewActivityServlet", urlPatterns = {"/activity/addNew"})
-public class addNewActivity extends HttpServlet {
+public class DeleteActivityServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
 
@@ -34,25 +33,12 @@ public class addNewActivity extends HttpServlet {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newActivityJsonString = reader.lines().collect(Collectors.joining());
-        activityParameters newActivityParameters = gson.fromJson(newActivityJsonString, activityParameters.class);
-
-        try {
-            addNewActivity(newActivityParameters);
-            resp.setStatus(200);
-        }
-        catch (EndTimeIsLowerException e){
-            // all exceptions are being taken care of from browser
-        }
-
+        int activityId = gson.fromJson(newActivityJsonString,Integer.class);
+        deleteActivity(activityId);
+        resp.setStatus(200);
     }
-    private void addNewActivity(activityParameters parameters) throws EndTimeIsLowerException  {
-        Boat.BoatType newBoatType = null;
-        if (parameters.hasBoat) {
-            Boat.BoatType.BoatSize size = Boat.BoatType.BoatSize.valueOf(parameters.rowersNum.toUpperCase());
-            newBoatType = new Boat.BoatType(size, parameters.singleOar, parameters.wide, parameters.helmsman, parameters.coastal);
-        }
-        LocalTime from = LocalTime.parse(parameters.startTime);
-        LocalTime to = LocalTime.parse(parameters.endTime);
-        bmsEngine.addNewActivity(from, to,parameters.activityName, newBoatType,false);
+
+    private void deleteActivity(int activityId){
+        this.bmsEngine.removeActivityFromList(activityId);
     }
 }

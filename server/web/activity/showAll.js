@@ -1,7 +1,66 @@
 const guestListContainerEl = document.querySelector('.activitiesList');
-/* *****************************************************************
-Update the DOM
-******************************************************************** */
+const deleteButtonsElements = document.querySelector('.deleteButtons');
+
+
+refreshListUsesAsyncAwait()
+
+async function refreshListUsesAsyncAwait() {
+    const response = await fetch('/activity/showAll', {
+        method: 'get',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+    });
+    const value = await response.json();
+    createActivityList(value);
+}
+
+async function deleteActivity(id){
+    const response = await fetch('/activity/delete', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(id)
+    });
+}
+
+function createActivityElement(activity) {
+    const el = document.createElement("li");
+
+    //add action button to each element
+    const deleteAction = document.createElement('button');
+    deleteAction.innerText = 'delete'
+    deleteAction.className = 'deleteButtons';
+    deleteAction.id = 'deleteButtons' + activity.id;
+    deleteAction.onclick = deleteActivity(activity.id);
+   // deleteAction.addEventListener('click', deleteActivity(activity.id))
+    el.append(deleteAction);
+
+    const editAction = document.createElement('button');
+    editAction.innerText = 'edit'
+    el.append(editAction);
+
+    const nameEl = document.createElement('span');
+    nameEl.innerText = activity.activityName;
+    el.append(nameEl);
+
+    const startEl = document.createElement('span');
+    startEl.innerText = activity.startTime;
+    el.appendChild(startEl)
+
+    const endEl = document.createElement('span');
+    endEl.innerText = activity.endTime;
+    el.appendChild(endEl)
+
+    if (!(activity.boatName === '')){
+        const boatNameEl = document.createElement('span');
+        boatNameEl.innerText = activity.boatName;
+        el.appendChild(boatNameEl)
+    }
+    return el;
+}
+
 function createActivityList(activityList) {
     guestListContainerEl.innerHTML = '';
 
@@ -12,35 +71,6 @@ function createActivityList(activityList) {
     });
 }
 
-function createActivityElement(activity) {
-    const el = document.createElement("li");
-    const nameEl = document.createElement('span');
-    nameEl.innerText = activity.activityName;
-    el.append(nameEl);
 
-    const startEl = document.createElement('span');
-    startEl.innerText = activity.startTime;
-    el.append(startEl);
 
-    const endEl = document.createElement('span');
-    endEl.innerText = activity.endTime;
-    el.append(endEl);
 
-    if (!(activity.boatName === '')){
-        const boatNameEl = document.createElement('span');
-        boatNameEl.innerText = activity.boatName;
-        el.append(boatNameEl);
-    }
-    return el;
-}
-
-/* *****************************************************************
-Get Data from the server using either Promises or Async / Await
-******************************************************************** */
-
-// Async/Await API
-async function refreshListUsesAsyncAwait() {
-    const response = await fetch('activity/showAll');
-    const value = await response.json();
-    createActivityList(value);
-}

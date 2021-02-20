@@ -11,17 +11,17 @@
     <div style="display:block" id="formBlock">
     <p>Please fill out the fields:</p>
     <p> Activity Name:
-        <input type="text" id="activityName" name="activityName" autofocus/></p>
+        <input type="text" id="activityName" name="activityName" autofocus required/></p>
     <p> Start Time:
-        <input type="text" id="StartTime" name="activityName" /></p>
+        <input type="text" id="StartTime" name="activityName" required/></p>
     <p> End Time:
-        <input type="text"  id="EndTime" name="activityName" /></p>
+        <input type="text"  id="EndTime" name="activityName" required/></p>
     <p> Boat Types (not mandatory):
         <input type="checkbox" id="checkBoatType">
         </p>
         <p style="display:none" id="boatTypeform">
             Boat size:
-        <input type="radio" id="solo" name="boatSize" value="solo" required>
+        <input type="radio" id="solo" name="boatSize" value="solo">
         <label for="solo">1</label>
         <input type="radio" id="pair" name="boatSize" value="pair">
         <label for="pair">2</label>
@@ -30,25 +30,25 @@
         <input type="radio" id="eight" name="boatSize" value="eight">
         <label for="eight">8</label><br>
         Oars number:
-        <input type="radio" id="singleOar" name="oars" value="true" required>
+        <input type="radio" id="singleOar" name="oars" value="true">
         <label for="singleOar">one (sweep)</label>
         <input type="radio" id="doublwOar" name="oars" value="false">
         <label for="doublwOar">two (sculls)</label><br>
 
         Boat Width:
-        <input type="radio" id="wide" name="width" value="true" required>
+        <input type="radio" id="wide" name="width" value="true">
         <label for="wide">wide</label>
         <input type="radio" id="notWide" name="width" value="false">
         <label for="notWide">normal</label><br>
 
         Coxswain On Boat:
-        <input type="radio" id="coxswain" name="coxswain" value="true" required>
+        <input type="radio" id="coxswain" name="coxswain" value="true">
         <label for="coxswain">coxswain</label>
         <input type="radio" id="coxless" name="coxswain" value="false">
         <label for="coxless">coxless </label><br>
 
         Coastal Boat:
-        <input type="radio" id="coastal" name="coastal" value="true" required>
+        <input type="radio" id="coastal" name="coastal" value="true">
         <label for="coastal">coastal</label>
         <input type="radio" id="nocoastal" name="coastal" value="false">
         <label for="nocoastal">not coastal </label><br>

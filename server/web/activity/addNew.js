@@ -36,6 +36,7 @@ function boatTypeChecked() {
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true){
         boatType.style.display = "block";
+
     } else {
         boatType.style.display = "none";
     }
