@@ -262,9 +262,9 @@ public class Engine implements BmsEngine, Serializable {
     }
 
 
-    //this method update the private bms.engine.boatsManagement.boat number, return false if this number doesn't exist in the bms.engine.boatsManagement.boat list
-    //(or represent no private bms.engine.boatsManagement.boat), true if it does
-    // private bms.engine.boatsManagement.boat for none bms.engine.boatsManagement.boat is -1
+    //this method update the private boat number, return false if this number doesn't exist in the boat list
+    //(or represent no private boat), true if it does
+    // private boat for none boat is -1
 
     public boolean updateMemberPrivateBoatNumber(int privateBoatSerialNumber, String memberEmail) {
 

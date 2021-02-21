@@ -40,7 +40,7 @@ public class EditBoatServlet extends HttpServlet{
         }
         else
         {
-            //return empty page!
+            //return empty page?
         }
     }
 

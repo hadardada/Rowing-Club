@@ -15,18 +15,16 @@ const coastalRadioEl = document.querySelector('#coastal');
 const widthRadioEl = document.querySelector('#wide');
 const outOfOrderEl = document.querySelector('#outof');
 
-
+//validation check and error message
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 boatFormEl.addEventListener('submit', validateForm);
-
 const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
 const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
 const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
 const NO_ERROR = '';
 
 
-//
 privateCheckBoxEl.addEventListener('change',privateChecked );
 
 function privateChecked() {

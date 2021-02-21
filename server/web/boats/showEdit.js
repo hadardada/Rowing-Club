@@ -20,10 +20,11 @@ const boatStatusEl = document.querySelector('#boatStatus');
 const shortNameEl = document.querySelector('#shortName');
 const privateStatusEl = document.querySelector('#privateStatus');
 
+var numOfRowers;
 // buttons
 const allButtonEl = document.querySelector('#allButtons');
 //const updateNameButtonEl = document.querySelector('#updateName');
-const updateOarsButtonEl = document.querySelector('updateOars');
+//const updateOarsButtonEl = document.querySelector('updateOars');
 const updateOarsErrorEl = document.querySelector('#oarsError');
 
 const queryString = window.location.search;
@@ -41,6 +42,7 @@ async function injectParameters(){
     serialNumEl.textContent = boatJson.idNum;
     boatNameEl.textContent = boatJson.boatName;
     shortNameEl.textContent = boatJson.shortName;
+    numOfRowers = boatJson.shortName[0];
     showStatus(boatJson.status);
     showOwnership(boatJson.privateProperty);
 }
@@ -60,6 +62,7 @@ function showOwnership(boolPrivate){
         privateStatusEl.textContent = "Club's Property";
 
 }
+
 
 
 
