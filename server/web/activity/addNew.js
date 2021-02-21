@@ -22,6 +22,8 @@ const addedMsgEl = document.querySelector('#addedMsgSpan')
 addNewActivityFormEl.addEventListener('submit', validateForm);
 
 const END_BEFORE_START = "End Time before Start Time ";
+const START_TIME_IN_FORMAT = 'Start time is not in the right format';
+const END_TIME_IN_FORMAT = 'End time is not in the right format';
 const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
 const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
 const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
@@ -44,8 +46,17 @@ function boatTypeChecked() {
 
 function validateForm(event) {
 
-    if (startTime.value > endTime.value)
+    if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
     {
+        event.preventDefault();
+        showError(START_TIME_IN_FORMAT);
+    }
+    else if(!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
+    {
+        event.preventDefault();
+        showError(END_TIME_IN_FORMAT);
+    }
+    else if(startTime.value > endTime.value){
         event.preventDefault();
         showError(END_BEFORE_START);
     }

@@ -1,15 +1,7 @@
 package servlets.activity;
 import bms.engine.Engine;
-import bms.engine.activitiesManagement.activity.Activity;
-import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
-import bms.engine.activitiesManagement.ActivitiesManagement;
 
-import bms.engine.boatsManagement.boat.Boat;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatAlreadyExistsException;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.HelmsmanException;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.SingleWithTwoOarsException;
 import com.google.gson.Gson;
-import servlets.boats.BoatsParameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;

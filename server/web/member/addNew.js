@@ -3,7 +3,7 @@ const privateCheckBoxEl = document.querySelector('#checkPrivate');
 privateCheckBoxEl.addEventListener('change', privateChecked);
 
 //radios consts
-const boatFormEl = document.querySelector('#addNewBoatForm');
+const memberFormEl = document.querySelector('#addNewMemberForm');
 const divFormBlock = document.querySelector('#formBlock');
 const memberAge = document.querySelector('#MemberAge');
 const memberEmail = document.querySelector('#MemberEmail');
@@ -21,7 +21,7 @@ const serNumEl = document.querySelector('#boatSerNum');
 
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
-boatFormEl.addEventListener('submit', validateForm);
+memberFormEl.addEventListener('submit', validateForm);
 
 const EMAIL_FORMAT = "Email Address is wrong";
 const MEMBER_AGE = "Members age is from 10 to 120";
@@ -48,19 +48,19 @@ function privateChecked() {
 
 function validateForm(event) {
 
-    if (!(memberEmail.nodeValue.includes('@'))) {
+    if (!(memberEmail.value.includes('@'))) {
         event.preventDefault();
         showError(EMAIL_FORMAT);
 
-    }else if (memberAge.nodeValue < '10' || memberAge.nodeValue > '120') {
+    }else if (parseInt(memberAge.value) < 10 || parseInt(memberAge.value) > 120) {
         event.preventDefault();
         showError(MEMBER_AGE);
 
-    }else if (memberPhoneNum.nodeValue.length !== 10) {
+    }else if (memberPhoneNum.value.length !== 10) {
         event.preventDefault();
         showError(PHONE_NUM_DIGITS);
     }
-    else if (memberPhoneNum.nodeValue.match(/^[0-9]+$/) == null){
+    else if (memberPhoneNum.value.match(/^[0-9]+$/) == null){
         event.preventDefault();
         showError(PHONE_NUM_FORMAT);
     }
@@ -72,8 +72,8 @@ function validateForm(event) {
         else if (memberLevel2.checked)
             level = memberLevel2.value;
         if (privateCheckBoxEl.checked)
-            serNum = serNumEl.nodeValue;
-        submitMember(memberName,memberNotes,memberEmail,memberPassword,memberAge,memberPhoneNum,privateCheckBoxEl.checked,serNum,level,managerYesEl.checked);
+            serNum = serNumEl.value;
+        submitMember(memberName.value,memberNotes.value,memberEmail.value,memberPassword.value,memberAge.value,memberPhoneNum.value,privateCheckBoxEl.checked,serNum,level,managerYesEl.checked);
     }
     event.preventDefault();
 
@@ -108,7 +108,7 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
     if (response.ok)
     {
         divFormBlock.style.display = "none";
-        addedMsgEl.textContent = "A new boat was successfully added to the club!"
+        addedMsgEl.textContent = "A new Member was successfully added to the club!"
     }
 
 }
@@ -116,6 +116,6 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
 function showError(errorMsg) {
     let initMsg = "";
     if (errorMsg !== NO_ERROR)
-        initMsg ="Cannot Add Boat: ";
+        initMsg ="Cannot Add Member: ";
     formErrorEl.textContent = initMsg+ errorMsg;
 }
