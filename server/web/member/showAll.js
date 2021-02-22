@@ -17,15 +17,18 @@ async function refreshListUsesAsyncAwait() {
     createMemberList(value);
 }
 
-// async function deleteActivity(id){
-//     const response = await fetch('/activity/delete', {
-//         method: 'post',
-//         headers: new Headers({
-//             'Content-Type': 'application/json;charset=utf-8'
-//         }),
-//         body: JSON.stringify(id)
-//     });
-// }
+async function deleteMember(){
+    let id = this.id;
+    const response = await fetch('/member/delete', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(id)
+    });
+    counter = 1;
+    refreshListUsesAsyncAwait()
+}
 
 
 function createMemberElement(member) {
@@ -36,9 +39,9 @@ function createMemberElement(member) {
     const deleteAction = document.createElement('button');
     deleteAction.innerText = 'delete'
     deleteAction.className = 'deleteButtons';
-    deleteAction.id = 'deleteButtons' + member.id;
-    // deleteAction.onclick = deleteActivity(activity.id);
-    //   deleteAction.addEventListener('change', deleteActivity(boat.id));
+    deleteAction.id = member.email;
+    deleteAction.addEventListener('click', deleteMember);
+
     deleteAction.style.position = 'absolute';
     deleteAction.style.left = '5px'
     el.append(deleteAction);
@@ -231,7 +234,7 @@ function createMemberList(memberList) {
 
 
     guestListContainerEl.style.position = 'absolute';
-    guestListContainerEl.style.top = '200px'
+    guestListContainerEl.style.top = '150px'
 
 
     // Create Elements on from data

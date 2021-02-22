@@ -17,15 +17,18 @@ async function refreshListUsesAsyncAwait() {
     createBoatList(value);
 }
 
-// async function deleteActivity(id){
-//     const response = await fetch('/activity/delete', {
-//         method: 'post',
-//         headers: new Headers({
-//             'Content-Type': 'application/json;charset=utf-8'
-//         }),
-//         body: JSON.stringify(id)
-//     });
-// }
+async function deleteBoat(){
+    let id = this.id;
+    const response = await fetch('/boats/delete', {
+        method: 'post',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+        body: JSON.stringify(id)
+    });
+    counter = 1;
+    refreshListUsesAsyncAwait()
+}
 
 function createBoatElement(boat) {
 
@@ -35,9 +38,9 @@ function createBoatElement(boat) {
     const deleteAction = document.createElement('button');
     deleteAction.innerText = 'delete'
     deleteAction.className = 'deleteButtons';
-    deleteAction.id = 'deleteButtons' + boat.id;
-    // deleteAction.onclick = deleteActivity(activity.id);
- //   deleteAction.addEventListener('change', deleteActivity(boat.id));
+    deleteAction.id = boat.idNum;
+    deleteAction.addEventListener('click', deleteBoat);
+
     deleteAction.style.position = 'absolute';
     deleteAction.style.left = '5px'
     el.append(deleteAction);
