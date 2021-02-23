@@ -1,4 +1,4 @@
-package servlets.activity;
+package servlets.member;
 import bms.engine.Engine;
 
 import com.google.gson.Gson;
@@ -12,10 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
-@WebServlet(name = "deleteActivityServlet", urlPatterns = {"/activity/delete"})
 
-public class DeleteActivityServlet extends HttpServlet {
+import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
+@WebServlet(name = "deleteMemberServlet", urlPatterns = {"/member/delete"})
+
+public class DeleteMemberServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
 
@@ -24,12 +25,12 @@ public class DeleteActivityServlet extends HttpServlet {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newActivityJsonString = reader.lines().collect(Collectors.joining());
-        int activityId = gson.fromJson(newActivityJsonString,Integer.class);
-        deleteActivity(activityId);
+        String memberEmail = gson.fromJson(newActivityJsonString,String.class);
+        deleteMember(memberEmail);
         resp.setStatus(200);
     }
 
-    private void deleteActivity(int activityId){
-        this.bmsEngine.removeActivityFromList(activityId);
+    private void deleteMember(String memberEmail){
+        this.bmsEngine.removeMember(memberEmail);
     }
 }
