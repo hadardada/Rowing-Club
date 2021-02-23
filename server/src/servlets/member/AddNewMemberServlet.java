@@ -1,4 +1,5 @@
 package servlets.member;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 
 import bms.engine.Engine;
@@ -31,19 +32,23 @@ public class AddNewMemberServlet extends HttpServlet {
             BufferedReader reader = req.getReader();
             String newMemberJsonString = reader.lines().collect(Collectors.joining());
             MemberParameters newMemberParameters = gson.fromJson(newMemberJsonString, MemberParameters.class);
+            PrintWriter out = resp.getWriter();
 
             try {
                 addNewMember(newMemberParameters);
                 resp.setStatus(200);
             }
             catch (EmailAddressAlreadyExistsException e){
-                // all exceptions are being taken care of from browser
+                resp.setStatus(404);
+                out.print("Email Address Already Belong To Another Member");
             }
             catch (BoatDoesNotExistException e){
-                // all exceptions are being taken care of from browser
+                resp.setStatus(404);
+                out.print("Boat Serial Num Doesn't belong to any Boat in the Club");
             }
             catch (ExpiryDateIsBeforeSignUpException e){
-                // all exceptions are being taken care of from browser
+                resp.setStatus(404);
+                out.print("Expiry Date Is Before SignUp Exception");
             }
         }
         private void addNewMember(MemberParameters parameters) throws EmailAddressAlreadyExistsException, BoatDoesNotExistException, ExpiryDateIsBeforeSignUpException {
