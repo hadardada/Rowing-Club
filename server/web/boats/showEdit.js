@@ -11,8 +11,7 @@ function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide,
     this.shortName = '';
 }
 
-
-
+var numOfRowers;
 
 const serialNumEl = document.querySelector('#serialNum');
 const boatNameEl = document.querySelector('#currBoatName');
@@ -20,13 +19,7 @@ const boatStatusEl = document.querySelector('#boatStatus');
 const shortNameEl = document.querySelector('#shortName');
 const privateStatusEl = document.querySelector('#privateStatus');
 
-var numOfRowers;
-// buttons
-const allButtonEl = document.querySelector('#allButtons');
-//const updateNameButtonEl = document.querySelector('#updateName');
-//const updateOarsButtonEl = document.querySelector('updateOars');
-const updateOarsErrorEl = document.querySelector('#oarsError');
-
+//get serialNum
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const boatSerialNumber = urlParams.get('boatId');

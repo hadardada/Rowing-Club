@@ -53,7 +53,6 @@ function createUpdateReqObj() {
     if (this === updateNameButtonEl) {
         const newNameEl = document.querySelector("#boatName");
         data = new updateReq(UPDATE_NAME, newNameEl.value, boatSerialNumber);
-        console.log(data.whatToUpdate);
     }
     else if (this === updateStatusButtonEl){
         const updateBoatStatusOutOfEl = document.querySelector('#outof');

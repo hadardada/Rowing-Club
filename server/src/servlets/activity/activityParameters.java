@@ -1,4 +1,6 @@
 package servlets.activity;
+import bms.engine.activitiesManagement.activity.Activity;
+
 import java.time.LocalTime;
 
 public class activityParameters {
@@ -29,8 +31,20 @@ public class activityParameters {
         this.helmsman = helmsman;
         this.coastal = coastal;
         this.hasBoat = hasBoat;
-        this.boatName = boatName;
+        this.boatName = boatName; //TODO why?
         this.id = id;
+    }
+
+    public activityParameters(Activity activity){
+        this.activityName = activity.getName();
+        this.startTime = activity.getStarts().toString();
+        this.endTime = activity.getEnds().toString();
+        if (activity.getSpecifiedType() == null)
+            this.boatName = "Unspecified";
+        else
+            this.boatName = activity.getSpecifiedType().getShortName();
+        //this.id = activity.getId();
+
     }
 
 }

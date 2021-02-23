@@ -15,7 +15,8 @@ async function refreshListUsesAsyncAwait() {
     createActivityList(value);
 }
 
-async function deleteActivity(id){
+async function deleteActivity(){
+    let id = this.id.substring('deleteButtons'.length);
     const response = await fetch('/activity/delete', {
         method: 'post',
         headers: new Headers({
@@ -33,8 +34,8 @@ function createActivityElement(activity) {
     deleteAction.innerText = 'delete'
     deleteAction.className = 'deleteButtons';
     deleteAction.id = 'deleteButtons' + activity.id;
-    deleteAction.onclick = deleteActivity(activity.id);
-   // deleteAction.addEventListener('click', deleteActivity(activity.id))
+    //deleteAction.onclick = deleteActivity(activity.id);
+    deleteAction.addEventListener('click', deleteActivity);
     el.append(deleteAction);
 
     const editAction = document.createElement('button');

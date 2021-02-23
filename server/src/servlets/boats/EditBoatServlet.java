@@ -5,6 +5,7 @@ import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
 import bms.engine.boatsManagement.boat.Boat;
 import com.google.gson.Gson;
+import servlets.boats.UpdateRequestObject;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,7 +51,7 @@ public class EditBoatServlet extends HttpServlet{
 
         BufferedReader reader = req.getReader();
         String updateReqJsonString = reader.lines().collect(Collectors.joining());
-        UpdateRequestObject updateReq = gson.fromJson(updateReqJsonString, UpdateRequestObject.class);
+        servlets.boats.UpdateRequestObject updateReq = gson.fromJson(updateReqJsonString, servlets.boats.UpdateRequestObject.class);
         updateReq.detectUpdate(bmsEngine);
 
         resp.setContentType("application/json");

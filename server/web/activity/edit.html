@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Activity</title>
+</head>
+<body>
+<h2>Edit Activity Details:</h2>
+<div>
+    <span id="errorMsg"> </span><br>
+    <span>WARNING: Edit Activity's starting/ending time will delete all reservations that are bound to this activity!
+    </span>
+</div>
+<div>
+    <p>Activity Name:<span id = activityName> </span></p>
+    <p> Update Name:
+        <input  type="text" id ="newName"/>
+        <button id="updateName">Update</button>
+    </p>
+
+    <p>
+        Start Time:<span id="startTime"> </span>
+    </p>
+    <p> Update Start Time:
+        <input  type="text" id ="starts"/>
+        <button id="updateStarts">Update</button><br>
+        <span style="color: grey">please type the time with hh:mm format</span>
+    </p>
+
+    <p>
+        End Time:<span id="endTime"> </span>
+    </p>
+    <p> Update End Time:
+        <input  type="text" id ="ends"/>
+        <button id="updateEnds">Update</button><br>
+        <span style="color: grey">please type the time with hh:mm format</span>
+    </p>
+
+    <p>
+        Boat Type:<span id="boatType"> </span>
+    </p>
+    <p>Update Boat Type:
+        <input type="checkbox" name="newboafdtType" id="setBoatType" value="true">
+        <label for="setBoatType">Set Boat Type</label>
+        <input type="checkbox" name="newboatType" id="noBoatType" value="false">
+        <label for="noBoatType">Boat Type Unspecified</label>
+        <button style="display:none" id="noBoatTypeBttn">Update</button>
+    </p>
+    <form style="display:none" id="boatTypeform">
+        Boat size:
+        <input type="radio" id="solo" name="boatSize" value="solo" required>
+        <label for="solo">1</label>
+        <input type="radio" id="pair" name="boatSize" value="pair">
+        <label for="pair">2</label>
+        <input type="radio" id="four" name="boatSize" value="four">
+        <label for="pair">4</label>
+        <input type="radio" id="eight" name="boatSize" value="eight">
+        <label for="eight">8</label><br>
+        Oars number:
+        <input type="radio" id="singleOar" name="oars" value="true" required>
+        <label for="singleOar">one (sweep)</label>
+        <input type="radio" id="doublwOar" name="oars" value="false">
+        <label for="doublwOar">two (sculls)</label><br>
+
+        Boat Width:
+        <input type="radio" id="wide" name="width" value="true" required>
+        <label for="wide">wide</label>
+        <input type="radio" id="notWide" name="width" value="false">
+        <label for="notWide">normal</label><br>
+
+        Coxswain On Boat:
+        <input type="radio" id="coxswain" name="coxswain" value="true" required>
+        <label for="coxswain">coxswain</label>
+        <input type="radio" id="coxless" name="coxswain" value="false">
+        <label for="coxless">coxless </label><br>
+
+        Coastal Boat:
+        <input type="radio" id="coastal" name="coastal" value="true" required>
+        <label for="coastal">coastal</label>
+        <input type="radio" id="nocoastal" name="coastal" value="false">
+        <label for="nocoastal">not coastal </label><br>
+        <input type="submit" value="Update">
+    </form>
+    <span style = "color: red" class="error" id="checkBoxError"></span>
+    <script src="utilies.js"></script>
+    <script src = "showEdit.js"></script>
+    <script src="sendEdit.js"></script>
+</div>
+</body>
+</html>
