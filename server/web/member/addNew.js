@@ -105,12 +105,15 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
         body: JSON.stringify(newMember)
     });
 
-    if (response.ok)
+    if (response.status === 200)
     {
         divFormBlock.style.display = "none";
         addedMsgEl.textContent = "A new Member was successfully added to the club!"
     }
-
+    else{
+        formErrorEl.textContent = "ERROR! " + await response.text();
+        formErrorEl.style.color = "red";
+    }
 }
 
 function showError(errorMsg) {
