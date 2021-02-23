@@ -90,12 +90,7 @@ function createMemberElement(member) {
     phoneEl.style.left = '600px'
 
     const rowingEl = document.createElement('span');
-    if (member.rowingLevel === 1)
-        rowingEl.innerText = 'Begginer';
-    else if (member.rowingLevel === 2)
-        rowingEl.innerText = 'Mid';
-    else
-        rowingEl.innerText = 'Expert';
+    showRowingLevel(member.rowingLevel, rowingEl);
     el.appendChild(rowingEl)
     rowingEl.style.position = 'absolute';
     rowingEl.style.left = '700px'
