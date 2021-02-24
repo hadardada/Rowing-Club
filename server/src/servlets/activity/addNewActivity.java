@@ -4,14 +4,9 @@ import java.time.LocalTime;
 
 import bms.engine.Engine;
 import bms.engine.activitiesManagement.activity.ActivityExceptions.*;
-import bms.engine.activitiesManagement.ActivitiesManagement;
 
 import bms.engine.boatsManagement.boat.Boat;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatAlreadyExistsException;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.HelmsmanException;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.SingleWithTwoOarsException;
 import com.google.gson.Gson;
-import servlets.boats.BoatsParameter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

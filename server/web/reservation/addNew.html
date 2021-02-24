@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add New Member</title>
 </head>
 <body>
 
+<h1>Add New Reservation To BoatHouse</h1>
+<form method="post" action="/reservation/addNew" id="addNewResForm">
+    <div style="display:block" id="formBlock">
+        <p>Please fill out the fields:</p>
+        <p> Main Rower:</p>
+        <span id="allMembers"></span>
+        <ol class="membersList">
+
+        </ol>
+        <p> Date:</p>
+        <span id="Dates"></span>
+        <ol class="datesList">
+
+        </ol>
+        <p> Activity:</p>
+        <span id="Activity"></span>
+        <ol class="ActivityList">
+
+        </ol>
+        <p> Boat Types:</p>
+        <span id="BoatsTypes"></span>
+        <ol class="boatsTypeList">
+
+        </ol>
+        <p> Additional Rowers:</p>
+        <span id="additionalRowers"></span>
+        <ol class="additionalRowersList">
+
+        </ol>
+        <input type="submit" value="Add Reservation"/>
+        <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+    </div>
+</form>
+<span class="added" style="color:green" id = "addedMsgSpan"> </span>
+<script src="/reservation/addNew.js"></script>
 </body>
 </html>
