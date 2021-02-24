@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Member</title>
+</head>
+<body>
+<h2>Edit Member Details:</h2>
+<p> Name:<span id="currName"></span></p>
+<p> Update Name:
+    <input type="text" id="MemberName" name="MemberName" autofocus required/>
+    <button id="updateName">Update</button>
+</p>
+
+<p> Email Address:<span id = "currEmail"></span></p>
+<p> Update Email Address:
+    <input type="text" id="MemberEmail" name="Member" required/>
+    <button id="updateEmail">Update</button>
+</p>
+<p> Password:<span id = "currPassword"></span></p>
+<p> Update Password:
+    <input type="text"  id="MemberPassword" name="Member" required/>
+    <button id="updatePassword">Update</button>
+</p>
+<p> Age: <span id="currAge"></span></p>
+<p> Update Age:
+    <input type="text"  id="MemberAge" name="Member" />
+    <button id="updateAge">Update</button>
+</p>
+<p> Phone Number: <span id="currPhone"></span></p>
+<p> Update Phone Number:
+    <input type="text"  id="MemberPhoneNum" name="Member" required/>
+    <button id="updatePhone">Update</button>
+</p>
+<p> Rowing Level:<span id="currLevel"></span></p>
+<p> Update Rowing Level:
+    <input type="radio" id="Beginner" name="oars" value="1" required>
+    <label for="Beginner">Beginner</label>
+    <input type="radio" id="Mid" name="oars" value="2">
+    <label for="Mid">Mid</label>
+    <input type="radio" id="Expert" name="oars" value="3">
+    <label for="Expert">Expert</label>
+    <button id="updateLevel">Update</button>
+</p>
+<p>Private boat: <span id="currPrivate"></span> </p>
+<p>Update Private Boat:
+    <input type="checkbox" id="checkPrivate">
+    Private Boat
+<span style="display:none" id="boatOwnerform"><br>Boat Serial Number: <input type="text"  id="boatSerNum" name="boatOwner"/></span>
+<button id="updatePrivate">Update</button>
+    <span style = "color:grey"> In order to set member to be without a private boat, leave the box unchecked and click 'Update'</span>
+</p>
+
+<p> Manager?: <span id="currManager"></span></p>
+    <p>
+    <input type="radio" id="managerYes" name="manager" value="true" required>
+    <label for="Beginner">Yes</label>
+    <input type="radio" id="managerNo" name="manager" value="false">
+    <label for="Mid">No</label>
+    <button id="updateManager">Update</button>
+    </p>
+<p> Notes: <span id = "currNotes"></span></p>
+<p> Update Notes:
+    <input type="text"  id="MemberNotes" name="Member" />
+    <button id="updateNotes">Update</button>
+</p>
+<span style="color:red" class="error" id = "errorSpan" > </span>
+</body>
+<script src="utilies.js"></script>
+<script src="showEdit.js"></script>
+<script src="sendEdit.js"></script>
+</html>

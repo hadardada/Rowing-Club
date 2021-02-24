@@ -19,6 +19,7 @@ public class MemberParameters {
 
     //C'tors
     public MemberParameters(){}
+
     public MemberParameters(Member member){
         this.name = member.getName();
         this.notes = member.getNotes();
