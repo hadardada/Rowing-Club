@@ -33,12 +33,14 @@ public class AddNewResServlet extends HttpServlet {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newReservationJsonString = reader.lines().collect(Collectors.joining());
+       // String newJson = gson.toJson(newReservationJsonString);
+        //    newReservationJsonString = newReservationJsonString.substring(1, newReservationJsonString.length() - 1);
         ReservationParameters newReservationParameters = gson.fromJson(newReservationJsonString, ReservationParameters.class);
         PrintWriter out = resp.getWriter();
 
         try {
             addNewReservation(newReservationParameters);
-            resp.setStatus(200);
+         //   resp.setStatus(200);
         }
         catch (ParticipentRowerIsOnListException e){
             resp.setStatus(404);
@@ -47,6 +49,7 @@ public class AddNewResServlet extends HttpServlet {
     }
     private void addNewReservation(ReservationParameters parameters) throws ParticipentRowerIsOnListException {
         Member participantRower = bmsEngine.getMemberByEmail(parameters.participantRowerEmail);
+        String trainingDateString = parameters.trainingDate;
         LocalDate trainingDate = LocalDate.parse(parameters.trainingDate);
         Activity activity = bmsEngine.findActivityById(parameters.activityID);
         List<Boat.BoatType> boatTypes = bmsEngine.getCurrentBoatTypes();

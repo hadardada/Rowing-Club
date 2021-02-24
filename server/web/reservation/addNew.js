@@ -18,6 +18,7 @@ let trainingDate;
 let activityIdGlobe;
 let additionalRowers = new Array();
 let boatTypes = new Array();
+let showAllMem;
 
 
 
@@ -33,25 +34,28 @@ const NO_ERROR = '';
 
 main()
 
-function main(){
-    showAllMembers(true);
-    showAllDate();
-    showAllActivities();
-    showAllMembers(false);
-    showAllBoatType();
+async function main(){
+    await showAllMembers(true);
 }
 
 //////////////////////////////////////////////////////////////////// display Dates //////////////////////////////////////
 
 
-function showAllDate(){
+async function showAllDate(){
     datesListContainerEl.innerHTML = '';
     let i;
     let today = new Date();
     for (i = 0; i < 8; i++) {
-        let dates = new Date(today.getFullYear(),today.getMonth(),today.getDay()+i);
-        createDateElement(dates);
+        let date = new Date()
+        date.setFullYear(today.getFullYear());
+        date.setMonth(today.getMonth())
+        date.setDate((today.getDate()+i));
+        let dateEl = createDateElement(date);
+        datesListContainerEl.append(dateEl);
+        const nameTitle = document.createElement("br");
+        datesListContainerEl.append(nameTitle);
     }
+    await showAllActivities();
 }
 
 function trainingDateFunc()
@@ -66,7 +70,15 @@ function createDateElement(dates) {
     const radioDateEl = document.createElement('input');
     radioDateEl.setAttribute("type", "radio");
     radioDateEl.setAttribute("name", "trainingDate");
-    radioDateEl.id = dates.toString();
+    radioDateEl.id = dates.getFullYear().toString() + "-" + (dates.getMonth()+1).toString()  + "-" + dates.getDate().toString();
+    if ((dates.getMonth()+1)%10 === (dates.getMonth()+1))
+    {
+        radioDateEl.id = dates.getFullYear().toString() + "-0" + (dates.getMonth()+1).toString()  + "-" + dates.getDate().toString();
+    }
+    if ((dates.getDate()+1)%10 === (dates.getDate()+1))
+    {
+        radioDateEl.id = dates.getFullYear().toString() + "-" + (dates.getMonth()+1).toString()  + "-0" + dates.getDate().toString();
+    }
     radioDateEl.addEventListener('change', trainingDateFunc);
 
     radioDateEl.style.position = 'absolute';
@@ -74,10 +86,12 @@ function createDateElement(dates) {
     el.append(radioDateEl);
 
     const nameEl = document.createElement('span');
-    nameEl.innerText = dates.toString();
+    nameEl.innerText = dates.getDate().toString() + "-" + (dates.getMonth()+1).toString()  + "-" + dates.getFullYear().toString();
     el.append(nameEl);
     nameEl.style.position = 'absolute';
-    nameEl.style.left = '100px'
+    nameEl.style.left = '30px'
+
+    return el;
 }
 
 
@@ -91,12 +105,19 @@ async function showAllMembers(mainOrAdditonal) {
         }),
     });
     const value = await response.json();
+    showAllMem = value;
     createMemberList(value,mainOrAdditonal);
+    await showAllDate();
+
 }
 
 function createMemberList(memberList,mainOrAdditonal) {
-    guestListContainerEl.innerHTML = '';
-    additionalRowersListContainerEl.innerHTML = '';
+    if (mainOrAdditonal){
+        guestListContainerEl.innerHTML = '';
+    }
+    else {
+        additionalRowersListContainerEl.innerHTML = '';
+    }
 
    // guestListContainerEl.style.position = 'absolute';
    // guestListContainerEl.style.top = '150px'
@@ -116,18 +137,19 @@ function createMemberList(memberList,mainOrAdditonal) {
             const nameTitle = document.createElement("br");
             additionalRowersListContainerEl.append(nameTitle);
         }
+
     });
 }
 
 function mainMember()
 {
-    mainRowerEmail = this.id;
+    mainRowerEmail = this.id.substring('main'.length);
 }
 
 function additionalMembers()
 {
-    if (this.check){
-        additionalRowers.push(this.id);
+    if (this.checked){
+        additionalRowers.push(this.id.substring('add'.length));
     }
     else {
         const index = additionalRowers.indexOf(this.id);
@@ -146,7 +168,7 @@ function createMemberElement(member,mainOrAdditonal) {
             const radioMemberEl = document.createElement('input');
             radioMemberEl.setAttribute("type", "radio");
             radioMemberEl.setAttribute("name", "mainMember");
-            radioMemberEl.id = member.email;
+            radioMemberEl.id = 'Main'+member.email;
             radioMemberEl.addEventListener('change', mainMember);
             radioMemberEl.style.position = 'absolute';
             radioMemberEl.style.left = '5px'
@@ -156,7 +178,7 @@ function createMemberElement(member,mainOrAdditonal) {
             const checkBoxMemberEl = document.createElement('input');
             checkBoxMemberEl.setAttribute("type", "checkBox");
             checkBoxMemberEl.setAttribute("name", "mainMember");
-            checkBoxMemberEl.id = member.email;
+            checkBoxMemberEl.id = 'Add'+member.email;
             checkBoxMemberEl.addEventListener('change', additionalMembers);
             checkBoxMemberEl.style.position = 'absolute';
             checkBoxMemberEl.style.left = '5px'
@@ -164,18 +186,17 @@ function createMemberElement(member,mainOrAdditonal) {
 
         }
 
-
         const nameEl = document.createElement('span');
-        nameEl.innerText = member.name;
+        nameEl.innerText = "Name: " + member.name;
         el.append(nameEl);
         nameEl.style.position = 'absolute';
         nameEl.style.left = '30px'
 
         const idEl = document.createElement('span');
-        idEl.innerText = member.email;
+        idEl.innerText = "Email: " + member.email;
         el.appendChild(idEl)
         idEl.style.position = 'absolute';
-        idEl.style.left = '50px'
+        idEl.style.left = '200px'
 
     return el
 }
@@ -191,13 +212,14 @@ async function showAllActivities() {
     });
     const value = await response.json();
     createActivityList(value);
+    await showAllBoatType();
 }
 
 function createActivityList(activityList) {
     activityListContainerEl.innerHTML = '';
 
-    activityListContainerEl.style.position = 'absolute';
-    activityListContainerEl.style.top = '50px'
+    // activityListContainerEl.style.position = 'absolute';
+    // activityListContainerEl.style.top = '50px'
 
     // Create Elements on from data
     activityList.forEach((activity) => {
@@ -232,19 +254,19 @@ function createActivityElement(activity) {
     nameEl.innerText = "Name: " + activity.activityName;
     el.append(nameEl);
     nameEl.style.position = 'absolute';
-    nameEl.style.left = '150px'
+    nameEl.style.left = '30px'
 
     const startEl = document.createElement('span');
     startEl.innerText = "Start Time: " + activity.startTime;
     el.appendChild(startEl)
     startEl.style.position = 'absolute';
-    startEl.style.left = '250px'
+    startEl.style.left = '150px'
 
     const endEl = document.createElement('span');
     endEl.innerText = "End Time: " + activity.endTime;
     el.appendChild(endEl)
     endEl.style.position = 'absolute';
-    endEl.style.left = '340px'
+    endEl.style.left = '300px'
 
     if (!(activity.boatName === '')){
         const boatNameEl = document.createElement('span');
@@ -267,6 +289,7 @@ async function showAllBoatType() {
     });
     const value = await response.json();
     createBoatsTypeList(value);
+    showAllAdditMembers(false);
 }
 
 function createBoatsTypeList(boatsTypeList) {
@@ -287,7 +310,7 @@ function createBoatsTypeList(boatsTypeList) {
 
 function boatTypeChecked()
 {
-    if (this.check){
+    if (this.checked){
         boatTypes.push(this.id);
     }
     else {
@@ -316,17 +339,21 @@ function createBoatTypeElement(type) {
     nameEl.innerText = type;
     el.append(nameEl);
     nameEl.style.position = 'absolute';
-    nameEl.style.left = '100px'
+    nameEl.style.left = '30px'
 
     return el
+}
+
+function showAllAdditMembers(mainOrAdditonal) {
+    createMemberList(showAllMem, mainOrAdditonal);
 }
 
 
 //////////////////////////////////////////////////////////////////// submit Form  /////////////////////////////////////////////////////////////
 
 function validateForm() {
-        submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,
-            additionalRowers,boatTypes,"snir.d@fun.com");
+        submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,boatTypes,
+            additionalRowers,"tiki@444");
 
 }
 
