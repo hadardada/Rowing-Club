@@ -8,6 +8,8 @@ const currPrivateEl = document.querySelector('#currPrivate');
 const currManagerEl = document.querySelector('#currManager');
 const currNotesEl = document.querySelector('#currNotes');
 const currPasswordEl = document.querySelector('#currPassword');
+const currSignUpEl = document.querySelector('#currSignUp');
+const currExpirationEl = document.querySelector('#currExpire');
 const errorMsgEl =document.querySelector('#errorSpan');
 
 //buttons and checkboxes:
@@ -21,6 +23,7 @@ const updatePrivateButtonEl = document.querySelector('#updatePrivate');
 const privateCheckboxEl = document.querySelector('#checkPrivate');
 const updateManagerEl = document.querySelector('#updateManager');
 const updateNotesEl = document.querySelector('#updateNotes');
+const updateExpireButtonEl = document.querySelector('#updateExpire');
 
 //get Id
 const queryString = window.location.search;
@@ -42,6 +45,8 @@ async function injectParameters(){
         currAgeEl.textContent = memberJson.age;
         currPhoneEl.textContent = memberJson.phoneNumber;
         currLevelEl.textContent = memberJson.rowingLevel;
+        currSignUpEl.textContent = memberJson.signUpDate;
+        currExpirationEl.textContent = memberJson.expirationDate;
         if (memberJson.havePrivateBoat)
             currPrivateEl.textContent = "Private Boat Serial Number: "+ memberJson.privateBoatSerialNumber;
         else

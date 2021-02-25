@@ -52,6 +52,7 @@ function activityJson(name, startTime, endTime, boatSize, oneOar,width,coxswain,
     this.coastal = coastalboat;
     this.hasBoat = hasBoat;
     this.boatName = '';
+    this.id = '';
 }
 
 function validateTimes (starts, ends){

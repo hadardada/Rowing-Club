@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Import/Export</title>
+</head>
+<body>
+
+<h3>I would like to:</h3>
+<p>
+    <input type="checkbox" id="import">
+    <label for="import">Import xml</label>
+    <input type="checkbox" id="export" >
+    <label for="export">Export xml </label><br>
+    <span style="color: red" class="error" id="errorChoice"></span>
+</p>
+<form  style="display:none" id ="importForm" action="/import" enctype="multipart/form-data" method="POST">
+    <h4>Which data to import?</h4>
+    <p>
+        <input type="radio" id="importActivity" name="importRadios" required>
+        <label for="importActivity">Activities</label>
+        <input type="radio" id="importBoat" name="importRadios" >
+        <label for="importBoat">Boats </label>
+        <input type="radio" id="importMember" name="importRadios" >
+        <label for="importBoat">Members </label><br>
+    </p>
+    <h4>Merge with existing data?</h4>
+    <p>
+        <input type="radio" id="merge" name="mergeData" required>
+        <label for="merge">Merge Data</label>
+        <input type="radio" id="delete" name="mergeData" >
+        <label for="delete">Delete Existing Data </label><br>
+    </p>
+    <input type="file" name="file1"><br>
+    <input type="Submit" value="Upload File"><br>
+</form>
+
+<form id = "exportForm" style="display:none" action="import" enctype="multipart/form-data" method="POST">
+    <h4>Which data to export?</h4>
+    <p>
+        <input type="radio" id="exportActivity" name="exportRadios" required>
+        <label for="exportActivity">Activities</label>
+        <input type="radio" id="exportBoat" name="exportRadios" >
+        <label for="exportBoat">Boats </label>
+        <input type="radio" id="exportMember" name="exportRadios" >
+        <label for="exportMember">Members </label><br>
+    </p>
+
+    <input type="file" name="file1"><br>
+    <input type="Submit" value="Upload File"><br>
+</form>
+</body>
+<script src = "files.js"></script>
+</html>

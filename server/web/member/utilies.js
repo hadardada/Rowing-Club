@@ -20,6 +20,8 @@ function MemberJson(name, notes, email, password, age, phoneNumber, havePrivateB
     this.privateBoatSerialNumber = privateBoatSerialNumber;
     this.rowingLevel = rowingLevel;
     this.isManager = isManager;
+    this.signUpDate = '';
+    this.expirationDate = '';
 }
 
 function privateChecked() {

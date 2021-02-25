@@ -272,6 +272,14 @@ public class ReservationsManagement implements Serializable {
 
     ///////////////////////////////////////////////////////////////////////////////////// Reservation filters ////////////////////////////////////////////////////////////////////////////
     //Returns all open reservations
+    public List<Reservation> getOpenReservationForDate (LocalDate date){
+        return openReservations.get(date);
+    }
+
+    public List<Reservation> getClosedReservationForDate (LocalDate date){
+        return closedReservations.get(date);
+    }
+
     public List<Reservation> getOpenReservation(){
         List<Reservation> openReservation = new ArrayList<>();
         if (!this.openReservations.isEmpty()){

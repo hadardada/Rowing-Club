@@ -14,7 +14,7 @@
 
 <p> Email Address:<span id = "currEmail"></span></p>
 <p> Update Email Address:
-    <input type="text" id="MemberEmail" name="Member" required/>
+    <input type="text" id="MemberEmail" name="Member" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
     <button id="updateEmail">Update</button>
 </p>
 <p> Password:<span id = "currPassword"></span></p>
@@ -42,6 +42,15 @@
     <label for="Expert">Expert</label>
     <button id="updateLevel">Update</button>
 </p>
+
+<p> Sign Up Date: <span id="currSignUp"></span></p>
+
+<p> Membership Expiration Date: <span id="currExpire"></span></p>
+<p> Update Expiration Date::
+    <input type="text"  id="newExpire" name="Member" required/>
+    <button id="updateExpire">Update</button>
+</p>
+
 <p>Private boat: <span id="currPrivate"></span> </p>
 <p>Update Private Boat:
     <input type="checkbox" id="checkPrivate">

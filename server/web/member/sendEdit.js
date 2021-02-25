@@ -8,6 +8,7 @@ const UPDATE_PRIVATE = 6;
 const UPDATE_MANAGER = 7;
 const UPDATE_LEVEL = 8;
 const UPDATE_NOTES = 9;
+const UPDATE_EXPIREY = 10;
 
 //errors massage
 const NO_LEVEL_CHOSEN = "cannot send rowing level update if no level was chosen"
@@ -23,6 +24,7 @@ updateLevelButtonEl.addEventListener('click',createUpdateReqObj );
 updatePrivateButtonEl.addEventListener('click',createUpdateReqObj );
 updateManagerEl.addEventListener('click',createUpdateReqObj );
 updateNotesEl.addEventListener('click',createUpdateReqObj );
+updateExpireButtonEl.addEventListener('click', createUpdateReqObj);
 
 const memberLevel1 = document.querySelector('#Beginner');
 const memberLevel2 = document.querySelector('#Mid');
@@ -98,6 +100,10 @@ function createUpdateReqObj(){
         data = new updateReq(UPDATE_NOTES, notesEl.value, memberId);
 
     }
+    else {//expirey date
+        const expiration = document.querySelector('#newExpire')
+        data = new updateReq(UPDATE_EXPIREY, expiration.value, memberId);
+    }
     if (typeof data !== 'undefined')
         sendUpdateReq(data);
 }
@@ -112,41 +118,48 @@ async function sendUpdateReq(data){
             body: JSON.stringify(data)
         });
     const updatedReq = await response.json();
-
-    if (data.whatToUpdate === UPDATE_NAME) {
-        currNameEl.textContent = updatedReq.updateTo;
-        currNameEl.style = "color:green";
-    } else if (data.whatToUpdate === UPDATE_EMAIL) {
-        currEmailEl.textContent = updatedReq.updateTo;
-        currEmailEl.style = "color:green";
-        memberId = updatedReq.updateTo;
-    } else if (data.whatToUpdate == UPDATE_AGE){
-        currAgeEl.textContent = updatedReq.updateTo;
-        currAgeEl.style = "color:green";
-    }else if (data.whatToUpdate === UPDATE_PHONE) {
-        currPhoneEl.textContent = updatedReq.updateTo;
-        currPhoneEl.style = "color:green";
-    }else if (data.whatToUpdate == UPDATE_PASSWORD){
-        currPasswordEl.textContent = updatedReq.updateTo;
-        currPasswordEl.style = "color:green";
-    }else if (data.whatToUpdate === UPDATE_LEVEL) {
-        showRowingLevel(updatedReq.updateTo, currLevelEl);
-        currLevelEl.style = "color:green";
-    }else if (data.whatToUpdate === UPDATE_PRIVATE) {
-        if (updatedReq.updateTo === '-1')
-            currPrivateEl.textContent = "No";
-        else
-            currPrivateEl.textContent = "Yes. Serial num: "+updatedReq.updateTo;
-        currPrivateEl.style = "color:green";
-    }else if (data.whatToUpdate == UPDATE_MANAGER){
-        if (updatedReq.updateTo === 'true')
-            currManagerEl.textContent = "Yes"
-        else
-            currManagerEl.textContent = "No"
-        currManagerEl.style = "color:green";
-    }else if (data.whatToUpdate === UPDATE_NOTES) {
-        currNotesEl.textContent = updatedReq.updateTo;
-        currNotesEl.style = "color:green";
+    if (updatedReq.status ===200) {
+        if (data.whatToUpdate === UPDATE_NAME) {
+            currNameEl.textContent = updatedReq.updateTo;
+            currNameEl.style = "color:green";
+        } else if (data.whatToUpdate === UPDATE_EMAIL) {
+            currEmailEl.textContent = updatedReq.updateTo;
+            currEmailEl.style = "color:green";
+            memberId = updatedReq.updateTo;
+        } else if (data.whatToUpdate == UPDATE_AGE) {
+            currAgeEl.textContent = updatedReq.updateTo;
+            currAgeEl.style = "color:green";
+        } else if (data.whatToUpdate === UPDATE_PHONE) {
+            currPhoneEl.textContent = updatedReq.updateTo;
+            currPhoneEl.style = "color:green";
+        } else if (data.whatToUpdate == UPDATE_PASSWORD) {
+            currPasswordEl.textContent = updatedReq.updateTo;
+            currPasswordEl.style = "color:green";
+        } else if (data.whatToUpdate === UPDATE_LEVEL) {
+            showRowingLevel(updatedReq.updateTo, currLevelEl);
+            currLevelEl.style = "color:green";
+        } else if (data.whatToUpdate === UPDATE_PRIVATE) {
+            if (updatedReq.updateTo === '-1')
+                currPrivateEl.textContent = "No";
+            else
+                currPrivateEl.textContent = "Yes. Serial num: " + updatedReq.updateTo;
+            currPrivateEl.style = "color:green";
+        } else if (data.whatToUpdate == UPDATE_MANAGER) {
+            if (updatedReq.updateTo === 'true')
+                currManagerEl.textContent = "Yes"
+            else
+                currManagerEl.textContent = "No"
+            currManagerEl.style = "color:green";
+        } else if (data.whatToUpdate === UPDATE_NOTES) {
+            currNotesEl.textContent = updatedReq.updateTo;
+            currNotesEl.style = "color:green";
+        } else { //date
+            currExpirationEl.textContent = updatedReq.updateTo;
+            currExpirationEl.style = "color:green";
+        }
+    }
+    else{
+        showError(updatedReq.text());
     }
 
 
