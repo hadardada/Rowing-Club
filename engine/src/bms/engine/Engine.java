@@ -55,6 +55,7 @@ public class Engine implements BmsEngine, Serializable {
         this.boats = new BoatsManagement();
         this.activities = new ActivitiesManagement();
         this.reservations = new ReservationsManagement();
+        this.reservations = new ReservationsManagement();
         this.members = new MembersManagement( this.boats);
         this.stateSaver = new XmlStateExport(this);
         this.loader = new XmlStateImport(this);
@@ -232,8 +233,16 @@ public class Engine implements BmsEngine, Serializable {
         return Collections.unmodifiableList(reservations.getOpenReservation());
     }
 
+    public List<Reservation> getOpenReservationForDate (LocalDate date){
+        return reservations.getOpenReservationForDate(date);
+    }
+
     public List<Reservation> getClosedReservation(){
         return Collections.unmodifiableList(reservations.getClosedReservation());
+    }
+
+    public List<Reservation> getClosedReservationForDate (LocalDate date){
+        return reservations.getClosedReservationForDate(date);
     }
 
 

@@ -43,7 +43,7 @@ public class showAllServlet extends HttpServlet {
         String createdBy;
         String mainRower;
         String activityId;
-        int boatId;
+        String boatId;
         String status;
 
 
@@ -51,15 +51,16 @@ public class showAllServlet extends HttpServlet {
             this.createdOn = reservation.getReservationDateTime().format((DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             this.createdBy = reservation.getReservationMember().getEmailAddress();
             this.mainRower = reservation.getParticipantRower().getEmailAddress();
+            this.activityId = String.valueOf(reservation.getActivity().getId());
             if (reservation.getIsApproved() == null) {
                 this.status = "Pending";
-                this.boatId = -1;
+                this.boatId = "";
             } else if (reservation.getIsApproved() == true) {
                 this.status = "Approved";
-                this.boatId = reservation.getReservationBoat().getSerialNum();
+                this.boatId = String.valueOf(reservation.getReservationBoat().getSerialNum());
             } else {
                 this.status = "Rejected";
-                this.boatId = -1;
+                this.boatId = "";
             }
         }
     }
@@ -78,7 +79,7 @@ public class showAllServlet extends HttpServlet {
             ShortReservation newShort = new ShortReservation(res);
             reservationsForDate.add(newShort);
         }}
-        if (status == "all") {
+        if (status.equals("all")) {
             if (bmsEngine.getClosedReservationForDate(requestedDate)!= null){
             for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
                 ShortReservation newShort = new ShortReservation(res);

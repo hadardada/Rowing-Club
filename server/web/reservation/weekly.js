@@ -1,4 +1,4 @@
-let maxResPerActivity;
+let maxResPerActivity =[];
 let activitiesIdsMap = new Map();
 const FULL_WEEK_DAYS = 8;
 const firstRow = document.getElementsByTagName("tr")[0];
@@ -22,7 +22,7 @@ const status = urlParams.get('status');
 
 window.addEventListener('DOMContentLoaded', createTable);
 
- function createTable () {
+ async function createTable () {
     let today = new Date();
     let activitiesCul =document.createElement('th');
     activitiesCul.textContent = '';
@@ -37,19 +37,20 @@ window.addEventListener('DOMContentLoaded', createTable);
         firstRow.appendChild(nextDay);
     }
     //build activities column
-    const activities = getActivities();
+    const activities = await getActivities();
     const numOfActivities = activities.length;
+    maxResPerActivity.length = numOfActivities;
     for (let i=0;i<numOfActivities;i++){
         const activityEl = createActivityElement(activities[i]);
         activitiesRows.appendChild(activityEl);
-        activitiesIdsMap.set(activities[i].id, i);
+        activitiesIdsMap.set(activities[i].id, i); // sets the key in the map so it is easire to fimd activity's row by it's id
+        maxResPerActivity[i] = 1; // the max height of each activity row is set to 1
     }
 
 
     //fill out the table with reservations data
-    for (let i = 0; i < FULL_WEEK_DAYS; i++) {
-
-        fillOutResOnDate(i);
+    for (let i = 1; i <= FULL_WEEK_DAYS; i++) {
+        await fillOutResOnDate(i);
     }
 }
 
@@ -62,7 +63,8 @@ async function getActivities(){
            // body: status
         });
 
-    return await response.json();
+    const activities = await response.json();
+    return activities;
 
 }
 
@@ -70,8 +72,13 @@ function createActivityElement(activity){
     let activityRow = document.createElement('tr');
     let activityRowText = document.createElement('td');
     activityRow.appendChild(activityRowText);
-    activityRowText.textContent = activity.activityName +" "+activity.startTime+ " - " + activity.endTime;
-    activityRow.setAttribute('id', activity.id); // id is a string
+    let firstLine = document.createElement('p');
+    let secLine = document.createElement('p')
+    activityRowText.appendChild(firstLine);
+    activityRowText.appendChild(secLine);
+    firstLine.textContent = activity.activityName;
+    secLine.textContent = activity.startTime+ " - " + activity.endTime;
+    //activityRow.setAttribute('id', activity.id); // id is a string
     for (let i =0; i<FULL_WEEK_DAYS; i++){
         let emptyRow =  document.createElement('td');
         activityRow.appendChild(emptyRow);
@@ -87,21 +94,70 @@ async function getReservationsOnDate(nextDayDate) {
     return reservations;
 }
 
-function fillOutResOnDate(index) {
+async function fillOutResOnDate(index) {
     let nextDayDate = new Date();
-    nextDayDate.setDate(nextDayDate.getDate() + index);
-    let reservations = getReservationsOnDate(nextDayDate);
+    nextDayDate.setDate(nextDayDate.getDate() + index-1);
+    let reservations = await getReservationsOnDate(nextDayDate);
     if (reservations.length !== 0){ // it might be that there are no reservations at all for that date
         for (let i=0;i<reservations.length; i++){
-            let activityRowEl = document.querySelector('#'+reservations[i].id);
-            let requstedCell = activityRowEl.getElementsByTagName('td')[0];
-            while (requstedCell !== ''){
-                requstedCell = requstedCell.nextSibling;
-            }
+            let activityRowIndx = activitiesIdsMap.get(reservations[i].activityId);
+            let activityRowEl = activitiesRows.getElementsByTagName("tr")[activityRowIndx];
+            let resCellEl = activityRowEl.getElementsByTagName('td')[index];
+            let currMaxOfActivities = maxResPerActivity[activityRowIndx];
+            for(j=0; j<=currMaxOfActivities; j++){
+                    if (j === maxResPerActivity[activityRowIndx]) {
+                        // meaning there are not enough rows to contain all reservation on that date with this activity
+                        maxResPerActivity[activityRowIndx]++;
+                        activityRowEl.getElementsByTagName('td')[0].rowSpan = maxResPerActivity[activityRowIndx];
+
+                        let newRow = createNewRow();
+                        if (activityRowIndx !== maxResPerActivity.length-1)
+                            // if we are not at the last activity
+                            activitiesRows.insertBefore(newRow, activityRowEl);
+                        else
+                            activitiesRows.insertBefore(newRow, null);
+                        resCellEl = newRow.getElementsByTagName('td')[index];
+                        setResContent(reservations[i], resCellEl);
+                        // resCellEl.textContent = setResContent(reservations[i]);
+                    }
+                    else if (resCellEl.textContent === ''){
+                        setResContent(reservations[i], resCellEl);
+                        j = maxResPerActivity[activityRowIndx] +1; // to break the loop
+                    }
+                    else{
+                        activityRowEl = activityRowEl.nextSibling;
+                        resCellEl = activityRowEl.getElementsByTagName('td')[index];}
+
+               }
 
         }
     }
 }
 
+function setResContent (reservation, resCellEl){
+     let newNode = document.createElement('p');
+     let newNode2 = document.createElement('p');
+     let hyper
+    resCellEl.appendChild(newNode);
+    resCellEl.appendChild(newNode2);
+    if (status === 'all') {
+        newNode.textContent = "Reservation status: " + reservation.status;
+        newNode2.textContent = "Main Rower: " + reservation.mainRower;
+    }
+    else if (status === 'approved'){
+        newNode.textContent = "Reservation status: " + reservation.status;
+        newNode2.textContent = "Main Rower: " + reservation.mainRower;
+    }
+
+}
 //function putResOnCell (reservation, in)
 
+function createNewRow(){
+    let newRow = document.createElement('tr');
+    for (i=0;i<FULL_WEEK_DAYS;i++){
+        let newRowText = document.createElement('td');
+        newRow.appendChild(newRowText);
+    }
+    return newRow;
+
+}
