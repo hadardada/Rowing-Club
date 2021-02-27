@@ -78,7 +78,7 @@ function createActivityElement(activity){
     activityRowText.appendChild(secLine);
     firstLine.textContent = activity.activityName;
     secLine.textContent = activity.startTime+ " - " + activity.endTime;
-    //activityRow.setAttribute('id', activity.id); // id is a string
+    activityRow.setAttribute('id', "act"+activity.id); // id is a string
     for (let i =0; i<FULL_WEEK_DAYS; i++){
         let emptyRow =  document.createElement('td');
         activityRow.appendChild(emptyRow);
@@ -101,22 +101,26 @@ async function fillOutResOnDate(index) {
     if (reservations.length !== 0){ // it might be that there are no reservations at all for that date
         for (let i=0;i<reservations.length; i++){
             let activityRowIndx = activitiesIdsMap.get(reservations[i].activityId);
-            let activityRowEl = activitiesRows.getElementsByTagName("tr")[activityRowIndx];
-            let resCellEl = activityRowEl.getElementsByTagName('td')[index];
+            let activityRowEl = document.getElementsByTagName('tr')[activityRowIndx+1];
+            let currRow = document.getElementsByTagName('tr')[activityRowIndx+1];
+            //let rowId = '#act'+reservations[i].activityId;
+            //let activityRowEl =document.getElementById(rowId);
+            let resCellEl = currRow.getElementsByTagName('td')[index];
             let currMaxOfActivities = maxResPerActivity[activityRowIndx];
             for(j=0; j<=currMaxOfActivities; j++){
                     if (j === maxResPerActivity[activityRowIndx]) {
                         // meaning there are not enough rows to contain all reservation on that date with this activity
                         maxResPerActivity[activityRowIndx]++;
-                        activityRowEl.getElementsByTagName('td')[0].rowSpan = maxResPerActivity[activityRowIndx];
-
+                        activityRowEl.getElementsByTagName('td')[0].rowSpan =maxResPerActivity[activityRowIndx];
                         let newRow = createNewRow();
-                        if (activityRowIndx !== maxResPerActivity.length-1)
+                        if (activityRowIndx !== maxResPerActivity.length-1) {
                             // if we are not at the last activity
-                            activitiesRows.insertBefore(newRow, activityRowEl);
+                            //activityRowEl = activitiesRows.getElementsByTagName("tr")[activityRowIndx+1];
+                            activitiesRows.insertBefore(newRow, currRow);
+                        }
                         else
                             activitiesRows.insertBefore(newRow, null);
-                        resCellEl = newRow.getElementsByTagName('td')[index];
+                        resCellEl = newRow.getElementsByTagName('td')[index-1];
                         setResContent(reservations[i], resCellEl);
                         // resCellEl.textContent = setResContent(reservations[i]);
                     }
@@ -124,10 +128,13 @@ async function fillOutResOnDate(index) {
                         setResContent(reservations[i], resCellEl);
                         j = maxResPerActivity[activityRowIndx] +1; // to break the loop
                     }
-                    else{
-                        activityRowEl = activityRowEl.nextSibling;
-                        resCellEl = activityRowEl.getElementsByTagName('td')[index];}
-
+                    else {
+                        currRow = currRow.nextSibling;
+                        //if(maxResPerActivity[activityRowIndx]>1)
+                        resCellEl = currRow.getElementsByTagName('td')[index - 1];
+                        //else
+                        //resCellEl = currRow.getElementsByTagName('td')[index];}
+                    }
                }
 
         }
@@ -137,9 +144,13 @@ async function fillOutResOnDate(index) {
 function setResContent (reservation, resCellEl){
      let newNode = document.createElement('p');
      let newNode2 = document.createElement('p');
-     let hyper
+     let newNode3 = document.createElement('p');
+     let resRef = document.createElement('a');
+    // resRef.href = /
+    newNode3.appendChild(resRef);
     resCellEl.appendChild(newNode);
     resCellEl.appendChild(newNode2);
+    resCellEl.appendChild(newNode3);
     if (status === 'all') {
         newNode.textContent = "Reservation status: " + reservation.status;
         newNode2.textContent = "Main Rower: " + reservation.mainRower;
@@ -154,7 +165,7 @@ function setResContent (reservation, resCellEl){
 
 function createNewRow(){
     let newRow = document.createElement('tr');
-    for (i=0;i<FULL_WEEK_DAYS;i++){
+    for (let i=0;i<FULL_WEEK_DAYS;i++){
         let newRowText = document.createElement('td');
         newRow.appendChild(newRowText);
     }

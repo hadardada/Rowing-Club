@@ -1,6 +1,9 @@
 
-table, th, td {
+td{
     border: 1px solid black;
-    border-collapse: collapse;
+}
+th {
+    table-layout: auto;
+    width:5%;
 }
 
