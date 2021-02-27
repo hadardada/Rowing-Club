@@ -517,6 +517,10 @@ public class Engine implements BmsEngine, Serializable {
         return newMemberList;
     }
 
+    public Reservation findResByResMadeAt (LocalDateTime madeAt, String email, LocalDate trainingDate){
+        return this.reservations.findByResMadeAtByWho(madeAt,email,trainingDate);
+    }
+
     //This reservation approves a reservation, if reservation owner has a private bms.engine.boatsManagement.boat
     //that its type matches the ones on the requested bms.engine.boatsManagement.boat types.
     public boolean approveResAutomatically(Member participantRower, Reservation clientReservation, boolean loadProcess) {
