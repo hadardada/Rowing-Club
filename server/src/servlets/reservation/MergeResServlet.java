@@ -1,12 +1,8 @@
 package servlets.reservation;
-
 import bms.engine.Engine;
-import bms.engine.boatsManagement.boat.Boat;
-import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatSizeMismatchException;
 import bms.engine.membersManagement.member.Member;
+
 import bms.engine.reservationsManagment.reservation.Reservation;
-import bms.engine.reservationsManagment.reservation.reservationsExceptions.ApprovedReservationWithNoBoatException;
-import bms.engine.reservationsManagment.reservation.reservationsExceptions.ParticipentRowerIsOnListException;
 import com.google.gson.Gson;
 import servlets.member.MemberParameters;
 
@@ -23,31 +19,28 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.time.format.DateTimeFormatter;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "addNewReservationServlet", urlPatterns = {"/reservation/approve"})
-public class ApproveResServlet extends HttpServlet {
+@WebServlet(name = "relevantBoatsServlet", urlPatterns = {"/reservation/merge"})
+public class MergeResServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
     Reservation originalRes;
-
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
 
-        String resMadeAtParameter = req.getParameter("createdOn");
-        String resMadeByParameter = req.getParameter("creator");
-        String resTrainingDateParameter = req.getParameter("date");
+        String resMadeAtParameter = req.getParameter("boatId");
+        String resMadeByParameter = req.getParameter("boatId");
+        String resTrainingDateParameter = req.getParameter("boatId");
 
-        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
+        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
         originalRes = reservation;
-
         List<Member> wanted = reservation.getWantedRowers();
         wanted.add(reservation.getParticipantRower());
         List<MemberParameters> memberParametersList = new ArrayList<>();
@@ -64,13 +57,17 @@ public class ApproveResServlet extends HttpServlet {
         return memberParameters;
     }
 
-    public static class ShortApproveReservation {
-        int BoatId;
-        List<String> ActualMembers;
+    public static class ShortMergeReservation {
+        String createdOnMerge;
+        String createdByMerge;
+        List<String> wantedMerge;
+        List<String> wantedOriginal;
 
-        public ShortApproveReservation( int BoatId, List<String> ActualMembers) {
-            this.BoatId = BoatId;
-            this.ActualMembers = ActualMembers;
+        public ShortMergeReservation(String createdOnMerge, String createdByMerge, List<String> wantedMerge, List<String> wantedOriginal) {
+            this.createdByMerge = createdByMerge;
+            this.createdOnMerge = createdOnMerge;
+            this.wantedMerge = wantedMerge;
+            this.wantedOriginal = wantedOriginal;
         }
     }
 
@@ -79,25 +76,22 @@ public class ApproveResServlet extends HttpServlet {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newMergeJsonString = reader.lines().collect(Collectors.joining());
-        ShortApproveReservation newMergeParameters = gson.fromJson(newMergeJsonString, ShortApproveReservation.class);
-        try {
-            approveRes(newMergeParameters);
-            resp.setStatus(200);
-        }
-        catch (ApprovedReservationWithNoBoatException e){
-
-        }
-        catch (BoatSizeMismatchException e){
-
-        }
+        ShortMergeReservation newMergeParameters = gson.fromJson(newMergeJsonString, ShortMergeReservation.class);
+        mergeRes(newMergeParameters);
+        resp.setStatus(200);
     }
-    private void approveRes(ShortApproveReservation parameters) throws ApprovedReservationWithNoBoatException, BoatSizeMismatchException {
-        List<Member> actual = new ArrayList<>();
-        for (String member: parameters.ActualMembers){
-            actual.add(this.bmsEngine.getMemberByEmail(member));
+    private void mergeRes(ShortMergeReservation parameters){
+        List<Member> originalWanted = new ArrayList<>();
+        List<Member> mergeWanted = new ArrayList<>();
+        for (String member: parameters.wantedOriginal){
+            originalWanted.add(this.bmsEngine.getMemberByEmail(member));
         }
-        Boat boat = this.bmsEngine.getBoatById(parameters.BoatId);
-        this.bmsEngine.assignBoatToReservation(originalRes,boat,false);
-        this.bmsEngine.assignApprovedRowersToReservation(actual,originalRes,false);
+        for (String member: parameters.wantedMerge){
+            mergeWanted.add(this.bmsEngine.getMemberByEmail(member));
+        }
+        LocalDateTime resMergeMadeAt = LocalDateTime.parse(parameters.createdOnMerge);
+        Reservation mergedRes = this.bmsEngine.findResByResMadeAt(resMergeMadeAt,parameters.createdByMerge,originalRes.getTrainingDate());
+        this.bmsEngine.mergeReservations(originalWanted,mergeWanted,originalRes,mergedRes);
     }
 }
+

@@ -1,4 +1,5 @@
 package servlets.reservation;
+
 import bms.engine.Engine;
 import bms.engine.reservationsManagment.reservation.Reservation;
 import com.google.gson.Gson;
@@ -11,31 +12,38 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "ShowSingleServlet", urlPatterns = {"/reservation/showSingle"})
-public class ShowSingleServlet extends HttpServlet {
+@WebServlet(name = "relevantBoatsServlet", urlPatterns = {"/reservation/pendingResSameActivity"})
+public class pendingResSameActivityServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
 
-        String resMadeAtParameter = req.getParameter("createdOn");
-        String resMadeByParameter = req.getParameter("creator");
-        String resTrainingDateParameter = req.getParameter("d");
+        String resMadeAtParameter = req.getParameter("boatId");
+        String resMadeByParameter = req.getParameter("boatId");
+        String resTrainingDateParameter = req.getParameter("boatId");
+        String activityId = req.getParameter("ActivityId");
 
+        int activityIdInt = Integer.parseInt(activityId);
         LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
         LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt,resMadeByParameter,trainingDate);
+        List<Reservation> pendingResSameActivity = this.bmsEngine.getFuturePendingReservationSameActivity(trainingDate,activityIdInt,reservation);
+        List<ReservationParameters> toSent = new ArrayList<>();
 
-        ReservationParameters reservationParameters = convertReservationToParameters(reservation);
+        for (Reservation res: pendingResSameActivity) {
+            toSent.add(convertReservationToParameters(res));
+        }
         PrintWriter out = resp.getWriter();
-        out.print(gson.toJson(reservationParameters));
+        out.print(gson.toJson(toSent));
         resp.setStatus(200);
     }
 
@@ -43,5 +51,4 @@ public class ShowSingleServlet extends HttpServlet {
         ReservationParameters resParameters = new ReservationParameters(res);
         return resParameters;
     }
-
 }

@@ -239,4 +239,14 @@ function createMemberList(memberList) {
         const nameTitle = document.createElement("br");
         guestListContainerEl.append(nameTitle);
     });
+
+    const Title = document.createElement("br");
+    guestListContainerEl.append(Title);
+    const backEl = document.createElement("a");
+    backEl.style.position = 'absolute';
+    backEl.style.left = '5px';
+    backEl.style.fontSize = 'small';
+    backEl.href = "/menu/member.html";
+    backEl.innerText = "Go Back";
+    guestListContainerEl.append(backEl);
 }

@@ -383,7 +383,6 @@ public class Engine implements BmsEngine, Serializable {
                         removeMemberFromReservationActualList(removedMember.getEmailAddress(), reservation); // remove from actual
                         reservation.reopenReservation();
                     }
-
             }
         }
         return true;
@@ -870,7 +869,7 @@ public class Engine implements BmsEngine, Serializable {
     }
 
     //This method gets two list of chosen members taken from to reservations, them into the main reservation.
-    public boolean mergeReservations(List<Member> chosenMain, List<Member> chosenAdded, Reservation clientReservationMain, Reservation clientReservationAdded) throws BoatSizeMismatchException, ApprovedReservationWithNoBoatException {
+    public boolean mergeReservations(List<Member> chosenMain, List<Member> chosenAdded, Reservation clientReservationMain, Reservation clientReservationAdded) {
         Reservation mainReservation = this.reservations.findByResMadeAtByWho(clientReservationMain.getReservationDateTime(),
                 clientReservationMain.getReservationMember().getEmailAddress(),clientReservationMain.getTrainingDate());
         Reservation addedReservation = this.reservations.findByResMadeAtByWho(clientReservationAdded.getReservationDateTime(),

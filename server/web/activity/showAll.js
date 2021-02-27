@@ -128,7 +128,7 @@ function createActivityList(activityList) {
     backEl.style.position = 'absolute';
     backEl.style.left = '5px';
     backEl.style.fontSize = 'small';
-    backEl.href = "menu/main";
+    backEl.href = "/menu/activity.html";
     backEl.innerText = "Go Back";
     guestListContainerEl.append(backEl);
 }

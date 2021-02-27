@@ -573,7 +573,7 @@ public class ReservationsManagement implements Serializable {
     }
 
     //This method gets two list of chosen members taken from to reservations, them into the main reservation.
-    public boolean mergeReservations(List<Member> chosenMain, List<Member> chosenAdded, Reservation mainReservation, Reservation addedReservation) throws BoatSizeMismatchException, ApprovedReservationWithNoBoatException {
+    public boolean mergeReservations(List<Member> chosenMain, List<Member> chosenAdded, Reservation mainReservation, Reservation addedReservation) {
 
 
         if (chosenAdded.contains(addedReservation.getParticipantRower())) { // if the main rower is moved from one reservation to another
