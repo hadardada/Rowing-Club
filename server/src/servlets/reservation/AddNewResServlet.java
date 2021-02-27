@@ -71,4 +71,9 @@ public class AddNewResServlet extends HttpServlet {
         Member resMadeBy = bmsEngine.getMemberByEmail(parameters.reservationMadeBy);
         bmsEngine.addNewReservation(participantRower,trainingDate,activity,resBoatTypes,wantedMembers,resMadeAt,resMadeBy,false);
     }
+
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+//        doPost(req,resp);
+//    }
 }

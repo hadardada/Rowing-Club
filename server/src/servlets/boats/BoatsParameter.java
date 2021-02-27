@@ -1,6 +1,5 @@
 package servlets.boats;
 import bms.engine.boatsManagement.boat.Boat;
-import com.google.gson.Gson;
 
 public class BoatsParameter {
      String boatName;
@@ -13,6 +12,7 @@ public class BoatsParameter {
      boolean helmsman;
      boolean coastal;
      String shortName;
+     int maxRowers;
 
      public BoatsParameter(){}
 
@@ -22,6 +22,7 @@ public class BoatsParameter {
          this.privateProperty = boat.isPrivateProperty();
          this.status = boat.isOutOfOrder();
          this.shortName = boat.getBoatType().getShortName();
+         this.maxRowers = boat.getMaxNumOfRowers();
          //this.helmsman = boat.getBoatType().hasHelmsman();
          //this.rowersNum = boat.getBoatType().;
      }

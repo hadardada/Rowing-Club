@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approve Reservation</title>
+</head>
+<body>
+
+<h1>Approve Reservation</h1>
+<div style="display:block" id="formBlock">
+        <p>Select the Boat:</p>
+        <span id="selectBoat"></span>
+        <ol class="boatList">
+
+        </ol>
+        <p> Select the Additional Rowers (Main Rower added Automatically):</p>
+        <span id="WantedRowers"></span>
+        <ol class="wantedRowersList">
+
+        </ol>
+        <input type="submit" value="Approve Reservation" id="approveRes"/>
+        <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+</div>
+<span class="added" style="color:green" id = "addedMsgSpan"> </span>
+<script src="/reservation/addNew.js"></script>
+</body>
+</html>
