@@ -74,18 +74,21 @@ public class showAllServlet extends HttpServlet {
     public List<ShortReservation> getRequestedRes(String date, String status) {
         LocalDate requestedDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
         List<ShortReservation> reservationsForDate = new ArrayList<>();
-        if (bmsEngine.getOpenReservationForDate(requestedDate)!= null){
-        for (Reservation res : bmsEngine.getOpenReservationForDate(requestedDate)) {
-            ShortReservation newShort = new ShortReservation(res);
-            reservationsForDate.add(newShort);
+        if (bmsEngine.getClosedReservationForDate(requestedDate)!= null){
+            for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
+                if (((status.equals("approved"))&&(Boolean.TRUE ==res.getIsApproved()))||(status.equals("all"))) {
+                    ShortReservation newShort = new ShortReservation(res);
+                    reservationsForDate.add(newShort);
+                }
         }}
         if (status.equals("all")) {
-            if (bmsEngine.getClosedReservationForDate(requestedDate)!= null){
-            for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
-                ShortReservation newShort = new ShortReservation(res);
-                reservationsForDate.add(newShort);
+            if (bmsEngine.getOpenReservationForDate(requestedDate)!= null){
+                for (Reservation res : bmsEngine.getOpenReservationForDate(requestedDate)) {
+                    ShortReservation newShort = new ShortReservation(res);
+                    reservationsForDate.add(newShort);
             }}
         }
         return reservationsForDate;
     }
+
 }

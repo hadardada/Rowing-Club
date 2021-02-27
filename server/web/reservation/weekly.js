@@ -1,9 +1,9 @@
-let maxResPerActivity =[];
+let maxResPerActivity =new Map();
 let activitiesIdsMap = new Map();
 const FULL_WEEK_DAYS = 8;
 const firstRow = document.getElementsByTagName("tr")[0];
 const activitiesRows = document.getElementsByTagName("tbody")[0];
-
+const infoMsgEl = document.querySelector('#pageInfo');
 
 function shortReservation (){
     createdOn;
@@ -18,6 +18,12 @@ function shortReservation (){
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const status = urlParams.get('status');
+
+if (status ==="all")
+    infoMsgEl.textContent = "Displaying all reservations for this week:";
+else if (status === "approved")
+    infoMsgEl.textContent = "Displaying all approved reservations for this week (AKA: This Week's Scheduling):";
+
 
 
 window.addEventListener('DOMContentLoaded', createTable);
@@ -43,8 +49,8 @@ window.addEventListener('DOMContentLoaded', createTable);
     for (let i=0;i<numOfActivities;i++){
         const activityEl = createActivityElement(activities[i]);
         activitiesRows.appendChild(activityEl);
-        activitiesIdsMap.set(activities[i].id, i); // sets the key in the map so it is easire to fimd activity's row by it's id
-        maxResPerActivity[i] = 1; // the max height of each activity row is set to 1
+        activitiesIdsMap.set(activities[i].id, i+1); // sets the key in the map so it is easire to fimd activity's row by it's id
+        maxResPerActivity.set (activities[i].id, 1); // the max height of each activity row is set to 1
     }
 
 
@@ -87,8 +93,7 @@ function createActivityElement(activity){
     return activityRow;
 }
 
-async function getReservationsOnDate(nextDayDate) {
-    let reqDate = nextDayDate.toISOString().substring(0, 10); //now formatted as YYYY-MM-DD
+async function getReservationsOnDate(reqDate) {
     const response =  await fetch ('/reservation/weekly?date='+reqDate+'&status='+status);
     let reservations = await response.json();
     return reservations;
@@ -97,21 +102,23 @@ async function getReservationsOnDate(nextDayDate) {
 async function fillOutResOnDate(index) {
     let nextDayDate = new Date();
     nextDayDate.setDate(nextDayDate.getDate() + index-1);
-    let reservations = await getReservationsOnDate(nextDayDate);
+    let reqDate = nextDayDate.toISOString().substring(0, 10); //now formatted as YYYY-MM-DD
+    let reservations = await getReservationsOnDate(reqDate);
     if (reservations.length !== 0){ // it might be that there are no reservations at all for that date
         for (let i=0;i<reservations.length; i++){
             let activityRowIndx = activitiesIdsMap.get(reservations[i].activityId);
-            let activityRowEl = document.getElementsByTagName('tr')[activityRowIndx+1];
-            let currRow = document.getElementsByTagName('tr')[activityRowIndx+1];
+            let activityRowEl = document.getElementsByTagName('tr')[activityRowIndx];
+            let currRow = document.getElementsByTagName('tr')[activityRowIndx];
             //let rowId = '#act'+reservations[i].activityId;
             //let activityRowEl =document.getElementById(rowId);
             let resCellEl = currRow.getElementsByTagName('td')[index];
-            let currMaxOfActivities = maxResPerActivity[activityRowIndx];
+            let currMaxOfActivities = maxResPerActivity.get(reservations[i].activityId);
             for(j=0; j<=currMaxOfActivities; j++){
-                    if (j === maxResPerActivity[activityRowIndx]) {
+                    if (j === maxResPerActivity.get(reservations[i].activityId)) {
                         // meaning there are not enough rows to contain all reservation on that date with this activity
-                        maxResPerActivity[activityRowIndx]++;
-                        activityRowEl.getElementsByTagName('td')[0].rowSpan =maxResPerActivity[activityRowIndx];
+                        maxResPerActivity.set(reservations[i].activityId, maxResPerActivity.get(reservations[i].activityId)+1);
+                        updateIndexMap(activityRowIndx,maxResPerActivity.length );
+                        activityRowEl.getElementsByTagName('td')[0].rowSpan =maxResPerActivity.get(reservations[i].activityId);
                         let newRow = createNewRow();
                         if (activityRowIndx !== maxResPerActivity.length-1) {
                             // if we are not at the last activity
@@ -121,12 +128,12 @@ async function fillOutResOnDate(index) {
                         else
                             activitiesRows.insertBefore(newRow, null);
                         resCellEl = newRow.getElementsByTagName('td')[index-1];
-                        setResContent(reservations[i], resCellEl);
+                        setResContent(reservations[i], resCellEl, reqDate);
                         // resCellEl.textContent = setResContent(reservations[i]);
                     }
                     else if (resCellEl.textContent === ''){
-                        setResContent(reservations[i], resCellEl);
-                        j = maxResPerActivity[activityRowIndx] +1; // to break the loop
+                        setResContent(reservations[i], resCellEl, reqDate);
+                        j = maxResPerActivity.get(reservations[i].activityId) +1; // to break the loop
                     }
                     else {
                         currRow = currRow.nextSibling;
@@ -141,22 +148,33 @@ async function fillOutResOnDate(index) {
     }
 }
 
-function setResContent (reservation, resCellEl){
+function setResContent (reservation, resCellEl, resDate){
      let newNode = document.createElement('p');
      let newNode2 = document.createElement('p');
      let newNode3 = document.createElement('p');
      let resRef = document.createElement('a');
-    // resRef.href = /
+     let link = "/reservation/showSingle.html?creator="+reservation.createdBy;
+    link = link.concat("&createdOn="+ reservation.createdOn);
+    link = link.concat("&date="+resDate);
+    resRef.href = link;
+    resRef.textContent = "Manage Reservation"
     newNode3.appendChild(resRef);
     resCellEl.appendChild(newNode);
     resCellEl.appendChild(newNode2);
     resCellEl.appendChild(newNode3);
     if (status === 'all') {
-        newNode.textContent = "Reservation status: " + reservation.status;
-        newNode2.textContent = "Main Rower: " + reservation.mainRower;
+            newNode.textContent = "Status: ";
+            let statusSpan = document.createElement('span');
+            newNode.appendChild(statusSpan);
+            if (reservation.status === "Pending")
+                statusSpan.style.color="red";
+            else if (reservation.status === "Approved")
+                statusSpan.style.color="green";
+            statusSpan.textContent = reservation.status;
+            newNode2.textContent = "Main Rower: " + reservation.mainRower;
     }
     else if (status === 'approved'){
-        newNode.textContent = "Reservation status: " + reservation.status;
+        newNode.textContent = "Assigned Boat's id: " + reservation.boatId;
         newNode2.textContent = "Main Rower: " + reservation.mainRower;
     }
 
@@ -171,4 +189,9 @@ function createNewRow(){
     }
     return newRow;
 
-}
+ }
+
+ function updateIndexMap (fromIndx, numOfActivities){
+     for (let i=fromIndx+1; i<=numOfActivities;i++)
+        activitiesIdsMap.set(i.toString(), (activitiesIdsMap.get(i.toString())+1));
+ }
