@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merge Reservation</title>
+</head>
+<body>
+
+<h1>Merge Reservation</h1>
+<div style="display:block" id="formBlock">
+    <p> Select the Additional Rowers from the Original Reservation:</p>
+    <span id="WantedRowersOriginal"></span>
+    <ol class="wantedRowersOriginalList">
+    </ol>
+    <p>Select the Reservation to Merge With:</p>
+    <span id="selectMergeRes"></span>
+    <ol class="mergeRes">
+
+    </ol>
+    <p> Select the Additional Rowers from the Merged Reservation:</p>
+    <span id="WantedRowersMerged"></span>
+    <ol class="wantedRowersMergedList">
+
+    </ol>
+    <input type="submit" value="Merge Reservation" id="mergeRes"/>
+    <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+</div>
+<span class="added" style="color:green" id = "addedMsgSpan"> </span>
+<script src="/reservation/addNew.js"></script>
+</body>
+</html>
