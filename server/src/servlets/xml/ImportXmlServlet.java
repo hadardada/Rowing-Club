@@ -42,7 +42,8 @@ public class ImportXmlServlet extends HttpServlet {
 
         for (Part part : parts) {
             //to write the content of the file to a string
-            fileContent.append(readFromInputStream(part.getInputStream()));
+            if (part.getSubmittedFileName() != null) // put only data from file (and not parameters)
+                fileContent.append(readFromInputStream(part.getInputStream()));
         }
         try {
             String xmlfile = fileContent.toString();
@@ -50,12 +51,11 @@ public class ImportXmlServlet extends HttpServlet {
             String typeOfData = req.getParameter("importType");
             String mergeData = req.getParameter("mergeData");
             importData(typeOfData, mergeData, username, xmlfile);
-            errorMsg = "Data Imported Successfully";
+            errorMsg = "success";
             resp.sendRedirect(FILE_MENU);
         } catch (XmlMultipleExceptions e) {
             errorMsg = e.getMessage();
             resp.sendRedirect(FILE_MENU);
-
         }
 
     }

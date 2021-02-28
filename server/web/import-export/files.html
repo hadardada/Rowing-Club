@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Import/Export</title>
 </head>
-<body>
+<h3 style="color: green" class="error" id="msgFromServer"></h3>
 
 <h3>I would like to:</h3>
 <p>
@@ -12,8 +12,12 @@
     <label for="import">Import xml</label>
     <input type="checkbox" id="export" >
     <label for="export">Export xml </label><br>
-    <span style="color: red" class="error" id="errorChoice"></span>
 </p>
+<div id = "errors">
+    <span style="color: red" id = 'errorHead'></span><br>
+    <span style="color: red" class="error" id="errorChoice"></span>
+</div>
+
 <form  style="display:none" id ="importForm" action="/data/import" enctype="multipart/form-data" method="POST">
     <h4>Which data to import?</h4>
     <p>

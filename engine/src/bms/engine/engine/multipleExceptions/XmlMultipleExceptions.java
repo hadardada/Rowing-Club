@@ -8,9 +8,9 @@ public class XmlMultipleExceptions extends Exception{
     }
 
     public void addException(String exceptionMessage){
-        if (this.EXCEPTION_MESSAGE.length() == 0)
-            this.EXCEPTION_MESSAGE.append("The following problems have occurred during the Import Process from the given XML file: \n");
-        this.EXCEPTION_MESSAGE.append(exceptionMessage+ "\n");
+        //if (this.EXCEPTION_MESSAGE.length() == 0)
+            //this.EXCEPTION_MESSAGE.append("The following problems have occurred during the Import Process from the given XML file: \n");
+        this.EXCEPTION_MESSAGE.append(exceptionMessage+'\n');
     }
 
     public boolean hasExceptions(){
