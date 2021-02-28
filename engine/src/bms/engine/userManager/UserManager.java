@@ -38,4 +38,7 @@ public class UserManager {
     }
 
     public boolean isUserManager(String username) {return (bmsEngine.getMemberByEmail(username)).getIsManager();}
+
+    public boolean isPasswordCorrect(String username, String password) {return (bmsEngine.checkMemberPassword(username, password));}
+
 }
