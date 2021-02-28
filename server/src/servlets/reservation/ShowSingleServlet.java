@@ -25,25 +25,13 @@ public class ShowSingleServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
 
-     //   String resMadeAtParameter = req.getParameter("createdOn");
-        String gen = req.getParameter("creator");
-   //     String resTrainingDateParameter = req.getParameter("date");
-        String[] parts = gen.split("createdOn=");
-        String creator = parts[0];
-        String creatorGen = parts[1];
-        String[] parts2 = creatorGen.split("date=");
-        String resMadeAtParameter = parts2[0];
-        String resTrainingDateParameter = parts2[1];
-
-
-
-
-
-
+        String resMadeAtParameter = req.getParameter("createdOn");
+        String resMadeByParameter = req.getParameter("creator");
+        String resTrainingDateParameter = req.getParameter("date");
 
         LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
         LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
-        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt,creator,trainingDate);
+        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt,resMadeByParameter,trainingDate);
 
         ReservationParameters reservationParameters = convertReservationToParameters(reservation);
         PrintWriter out = resp.getWriter();

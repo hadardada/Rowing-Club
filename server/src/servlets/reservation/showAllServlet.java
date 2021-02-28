@@ -2,8 +2,11 @@ package servlets.reservation;
 
 import bms.engine.Engine;
 import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.engine.userManager.UserManager;
 import com.google.gson.Gson;
 import servlets.activity.activityParameters;
+import utilities.ServletUtils;
+import utilities.SessionUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +33,13 @@ public class showAllServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
+        String usernameFromSession = SessionUtils.getUsername(req);
+        UserManager userManager = ServletUtils.getUserManager(getServletContext());
+        boolean personalView = !(userManager.isUserManager(usernameFromSession));
         BufferedReader reader = req.getReader();
         String date = req.getParameter("date");
         String status = req.getParameter("status");
-        List<ShortReservation> shortReservations = getRequestedRes(date, status);
+        List<ShortReservation> shortReservations = getRequestedRes(date, status, personalView, usernameFromSession);
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(shortReservations));
     }
@@ -71,10 +77,19 @@ public class showAllServlet extends HttpServlet {
 
     //this method creates a list of ShortReservation object, based on the Reservations on a given date
     //the returned list can be of all the reservations for a given date (status = "all"), or only the approved ones
-    public List<ShortReservation> getRequestedRes(String date, String status) {
+    public List<ShortReservation> getRequestedRes(String date, String status, boolean personalView, String ofMember) {
         LocalDate requestedDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
         List<ShortReservation> reservationsForDate = new ArrayList<>();
-        if (bmsEngine.getClosedReservationForDate(requestedDate)!= null){
+        if (personalView) { // show only reservations that are linked to a specific member
+            if (bmsEngine.getAllFutureReservationOfMember(ofMember) != null) {
+                for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
+                    ShortReservation newShort = new ShortReservation(res);
+                    reservationsForDate.add(newShort);
+                }
+            }
+        }
+        else {
+            if(bmsEngine.getClosedReservationForDate(requestedDate)!= null){
             for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
                 if (((status.equals("approved"))&&(Boolean.TRUE ==res.getIsApproved()))||(status.equals("all"))) {
                     ShortReservation newShort = new ShortReservation(res);
@@ -87,7 +102,7 @@ public class showAllServlet extends HttpServlet {
                     ShortReservation newShort = new ShortReservation(res);
                     reservationsForDate.add(newShort);
             }}
-        }
+        }}
         return reservationsForDate;
     }
 
