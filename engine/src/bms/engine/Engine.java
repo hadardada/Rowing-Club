@@ -958,7 +958,7 @@ public class Engine implements BmsEngine, Serializable {
             case 3:
                 return schemaXml.marshalMembers();
         }
-        return "hey";
+        return "";
     }
 
     public void saveState() {

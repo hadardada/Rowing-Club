@@ -5,7 +5,7 @@
     <title>Import/Export</title>
 </head>
 <h3 style="color: green" class="error" id="msgFromServer"></h3>
-
+<h2>XML data import / export</h2>
 <h3>I would like to:</h3>
 <p>
     <input type="checkbox" id="import">
@@ -38,20 +38,25 @@
     <input type="file" name="file1"><br>
     <input type="Submit" value="Upload File"><br>
 </form>
-
-<form id = "exportForm" style="display:none" action="import" enctype="multipart/form-data" method="POST">
+<div>
+<form id = "exportForm" style="display:none" action="/data/export" enctype="multipart/form-data" method="get">
     <h4>Which data to export?</h4>
     <p>
-        <input type="radio" id="exportActivity" name="exportRadios" required>
+        <input type="radio" id="exportActivity" name="exportRadios" value ="1" required checked="checked">
         <label for="exportActivity">Activities</label>
-        <input type="radio" id="exportBoat" name="exportRadios" >
+        <input type="radio" id="exportBoat" name="exportRadios" value ="2" >
         <label for="exportBoat">Boats </label>
-        <input type="radio" id="exportMember" name="exportRadios" >
+        <input type="radio" id="exportMember" name="exportRadios" value ="3" >
         <label for="exportMember">Members </label><br>
     </p>
 
-    <input type="file" name="file1"><br>
-    <input type="Submit" value="Upload File"><br>
+    <input type="Submit" value="Download"><br><br>
+</form>
+</div>
+<p><a href="/menu/main.html" >Go Back</a></p>
+
+<form method="post" action="/logout">
+    <input type="submit" value="Logout" style="position: absolute; right: 1%; top:1%"/>
 </form>
 </body>
 <script src = "files.js"></script>
