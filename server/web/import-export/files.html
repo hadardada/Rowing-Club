@@ -14,21 +14,21 @@
     <label for="export">Export xml </label><br>
     <span style="color: red" class="error" id="errorChoice"></span>
 </p>
-<form  style="display:none" id ="importForm" action="/import" enctype="multipart/form-data" method="POST">
+<form  style="display:none" id ="importForm" action="/data/import" enctype="multipart/form-data" method="POST">
     <h4>Which data to import?</h4>
     <p>
-        <input type="radio" id="importActivity" name="importRadios" required>
+        <input type="radio" id="importActivity" name="importType" value="1" checked="checked" required>
         <label for="importActivity">Activities</label>
-        <input type="radio" id="importBoat" name="importRadios" >
+        <input type="radio" id="importBoat" name="importType" value ="2">
         <label for="importBoat">Boats </label>
-        <input type="radio" id="importMember" name="importRadios" >
+        <input type="radio" id="importMember" name="importType" value = "3">
         <label for="importBoat">Members </label><br>
     </p>
     <h4>Merge with existing data?</h4>
     <p>
-        <input type="radio" id="merge" name="mergeData" required>
+        <input type="radio" id="merge" name="mergeData" required value = "true" checked="checked">
         <label for="merge">Merge Data</label>
-        <input type="radio" id="delete" name="mergeData" >
+        <input type="radio" id="delete" name="mergeData" value = "false">
         <label for="delete">Delete Existing Data </label><br>
     </p>
     <input type="file" name="file1"><br>
