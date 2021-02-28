@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
-@WebServlet(name = "deleteMemberServlet", urlPatterns = {"/member/delete"})
+@WebServlet(name = "DeleteMemberServlet", urlPatterns = {"/member/delete"})
 
 public class DeleteMemberServlet extends HttpServlet {
     private Gson gson = new Gson();

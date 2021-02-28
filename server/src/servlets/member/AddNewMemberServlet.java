@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "addNewMemberServlet", urlPatterns = {"/member/addNew"})
+@WebServlet(name = "AddNewMemberServlet", urlPatterns = {"/member/addNew"})
 public class AddNewMemberServlet extends HttpServlet {
 
         private Gson gson = new Gson();

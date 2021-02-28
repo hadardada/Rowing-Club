@@ -7,7 +7,7 @@ const additionalRowersListContainerEl = document.querySelector('.additionalRower
 const boatTypeListContainerEl = document.querySelector('.boatsTypeList');
 
 const mainRowerEl = document.querySelector('#allMembers');
-const divFormBlock = document.querySelector('#Dates');
+const divFormBlock = document.querySelector('#formBlock');
 const memberAge = document.querySelector('#Activity');
 const memberEmail = document.querySelector('#BoatsTypes');
 const memberPhoneNum = document.querySelector('#additionalRowers');
@@ -50,7 +50,8 @@ async function showAllDate(){
         date.setFullYear(today.getFullYear());
         date.setMonth(today.getMonth())
         date.setDate((today.getDate()+i));
-        let dateEl = createDateElement(date);
+        let dateForEl = date.toISOString().substring(0, 10)
+        let dateEl = createDateElement(dateForEl);
         datesListContainerEl.append(dateEl);
         const nameTitle = document.createElement("br");
         datesListContainerEl.append(nameTitle);
@@ -70,15 +71,8 @@ function createDateElement(dates) {
     const radioDateEl = document.createElement('input');
     radioDateEl.setAttribute("type", "radio");
     radioDateEl.setAttribute("name", "trainingDate");
-    radioDateEl.id = dates.getFullYear().toString() + "-" + (dates.getMonth()+1).toString()  + "-" + dates.getDate().toString();
-    if ((dates.getMonth()+1)%10 === (dates.getMonth()+1))
-    {
-        radioDateEl.id = dates.getFullYear().toString() + "-0" + (dates.getMonth()+1).toString()  + "-" + dates.getDate().toString();
-    }
-    if ((dates.getDate()+1)%10 === (dates.getDate()+1))
-    {
-        radioDateEl.id = dates.getFullYear().toString() + "-" + (dates.getMonth()+1).toString()  + "-0" + dates.getDate().toString();
-    }
+    radioDateEl.id = dates;
+
     radioDateEl.addEventListener('change', trainingDateFunc);
 
     radioDateEl.style.position = 'absolute';
@@ -86,7 +80,7 @@ function createDateElement(dates) {
     el.append(radioDateEl);
 
     const nameEl = document.createElement('span');
-    nameEl.innerText = dates.getDate().toString() + "-" + (dates.getMonth()+1).toString()  + "-" + dates.getFullYear().toString();
+    nameEl.innerText = dates;
     el.append(nameEl);
     nameEl.style.position = 'absolute';
     nameEl.style.left = '30px'
@@ -351,10 +345,11 @@ function showAllAdditMembers(mainOrAdditonal) {
 
 //////////////////////////////////////////////////////////////////// submit Form  /////////////////////////////////////////////////////////////
 
-function validateForm() {
-        submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,boatTypes,
+function validateForm(event) {
+    event.preventDefault();
+    submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,boatTypes,
             additionalRowers,"admin123@gmail.com");
-
+    event.preventDefault();
 }
 
 function ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails,reservationMadeBy) {
@@ -382,7 +377,7 @@ async function submitReservation(participantRowerEmail,trainingDate,activityID,b
     if (response.status === 200)
     {
         divFormBlock.style.display = "none";
-        addedMsgEl.textContent = "A new Member was successfully added to the club!"
+        addedMsgEl.textContent = "A new Reservation was successfully Submitted!"
     }
     else{
         formErrorEl.textContent = "ERROR! " + await response.text();

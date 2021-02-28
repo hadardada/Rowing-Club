@@ -29,7 +29,6 @@ const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
 const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
 const NO_ERROR = '';
 
-privateCheckBoxEl.addEventListener('change',privateChecked );
 
 function validateForm(event) {
 
@@ -63,20 +62,6 @@ function validateForm(event) {
     event.preventDefault();
 
 }
-
-function MemberJson(name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager) {
-    this.name = name;
-    this.notes = notes;
-    this.email = email;
-    this.password = password;
-    this.age = age;
-    this.phoneNumber = phoneNumber;
-    this.havePrivateBoat = havePrivateBoat;
-    this.privateBoatSerialNumber = privateBoatSerialNumber;
-    this.rowingLevel = rowingLevel;
-    this.isManager = isManager;
-}
-
 
 async function submitMember (name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager)
 {

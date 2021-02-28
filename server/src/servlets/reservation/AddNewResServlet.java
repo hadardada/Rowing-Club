@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "addNewReservationServlet", urlPatterns = {"/reservation/addNew"})
+@WebServlet(name = "AddNewResServlet", urlPatterns = {"/reservation/addNew"})
 public class AddNewResServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
@@ -40,7 +40,7 @@ public class AddNewResServlet extends HttpServlet {
 
         try {
             addNewReservation(newReservationParameters);
-         //   resp.setStatus(200);
+            resp.setStatus(200);
         }
         catch (ParticipentRowerIsOnListException e){
             resp.setStatus(404);
@@ -71,9 +71,4 @@ public class AddNewResServlet extends HttpServlet {
         Member resMadeBy = bmsEngine.getMemberByEmail(parameters.reservationMadeBy);
         bmsEngine.addNewReservation(participantRower,trainingDate,activity,resBoatTypes,wantedMembers,resMadeAt,resMadeBy,false);
     }
-
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-//        doPost(req,resp);
-//    }
 }

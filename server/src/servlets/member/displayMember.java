@@ -16,7 +16,7 @@ import java.util.List;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "displayMemberServlet", urlPatterns = {"/member/showAll"})
+@WebServlet(name = "displayMember", urlPatterns = {"/member/showAll"})
 public class displayMember extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;

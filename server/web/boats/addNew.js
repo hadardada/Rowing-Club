@@ -71,7 +71,6 @@ function validateForm(event) {
         //refreshListUsesAsyncAwait();
         }
     event.preventDefault();
-
 }
 
 function BoatJson(boatName, privateProperty, status, rowersNum, singleOar, wide, helmsman, coastal) {
