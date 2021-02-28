@@ -27,7 +27,7 @@ public class ShowSingleServlet extends HttpServlet {
 
         String resMadeAtParameter = req.getParameter("createdOn");
         String resMadeByParameter = req.getParameter("creator");
-        String resTrainingDateParameter = req.getParameter("d");
+        String resTrainingDateParameter = req.getParameter("date");
 
         LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
         LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
