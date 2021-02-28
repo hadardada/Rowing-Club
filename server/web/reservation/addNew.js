@@ -353,7 +353,7 @@ function showAllAdditMembers(mainOrAdditonal) {
 
 function validateForm() {
         submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,boatTypes,
-            additionalRowers,"tiki@444");
+            additionalRowers,"admin123@gmail.com");
 
 }
 
