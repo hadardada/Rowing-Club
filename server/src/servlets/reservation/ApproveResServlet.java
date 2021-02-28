@@ -27,7 +27,7 @@ import java.time.format.DateTimeFormatter;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "addNewReservationServlet", urlPatterns = {"/reservation/approve"})
+@WebServlet(name = "ApproveResServlet", urlPatterns = {"/reservation/approve"})
 public class ApproveResServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;

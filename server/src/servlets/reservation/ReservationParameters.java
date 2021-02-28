@@ -41,7 +41,10 @@ public ReservationParameters(Reservation reservation){
         wantedNames.add(member.getName());
     }
     this.wantedMemberNames = wantedNames;
-    this.boatID = reservation.getReservationBoat().getSerialNum();
+    if (!(reservation.getReservationBoat()==null)){
+        this.boatID = reservation.getReservationBoat().getSerialNum();
+        this.boat = reservation.getReservationBoat().toString();
+    }
     List<String> actual = new ArrayList<>();
     for (Member member : reservation.getActualRowers()){
         actual.add(member.getEmailAddress());
@@ -58,6 +61,6 @@ public ReservationParameters(Reservation reservation){
     }
     this.activityTime = reservation.getActivity().toString();
     this.getReservationMadeAt = reservation.getReservationDateTime().toString();
-    this.boat = reservation.getReservationBoat().toString();
+    this.reservationMadeBy = reservation.getReservationMember().getEmailAddress();
 }
 }

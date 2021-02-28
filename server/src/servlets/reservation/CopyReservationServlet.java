@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "deleteActivityServlet", urlPatterns = {"/reservation/copy"})
+@WebServlet(name = "CopyReservationServlet", urlPatterns = {"/reservation/copy"})
 
 public class CopyReservationServlet extends HttpServlet {
     private Gson gson = new Gson();

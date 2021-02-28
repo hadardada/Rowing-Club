@@ -153,10 +153,15 @@ function setResContent (reservation, resCellEl, resDate){
      let newNode2 = document.createElement('p');
      let newNode3 = document.createElement('p');
      let resRef = document.createElement('a');
-     let link = "/reservation/showSingle.html?creator="+reservation.createdBy;
-    link = link.concat("&createdOn="+ reservation.createdOn);
-    link = link.concat("&date="+resDate);
-    resRef.href = link;
+     let url = new URLSearchParams({
+         "creator": reservation.createdBy,
+         "createdOn": reservation.createdOn,
+         "date":resDate,
+     });
+        let link = "/reservation/showSingle.html?";
+    // link = link.concat("&createdOn="+ reservation.createdOn);
+    // link = link.concat("&date="+resDate);
+    resRef.href = link+url;
     resRef.textContent = "Manage Reservation"
     newNode3.appendChild(resRef);
     resCellEl.appendChild(newNode);

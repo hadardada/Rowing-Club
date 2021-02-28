@@ -18,7 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "ad  dNewBoatServlet", urlPatterns = {"/boats/addNew"})
+@WebServlet(name = "AddNewBoatServlet", urlPatterns = {"/boats/addNew"})
 public class AddNewBoatServlet extends HttpServlet {
 
     private Gson gson = new Gson();
