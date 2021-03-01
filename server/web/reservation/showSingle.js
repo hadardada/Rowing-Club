@@ -17,7 +17,7 @@ let date = urlParams.get('date');
 showSingle()
 
 async function showSingle() {
-    const response = await fetch('/reservation/showSingle?creator='+creator+'createdOn='+createdOnId+'date='+date, {
+    const response = await fetch('/reservation/showSingle?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -39,42 +39,40 @@ async function editRes()
 
 async function deleteRes()
 {
-    const response = await fetch('/reservation/delete', {
+    const response = await fetch('/reservation/delete?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
         }),
     });
+    window.location.href = "/menu/reservation.html";
 }
 
 async function mergeRes(){
-    const response = await fetch('/reservation/merge?creator='+creator+'createdOn='+createdOnId+'date='+date, {
-        method: 'post',
-        headers: new Headers({
-            'Content-Type': 'application/json;charset=utf-8'
-        }),
-    });
+    window.location.href = '/reservation/merge.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
-async function approveRes(){
-    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
-        method: 'get',
-        headers: new Headers({
-            'Content-Type': 'application/json;charset=utf-8'
-        }),
-    });
+async function approveRes() {
+    window.location.href = '/reservation/approve.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 async function copyRes(){
-    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/reservation/copy?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
         }),
     });
+    if (response.status === 200)
+    {
+        formErrorEl.textContent = "The Reservation Copied Successfully !"
+        formErrorEl.style.color = "green";
+    }
+    else{
+        formErrorEl.textContent = "ERROR! " + await response.text();
+        formErrorEl.style.color = "red";
+    }
 }
-
-
 
 function createRes(res) {
 
@@ -91,6 +89,8 @@ function createRes(res) {
         const memberEl = document.createElement("span");
         memberEl.innerText = member;
         wantedRowersEl.appendChild(memberEl)
+        const newLineEl = document.createElement("br");
+        wantedRowersEl.appendChild(newLineEl)
     });
 
     resMadeByEl.innerText = res.reservationMadeBy;

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "relevantBoatsServlet", urlPatterns = {"/reservation/merge"})
+@WebServlet(name = "MergeResServlet", urlPatterns = {"/reservation/merge"})
 public class MergeResServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
@@ -33,9 +33,9 @@ public class MergeResServlet extends HttpServlet {
 
         bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
 
-        String resMadeAtParameter = req.getParameter("boatId");
-        String resMadeByParameter = req.getParameter("boatId");
-        String resTrainingDateParameter = req.getParameter("boatId");
+        String resMadeAtParameter = req.getParameter("createdOn");
+        String resMadeByParameter = req.getParameter("creator");
+        String resTrainingDateParameter = req.getParameter("date");
 
         LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
         LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);

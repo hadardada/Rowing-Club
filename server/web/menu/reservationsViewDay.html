@@ -7,16 +7,17 @@
 <body>
 <div style="display:block" id="formBlock">
     <h1>Reservations Menu</h1>
-    <a href="reservationViews.html" style="position: absolute; top: 80px; left: 30px; font-size: large">Display Approved (scheduling)</a>
+    <a href="http://localhost:8080/reservation/weekly.html?status=all" style="position: absolute; top: 80px; left: 30px; font-size: large">Weekly View</a>
     <br>
-    <a href="reservationsViewDay.html" style="position: absolute; top: 110px; left: 30px; font-size: large">Display all</a>
+    <a href="/reservation/addNew.html" style="position: absolute; top: 110px; left: 30px; font-size: large">Day View</a>
+    <span style="color:#ff0000" class="error" id = "errorSpan" > </span>
     <br>
     <br>
     <form method="post" action="/logout">
         <input type="submit" value="Logout" style="position: absolute; top: 10px; right: 10px;"/>
     </form>
 </div>
-<a href="reservation.html" style="font-size: small">Go Back</a>
+<a href="reservationExist.html" style="font-size: small">Go Back</a>
 <script src="main.js"></script>
 </body>
 </html>

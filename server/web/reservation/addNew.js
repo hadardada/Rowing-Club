@@ -48,7 +48,7 @@ async function showAllDate(){
     for (i = 0; i < 8; i++) {
         let date = new Date()
         date.setFullYear(today.getFullYear());
-        date.setMonth(today.getMonth())
+        date.setMonth(today.getMonth());
         date.setDate((today.getDate()+i));
         let dateForEl = date.toISOString().substring(0, 10)
         let dateEl = createDateElement(dateForEl);

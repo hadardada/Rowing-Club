@@ -1,5 +1,13 @@
-const reservationFormEl = document.querySelector('#approveRes');
-reservationFormEl.addEventListener('submit', validateForm);
+const reservationFormEl = document.querySelector('#ApproveAction');
+const selectBoatEl = document.querySelector('#selectBoat');
+
+const approveAction = document.createElement('button');
+approveAction.innerText = 'Approve Reservation'
+approveAction.style.position = 'absolute';
+approveAction.style.left = '5px'
+approveAction.style.backgroundColor = 'green'
+reservationFormEl.append(approveAction);
+approveAction.addEventListener('click', validateForm);
 
 const BoatListContainerEl = document.querySelector('.boatList');
 const wantedRowersListContainerEl = document.querySelector('.wantedRowersList');
@@ -21,7 +29,7 @@ let date = urlParams.get('date');
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 
-const TOO_MUCH_MEMBERS = "Additional Members Pass the Boat Limit";
+const TOO_MUCH_MEMBERS = "Not enough or too much members selected, the number should be " + boatToApproveMaxRowers;
 const NO_ERROR = '';
 
 main()
@@ -33,9 +41,16 @@ async function main(){
 //////////////////////////////////////////////////////////////////// display Boat  ////////////////////
 
 async function showAllBoats() {
-    const response = await fetch('/reservation/getRelevantBoat?creator='+creator+'createdOn='+createdOnId+'date='+date);
+    const response = await fetch('/reservation/getRelevantBoat?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
     const boatJson = await response.json();
-    createBoatList(boatJson);
+    if (!(boatJson.length ===0)){
+        createBoatList(boatJson);
+    }
+    else {
+        selectBoatEl.innerText = "No Available Boats For This Reservation!"
+        selectBoatEl.style.color = 'red';
+    }
+    await showWantedRowersOriginal()
 }
 
 function createBoatList(boatList) {
@@ -71,7 +86,7 @@ function createBoatElement(boat) {
         radioBoatEl.style.position = 'absolute';
         radioBoatEl.style.left = '5px'
         if (boatCounter === 0){
-            radioBoatEl.defaultChecked;
+            radioBoatEl.checked = true;
         }
         boatCounter++;
         el.append(radioBoatEl);
@@ -83,16 +98,16 @@ function createBoatElement(boat) {
     nameEl.style.left = '30px'
 
     const idEl = document.createElement('span');
-    idEl.innerText = "Email: " + boat.idNum;
+    idEl.innerText = "ID: " + boat.idNum;
     el.appendChild(idEl)
     idEl.style.position = 'absolute';
     idEl.style.left = '200px'
 
     const typeEl = document.createElement('span');
-    typeEl.innerText = "Email: " + boat.shortName;
+    typeEl.innerText = "Type: " + boat.shortName;
     el.appendChild(typeEl)
     typeEl.style.position = 'absolute';
-    typeEl.style.left = '250px'
+    typeEl.style.left = '300px'
 
     return el
 }
@@ -101,7 +116,7 @@ function createBoatElement(boat) {
 
 
 async function showWantedRowersOriginal(){
-    const response = await fetch('/reservation/approve?creator='+creator+'createdOn='+createdOnId+'date='+date, {
+    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -109,7 +124,6 @@ async function showWantedRowersOriginal(){
     });
     const value = await response.json();
     createMemberList(value);
-    await showAllMatchRes();
 }
 
 function createMemberList(membersList) {
@@ -173,32 +187,36 @@ function createMemberElement(member) {
 
 
 //////////////////////////////////////////////////////////////////// submit Form  /////////////////////////////////////////////////////////////
+function ApprovedJson() {
+    this.BoatId = boatToApprove;
+    this.ActualMembers = actualRowers;
+}
 
 function validateForm(event) {
-    if (actualRowers.length > boatToApproveMaxRowers){
+    if (actualRowers.length+1 !== parseInt(boatToApproveMaxRowers)){
         event.preventDefault();
         showError(TOO_MUCH_MEMBERS);
     }
     else {
-        submitApproveReservation(boatToApprove,actualRowers);
+        submitApproveReservation();
     }
 }
 
-async function submitApproveReservation(boatToApprove,actualRowers)
+async function submitApproveReservation()
 {
-    resObj = {boatToApprove,actualRowers}
+    const newApproved = new ApprovedJson();
     const response = await fetch('/reservation/approve', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
         }),
-        body: JSON.stringify(resObj)
+        body: JSON.stringify(newApproved)
     });
 
     if (response.status === 200)
     {
         divFormBlock.style.display = "none";
-        addedMsgEl.textContent = "A new Member was successfully added to the club!"
+        addedMsgEl.textContent = "The Reservation Approved Successfully!"
     }
     else{
         formErrorEl.textContent = "ERROR! " + await response.text();

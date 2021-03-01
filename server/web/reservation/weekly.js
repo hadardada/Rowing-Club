@@ -153,7 +153,7 @@ function setResContent (reservation, resCellEl, resDate){
      let newNode2 = document.createElement('p');
      let newNode3 = document.createElement('p');
      let resRef = document.createElement('a');
-     let link = "/reservation/showSingle?creator="+reservation.createdBy;
+     let link = "/reservation/showSingle.html?creator="+reservation.createdBy;
      link = link + "&createdOn="+ reservation.createdOn;
      link = link + "&date="+resDate;
     resRef.href = link;

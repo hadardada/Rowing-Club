@@ -91,11 +91,13 @@ public class ApproveResServlet extends HttpServlet {
 
         }
     }
+
     private void approveRes(ShortApproveReservation parameters) throws ApprovedReservationWithNoBoatException, BoatSizeMismatchException {
         List<Member> actual = new ArrayList<>();
         for (String member: parameters.ActualMembers){
             actual.add(this.bmsEngine.getMemberByEmail(member));
         }
+        actual.add(originalRes.getParticipantRower());
         Boat boat = this.bmsEngine.getBoatById(parameters.BoatId);
         this.bmsEngine.assignBoatToReservation(originalRes,boat,false);
         this.bmsEngine.assignApprovedRowersToReservation(actual,originalRes,false);

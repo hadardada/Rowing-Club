@@ -1,9 +1,16 @@
-const reservationFormEl = document.querySelector('#approveRes');
-reservationFormEl.addEventListener('submit', submitMergeReservation);
+const reservationFormEl = document.querySelector('#mergeRes');
 
 const MergeResListContainerEl = document.querySelector('.mergeRes');
 const wantedRowersMergeListContainerEl = document.querySelector('.wantedRowersMergedList');
 const wantedRowersOriginalListContainerEl = document.querySelector('.wantedRowersOriginalList');
+
+const mergeAction = document.createElement('button');
+mergeAction.innerText = 'Merge Reservation'
+mergeAction.style.position = 'absolute';
+mergeAction.style.left = '5px'
+mergeAction.style.backgroundColor = 'green'
+reservationFormEl.append(mergeAction);
+mergeAction.addEventListener('click', submitMergeReservation);
 
 //global
 let resObjMerged;
@@ -11,7 +18,6 @@ let wantedRowersOriginal = new Array();
 let wantedRowersMerged = new Array();
 
 let membersCount = 0;
-let boatToApproveMaxRowers;
 let resCounter = 0;
 
 const queryString = window.location.search;
@@ -24,7 +30,6 @@ let date = urlParams.get('date');
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 
-const TOO_MUCH_MEMBERS = "Additional Members Pass the Boat Limit";
 const NO_ERROR = '';
 
 main()
@@ -36,7 +41,7 @@ async function main(){
 //////////////////////////////////////////////////////////////////// display wanted Original  ///////////////////////////////
 
 async function showWantedRowersOriginal(){
-    const response = await fetch('/reservation/merge', {
+    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -109,7 +114,7 @@ function createMemberElement(member) {
 //////////////////////////////////////////////////////////////////// Display Match Reservations  /////////////////////////////////////////////////////////////
 
 async function showAllMatchRes() {
-    const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'createdOn='+createdOnId+'date='+date);
+    const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'?&createdOn='+createdOnId+'&date='+date);
     const resJson = await response.json();
     createResList(resJson);
     await showAllDate();
@@ -270,7 +275,7 @@ async function submitMergeReservation()
 {
     const newMerge= new MergeJson();
 
-    const response = await fetch('/reservation/merge', {
+    const response = await fetch('/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

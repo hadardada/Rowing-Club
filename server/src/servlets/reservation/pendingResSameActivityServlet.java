@@ -1,6 +1,7 @@
 package servlets.reservation;
 
 import bms.engine.Engine;
+import bms.engine.activitiesManagement.activity.Activity;
 import bms.engine.reservationsManagment.reservation.Reservation;
 import com.google.gson.Gson;
 
@@ -17,7 +18,7 @@ import java.util.List;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "relevantBoatsServlet", urlPatterns = {"/reservation/pendingResSameActivity"})
+@WebServlet(name = "pendingResSameActivityServlet", urlPatterns = {"/reservation/pendingResSameActivity"})
 public class pendingResSameActivityServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
@@ -27,16 +28,18 @@ public class pendingResSameActivityServlet extends HttpServlet {
 
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
 
-        String resMadeAtParameter = req.getParameter("boatId");
-        String resMadeByParameter = req.getParameter("boatId");
-        String resTrainingDateParameter = req.getParameter("boatId");
-        String activityId = req.getParameter("ActivityId");
+        String resMadeAtParameter = req.getParameter("createdOn");
+        String resMadeByParameter = req.getParameter("creator");
+        String resTrainingDateParameter = req.getParameter("date");
 
-        int activityIdInt = Integer.parseInt(activityId);
         LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
         LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
-        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt,resMadeByParameter,trainingDate);
-        List<Reservation> pendingResSameActivity = this.bmsEngine.getFuturePendingReservationSameActivity(trainingDate,activityIdInt,reservation);
+        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
+
+        int activityID = reservation.getActivity().getId();
+
+      //  int activityIdInt = Integer.parseInt(activityId);
+        List<Reservation> pendingResSameActivity = this.bmsEngine.getFuturePendingReservationSameActivity(trainingDate,activityID,reservation);
         List<ReservationParameters> toSent = new ArrayList<>();
 
         for (Reservation res: pendingResSameActivity) {
