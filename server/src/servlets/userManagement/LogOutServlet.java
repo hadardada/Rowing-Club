@@ -13,11 +13,11 @@ import java.io.IOException;
 
 
 
-@WebServlet(name = "LogOutServlet", urlPatterns = "/logout")
+@WebServlet(name = "LogOutServlet", urlPatterns = {"/logout"})
 
 
 public class LogOutServlet extends HttpServlet {
-    private final String SIGN_UP_URL = "login.html";
+    private String SIGN_UP_URL = "login.html";
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);

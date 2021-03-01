@@ -2,18 +2,17 @@
 <html>
 <head>
     <title>BoatHouseSystem</title>
-    <link rel="stylesheet" href="WEB-INF/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-    <h1>Welcome to the Online Chat</h1>
-    <br/>
-    <h2>Please enter your username (email address):</h2>
-    <form method="post" action="login">
-        <input type="text" name="username" autofocus/>
-        <h2>Please enter your password:</h2>
+    <h2>Login</h2>
+    <br>
+    <h3>Please enter your username (email address):</h3>
+    <form method="post" action="loginToServer">
+        <input type="text" name="username" autofocus/><span id="usernameError" style="color:red"> </span>
+        <h3>Please enter your password:</h3>
         <input type="password" name="password"/>
-        <input type="submit" value="Login"/>
+        <input type="submit" value="Login"/> <span id="passwordError" style="color:red"> </span>
     </form>
 
 </div>

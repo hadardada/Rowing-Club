@@ -1,7 +1,7 @@
 const NO_ERROR = '';
 const ERROR_HEAD = "The following problems have occurred during the Import Process from the given XML file:"
-const TWO_CHECK= 'You must pick one action at a time'
-
+const TWO_CHECK= 'You must pick one action at a time';
+const NO_FILE = "You must choose a file before uploading";
 const importCheckboxEl = document.querySelector('#import');
 const exportCheckboxEl = document.querySelector('#export');
 const importFormEl = document.querySelector('#importForm');
@@ -15,7 +15,7 @@ importCheckboxEl.addEventListener('change', showChecked);
 exportCheckboxEl.addEventListener('change', showChecked);
 window.addEventListener('DOMContentLoaded',showErrorFromServer);
 
-//importFormEl.addEventListener('submit', submitImportForm);
+//importFormEl.addEventListener('submit', importValidation);
 
 
 function showChecked(){

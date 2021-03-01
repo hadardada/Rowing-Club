@@ -20,7 +20,7 @@ import java.util.List;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "relevantBoatsServlet", urlPatterns = {"/reservation/getRelevantBoat"})
+@WebServlet(name = "getRelevantBoat", urlPatterns = {"/reservation/getRelevantBoat"})
 public class getRelevantBoat extends HttpServlet {
         private Gson gson = new Gson();
         Engine bmsEngine;

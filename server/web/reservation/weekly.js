@@ -14,7 +14,7 @@ function shortReservation (){
     status;
 }
 
-//get activity required status reservation (scheduling / all)
+//get required status reservation (scheduling / all)
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const status = urlParams.get('status');

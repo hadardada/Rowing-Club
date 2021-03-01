@@ -15,7 +15,7 @@ import static constants.Constants.USERNAME;
 import static constants.Constants.PASSWORD;
 
 
-@WebServlet(name = "LogInServlet", urlPatterns = "/login")
+@WebServlet(name = "LogInServlet", urlPatterns = "/loginToServer")
 
 
 public class LogInServlet  extends HttpServlet {
@@ -23,6 +23,7 @@ public class LogInServlet  extends HttpServlet {
     private final String MANAGER_MENU = "/menu/main.html";
     private final String MEMBER_MENU = "/menu/mainMember.html";
     private final String SIGN_UP_URL = "login.html";
+    String errorMsg = "";
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);
@@ -64,8 +65,15 @@ public class LogInServlet  extends HttpServlet {
                         else // redirect to non-manager member menu
                             response.sendRedirect(MEMBER_MENU);
                     }
+                    else{ // wrong password
+                        errorMsg = "passwordErr";
+                        response.sendRedirect(SIGN_UP_URL);
+
+                    }
                 }
                 else{ //user is not even a member in the club.
+                    errorMsg = "usernameErr";
+                    response.sendRedirect(SIGN_UP_URL);
 
                 }
             }
@@ -79,4 +87,4 @@ public class LogInServlet  extends HttpServlet {
 
     }
 
-    }
+}

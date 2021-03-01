@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "deleteActivityServlet", urlPatterns = {"/reservation/reopen"})
+@WebServlet(name = "ReopenResServlet", urlPatterns = {"/reservation/reopen"})
 public class ReopenResServlet extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;

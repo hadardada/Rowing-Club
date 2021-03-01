@@ -4,7 +4,6 @@ import bms.engine.Engine;
 import bms.engine.reservationsManagment.reservation.Reservation;
 import bms.engine.userManager.UserManager;
 import com.google.gson.Gson;
-import servlets.activity.activityParameters;
 import utilities.ServletUtils;
 import utilities.SessionUtils;
 
@@ -20,7 +19,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
@@ -36,7 +34,7 @@ public class showAllServlet extends HttpServlet {
         String usernameFromSession = SessionUtils.getUsername(req);
         UserManager userManager = ServletUtils.getUserManager(getServletContext());
         boolean personalView = !(userManager.isUserManager(usernameFromSession));
-        BufferedReader reader = req.getReader();
+        //BufferedReader reader = req.getReader();
         String date = req.getParameter("date");
         String status = req.getParameter("status");
         List<ShortReservation> shortReservations = getRequestedRes(date, status, personalView, usernameFromSession);
@@ -51,6 +49,7 @@ public class showAllServlet extends HttpServlet {
         String activityId;
         String boatId;
         String status;
+        String date;
 
 
         public ShortReservation(Reservation reservation) {
@@ -61,13 +60,14 @@ public class showAllServlet extends HttpServlet {
             if (reservation.getIsApproved() == null) {
                 this.status = "Pending";
                 this.boatId = "";
-            } else if (reservation.getIsApproved() == true) {
+            } else if (reservation.getIsApproved()) {
                 this.status = "Approved";
                 this.boatId = String.valueOf(reservation.getReservationBoat().getSerialNum());
             } else {
                 this.status = "Rejected";
                 this.boatId = "";
             }
+            this.date = reservation.getTrainingDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
         }
     }
 
@@ -78,17 +78,22 @@ public class showAllServlet extends HttpServlet {
     //this method creates a list of ShortReservation object, based on the Reservations on a given date
     //the returned list can be of all the reservations for a given date (status = "all"), or only the approved ones
     public List<ShortReservation> getRequestedRes(String date, String status, boolean personalView, String ofMember) {
-        LocalDate requestedDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
         List<ShortReservation> reservationsForDate = new ArrayList<>();
         if (personalView) { // show only reservations that are linked to a specific member
-            if (bmsEngine.getAllFutureReservationOfMember(ofMember) != null) {
-                for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
+            List<Reservation> reservationsForMember;
+            if (status.equals("future"))
+                reservationsForMember = bmsEngine.getAllFutureReservationOfMember(ofMember);
+            else //status == "history"
+                reservationsForMember = bmsEngine.getReservationHistoryOfMember(ofMember);
+            if (reservationsForMember!= null) {
+                for (Reservation res : reservationsForMember) {
                     ShortReservation newShort = new ShortReservation(res);
                     reservationsForDate.add(newShort);
                 }
             }
         }
-        else {
+        else { // manager view - can see all reservations of all members
+            LocalDate requestedDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
             if(bmsEngine.getClosedReservationForDate(requestedDate)!= null){
             for (Reservation res : bmsEngine.getClosedReservationForDate(requestedDate)) {
                 if (((status.equals("approved"))&&(Boolean.TRUE ==res.getIsApproved()))||(status.equals("all"))) {
