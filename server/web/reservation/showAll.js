@@ -28,15 +28,36 @@ async function createList(){
 
 function createListElemnt(reservation){
     let newResLine = document.createElement("li");
-    let lineContent = "Date: "+reservation.date+ " Status: "+ reservation.status;
-    lineContent = lineContent+" Main Rower: "+reservation.mainRower +" ";
-    newResLine.textContent = lineContent;
+    //date:
+    let dateField = document.createElement("sp");
+    newResLine.appendChild(dateField);
+    dateField.textContent = " Date: "
+    dateField.class = "field";
+    let dateValue = document.createElement("sp");
+    newResLine.appendChild(dateValue);
+    dateValue.textContent = reservation.date;
+    // status:
+    let statusField = document.createElement("sp");
+    newResLine.appendChild(statusField);
+    statusField.textContent = " Status: "
+    dateField.class = "field";
+    let statusValue = document.createElement("sp");
+    newResLine.appendChild(statusValue);
+    statusValue.textContent = reservation.status;
+    //Main Rower
+    let rowerField = document.createElement("sp");
+    newResLine.appendChild(rowerField);
+    rowerField.textContent = " Main Rower: "
+    rowerField.class = "field";
+    let rowerValue = document.createElement("sp");
+    newResLine.appendChild(rowerValue);
+    rowerValue.textContent = reservation.mainRower+" ";
     let resLink = document.createElement('a');
     let link = "/reservation/showSingle.html?creator="+reservation.createdBy;
     link = link + "&createdOn="+ reservation.createdOn;
-    link = link + "&date="+resDate;
+    link = link + "&date="+reservation.date;
     resLink.href = link;
     resLink.textContent = "Manage Reservation";
-    newResLine.appendChild(link);
+    newResLine.appendChild(resLink);
     listEl.appendChild(newResLine);
 }

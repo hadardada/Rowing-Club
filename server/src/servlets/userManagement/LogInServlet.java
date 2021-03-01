@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import bms.engine.userManager.UserManager;
+import com.google.gson.Gson;
 import utilities.ServletUtils;
 import utilities.SessionUtils;
 import constants.Constants;
@@ -19,11 +21,12 @@ import static constants.Constants.PASSWORD;
 
 
 public class LogInServlet  extends HttpServlet {
+    private Gson gson = new Gson();
 
     private final String MANAGER_MENU = "/menu/main.html";
     private final String MEMBER_MENU = "/menu/mainMember.html";
     private final String SIGN_UP_URL = "login.html";
-    String errorMsg = "";
+    PasswordError errorLogin = new PasswordError();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);
@@ -66,13 +69,15 @@ public class LogInServlet  extends HttpServlet {
                             response.sendRedirect(MEMBER_MENU);
                     }
                     else{ // wrong password
-                        errorMsg = "passwordErr";
+                        errorLogin.errorMsg = "passwordErr";
+                        errorLogin.sentUserName = usernameFromParameter;
                         response.sendRedirect(SIGN_UP_URL);
 
                     }
                 }
                 else{ //user is not even a member in the club.
-                    errorMsg = "usernameErr";
+                    errorLogin.errorMsg = "usernameErr";
+                    errorLogin.sentUserName = usernameFromParameter;
                     response.sendRedirect(SIGN_UP_URL);
 
                 }
@@ -81,10 +86,18 @@ public class LogInServlet  extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect(SIGN_UP_URL);
-
-
-
+        try (PrintWriter out = response.getWriter()) {
+            out.print(gson.toJson(errorLogin));
+        }
     }
 
+    public static class PasswordError {
+        public String errorMsg;
+        public String sentUserName;
+
+        public PasswordError(){
+            this.errorMsg="";
+            this.sentUserName="";
+        }
+    }
 }

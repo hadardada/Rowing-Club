@@ -5,16 +5,17 @@
 </head>
 <body>
 <div class="container">
-    <h2>Login</h2>
-    <br>
-    <h3>Please enter your username (email address):</h3>
+    <h2>Login To BoatHouse System</h2>
     <form method="post" action="loginToServer">
-        <input type="text" name="username" autofocus/><span id="usernameError" style="color:red"> </span>
+        <h3>Please enter your username (email address):</h3>
+        <input id = "username"type="text" name="username" autofocus/><span id="usernameError" style="color:red"> </span>
         <h3>Please enter your password:</h3>
-        <input type="password" name="password"/>
-        <input type="submit" value="Login"/> <span id="passwordError" style="color:red"> </span>
+        <input type="password" name="password"/><span id="passwordError" style="color:red"> </span>
+        <br><input type="submit" value="Login"/>
     </form>
 
 </div>
+<script src ="login.js" ></script>
+
 </body>
 </html>
