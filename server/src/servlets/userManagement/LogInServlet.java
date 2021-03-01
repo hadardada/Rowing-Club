@@ -31,7 +31,7 @@ public class LogInServlet  extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);
         UserManager userManager = ServletUtils.getUserManager(getServletContext());
-
+        errorLogin.errorMsg = "";
         //user is already logged in
         if (usernameFromSession != null) {
             //if user is manager, redirect to manager main menu
@@ -88,6 +88,7 @@ public class LogInServlet  extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
             out.print(gson.toJson(errorLogin));
+            errorLogin.errorMsg="";
         }
     }
 
