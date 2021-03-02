@@ -14,6 +14,12 @@ const UPDATE_EXPIREY = 10;
 const NO_LEVEL_CHOSEN = "cannot send rowing level update if no level was chosen"
 const NO_MANAGER_CHOSEN = "cannot send management update if no radio was chosen"
 const NO_ERROR = '';
+const EMAIL_FORMAT = "Email Format is Wrong";
+const MEMBER_AGE = "Members age is from 10 to 120";
+const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
+const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
+
+
 //update-events listeners
 updateNameButtonEl.addEventListener('click',createUpdateReqObj );
 updateEmailButtonEl.addEventListener('click',createUpdateReqObj );
@@ -47,16 +53,35 @@ function createUpdateReqObj(){
     }
     else if (this === updateEmailButtonEl){
         const newEmail = document.querySelector('#MemberEmail');
-        data = new updateReq(UPDATE_EMAIL, newEmail.value, memberId);
+        let emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!emailRegex.test(newEmail.value)){
+            showError(EMAIL_FORMAT);
+        }
+        else {
+            data = new updateReq(UPDATE_EMAIL, newEmail.value, memberId);
+        }
     }
     else if (this === updateAgeButtonEl){
         const newAge = document.querySelector('#MemberAge');
-        data = new updateReq(UPDATE_AGE, newAge.value, memberId);
+        if (parseInt(newAge.value) < 10 || parseInt(newAge.value) > 120){
+            showError(MEMBER_AGE);
+        }
+        else {
+            data = new updateReq(UPDATE_AGE, newAge.value, memberId);
+        }
     }
 
     else if(this === updatePhoneButtonEl){
         const newPhone = document.querySelector('#MemberPhoneNum');
-        data = new updateReq(UPDATE_PHONE, newPhone.value, memberId);
+        if (newPhone.value.length !== 10){
+            showError(PHONE_NUM_DIGITS);
+        }
+        else if(newPhone.value.match(/^[0-9]+$/) == null){
+            showError(PHONE_NUM_FORMAT);
+        }
+        else {
+            data = new updateReq(UPDATE_PHONE, newPhone.value, memberId);
+        }
     }
 
     else if (this === updatePasswordButtonEl) {
