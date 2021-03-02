@@ -2,6 +2,7 @@ package listeners;
 
 import bms.engine.Engine;
 import bms.engine.userManager.UserManager;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebListener;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 import static constants.Constants.USER_MANAGER_ATTRIBUTE_NAME;
+import static constants.Constants.NOTIFICATIONS_MANAGER_ATTRIBUTE_NAME;
 
 @WebListener("WebApp Context Listener")
 public class WebAppContextListener implements ServletContextListener {
@@ -20,6 +22,7 @@ public class WebAppContextListener implements ServletContextListener {
     Engine engine = new Engine();
     context.setAttribute(ENGINE_ATTRIBUTE_NAME,engine);
     context.setAttribute(USER_MANAGER_ATTRIBUTE_NAME, new UserManager(engine));
+    context.setAttribute(NOTIFICATIONS_MANAGER_ATTRIBUTE_NAME, new NotificationsManager(engine.getMembers().keySet()));
     //context.setAttribute(CHAT_MANAGER_ATTRIBUTE_NAME, new ChatManager());
   }
 

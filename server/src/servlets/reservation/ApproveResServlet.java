@@ -7,8 +7,11 @@ import bms.engine.membersManagement.member.Member;
 import bms.engine.reservationsManagment.reservation.Reservation;
 import bms.engine.reservationsManagment.reservation.reservationsExceptions.ApprovedReservationWithNoBoatException;
 import bms.engine.reservationsManagment.reservation.reservationsExceptions.ParticipentRowerIsOnListException;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
+import bms.notificationsEngine.notification.Notification;
 import com.google.gson.Gson;
 import servlets.member.MemberParameters;
+import utilities.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,11 +82,13 @@ public class ApproveResServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
         BufferedReader reader = req.getReader();
         String newMergeJsonString = reader.lines().collect(Collectors.joining());
         ShortApproveReservation newMergeParameters = gson.fromJson(newMergeJsonString, ShortApproveReservation.class);
         try {
             approveRes(newMergeParameters);
+            notificationsMng.addNewAutoNotification(Notification.APPROVED,originalRes);
             resp.setStatus(200);
         }
         catch (ApprovedReservationWithNoBoatException e){
