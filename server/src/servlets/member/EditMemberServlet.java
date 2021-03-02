@@ -7,6 +7,7 @@ import bms.engine.membersManagement.member.Member;
 import bms.engine.membersManagement.member.memberListsExceptions.EmailAddressAlreadyExistsException;
 import com.google.gson.Gson;
 import servlets.activity.activityParameters;
+import utilities.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +30,12 @@ public class EditMemberServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Engine bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         String memberEmail = req.getParameter("email").toLowerCase();
+        String usernameFromSession = SessionUtils.getUsername(req);
         if ((memberEmail != null) && (memberEmail != "")) {
-                Member requestedMember = bmsEngine.getMemberByEmail(memberEmail);
+            Member requestedMember = bmsEngine.getMemberByEmail(memberEmail);
+                if (memberEmail.equals("me")){
+                    requestedMember = bmsEngine.getMemberByEmail(usernameFromSession);
+                }
                 if (requestedMember != null) {
                     MemberParameters responseMember = new MemberParameters(requestedMember);
                     resp.setContentType("application/json");
