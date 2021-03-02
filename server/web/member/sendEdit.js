@@ -117,8 +117,8 @@ async function sendUpdateReq(data){
             }),
             body: JSON.stringify(data)
         });
-    const updatedReq = await response.json();
-    if (updatedReq.status ===200) {
+    if (response.status ===200) {
+        const updatedReq = await response.json();
         if (data.whatToUpdate === UPDATE_NAME) {
             currNameEl.textContent = updatedReq.updateTo;
             currNameEl.style = "color:green";
@@ -159,14 +159,15 @@ async function sendUpdateReq(data){
         }
     }
     else{
-        showError(updatedReq.text());
+        const updatedReqErr = await response.text();
+        showError(updatedReqErr);
     }
 
 
 }
 
 function showError(errorMsg){
-    if (errorMsgEl == NO_ERROR)
+    if (errorMsg === NO_ERROR)
         errorMsgEl.textContent = '';
     else
         errorMsgEl.textContent = "Error! "+ errorMsg;

@@ -37,7 +37,7 @@ privateCheckboxEl.addEventListener('change', privateChecked);
 async function injectParameters(){
 
     const response = await fetch('/member/edit?email='+memberId);
-    if (response.status === 200) {
+    if (response.ok) {
         const memberJson = await response.json();
         currNameEl.textContent = memberJson.name;
         currEmailEl.textContent = memberJson.email;

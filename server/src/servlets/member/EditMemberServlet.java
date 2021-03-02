@@ -31,6 +31,7 @@ public class EditMemberServlet extends HttpServlet {
         Engine bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         String memberEmail = req.getParameter("email").toLowerCase();
         String usernameFromSession = SessionUtils.getUsername(req);
+
         if ((memberEmail != null) && (memberEmail != "")) {
             Member requestedMember = bmsEngine.getMemberByEmail(memberEmail);
                 if (memberEmail.equals("me")){
@@ -64,6 +65,8 @@ public class EditMemberServlet extends HttpServlet {
         servlets.member.UpdateRequestObject updateReq = gson.fromJson(updateReqJsonString, servlets.member.UpdateRequestObject.class);
         try{
             updateReq.detectUpdate(bmsEngine);
+            if (updateReq.whatToUpdate == updateReq.UPDATE_EMAIL)
+                req.changeSessionId();
             resp.setContentType("application/json");
             try (PrintWriter out = resp.getWriter()) {
                 out.print(gson.toJson(updateReq));
