@@ -351,23 +351,22 @@ function showAllAdditMembers(mainOrAdditonal) {
 function validateForm(event) {
     event.preventDefault();
     submitReservation(mainRowerEmail,trainingDate,activityIdGlobe,boatTypes,
-            additionalRowers,"admin123@gmail.com");
+            additionalRowers);
     event.preventDefault();
 }
 
-function ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails,reservationMadeBy) {
+function ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails) {
     this.participantRowerEmail = participantRowerEmail;
     this.trainingDate = trainingDate;
     this.activityID = activityID;
     this.boatTypes = boatTypes;
     this.wantedMemberEmails = wantedMemberEmails;
-    this.reservationMadeBy = reservationMadeBy;
 }
 
 
-async function submitReservation(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails,reservationMadeBy)
+async function submitReservation(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails)
 {
-    const reservation = new ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails,reservationMadeBy);
+    const reservation = new ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails);
 
     const response = await fetch('/reservation/addNew', {
         method: 'post',

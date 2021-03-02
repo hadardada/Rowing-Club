@@ -31,7 +31,8 @@ async function deleteBoat(){
 }
 
 async function editBoat(){
-    window.location.href = '/boats/edit.html?id=';
+    let boatId = this.id.substring('edit'.length)
+    window.location.href = '/boats/edit.html?boatId='+boatId;
 
 }
 
@@ -54,6 +55,7 @@ function createBoatElement(boat) {
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
     editAction.style.left = '57px'
+    editAction.id = "edit"+boat.idNum;
     editAction.addEventListener('click', editBoat);
 
     el.append(editAction);

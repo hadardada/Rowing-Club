@@ -28,7 +28,7 @@ public class MemberParameters {
         this.age = member.getAge();
         this.phoneNumber = member.getPhoneNumber();
         this.havePrivateBoat = member.getPrivateBoatStatus();
-        this.privateBoatSerialNumber = member.getSerialNumber();
+        this.privateBoatSerialNumber = member.getPrivateBoatSerialNumber();
         this.rowingLevel = member.getLevel();
         this.isManager = member.getIsManager();
         this.signUpDate = member.getSignUpDate().toString();

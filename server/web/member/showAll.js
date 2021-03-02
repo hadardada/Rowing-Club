@@ -31,7 +31,8 @@ async function deleteMember(){
 }
 
 async function editMember(){
-    window.location.href = '/member/edit.html?id=';
+    let emailId = this.id.substring('edit'.length)
+    window.location.href = '/member/edit.html?email='+emailId;
 }
 
 
@@ -54,6 +55,7 @@ function createMemberElement(member) {
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
     editAction.style.left = '57px'
+    editAction.id = "Edit"+member.email;
     editAction.addEventListener('click', editMember);
     el.append(editAction);
 

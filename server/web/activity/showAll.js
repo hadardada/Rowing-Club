@@ -31,7 +31,8 @@ async function deleteActivity(){
 }
 
 async function editActivity(){
-    window.location.href = '/activity/edit.html?id=';
+    let activityId = this.id.substring('edit'.length)
+    window.location.href = '/activity/edit.html?id='+activityId;
 }
 function createActivityElement(activity) {
 
@@ -52,6 +53,7 @@ function createActivityElement(activity) {
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
     editAction.style.left = '57px';
+    editAction.id = "edit"+activity.id;
     editAction.addEventListener('click', editActivity);
     el.append(editAction);
 

@@ -5,7 +5,10 @@ import bms.engine.activitiesManagement.activity.Activity;
 import bms.engine.boatsManagement.boat.Boat;
 import bms.engine.membersManagement.member.Member;
 import bms.engine.reservationsManagment.reservation.reservationsExceptions.ParticipentRowerIsOnListException;
+import bms.engine.userManager.UserManager;
 import com.google.gson.Gson;
+import utilities.ServletUtils;
+import utilities.SessionUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,13 +36,13 @@ public class AddNewResServlet extends HttpServlet {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         BufferedReader reader = req.getReader();
         String newReservationJsonString = reader.lines().collect(Collectors.joining());
-       // String newJson = gson.toJson(newReservationJsonString);
-        //    newReservationJsonString = newReservationJsonString.substring(1, newReservationJsonString.length() - 1);
         ReservationParameters newReservationParameters = gson.fromJson(newReservationJsonString, ReservationParameters.class);
         PrintWriter out = resp.getWriter();
 
+        String usernameFromSession = SessionUtils.getUsername(req);
+
         try {
-            addNewReservation(newReservationParameters);
+            addNewReservation(newReservationParameters, usernameFromSession);
             resp.setStatus(200);
         }
         catch (ParticipentRowerIsOnListException e){
@@ -47,7 +50,7 @@ public class AddNewResServlet extends HttpServlet {
             out.print("Main Rower is in wanted Rowers List");
         }
     }
-    private void addNewReservation(ReservationParameters parameters) throws ParticipentRowerIsOnListException {
+    private void addNewReservation(ReservationParameters parameters, String userManager) throws ParticipentRowerIsOnListException {
         Member participantRower = bmsEngine.getMemberByEmail(parameters.participantRowerEmail);
         String trainingDateString = parameters.trainingDate;
         LocalDate trainingDate = LocalDate.parse(parameters.trainingDate);
@@ -68,7 +71,7 @@ public class AddNewResServlet extends HttpServlet {
                 wantedMembers.add(wantedRower);
             }
         LocalDateTime resMadeAt = LocalDateTime.now();
-        Member resMadeBy = bmsEngine.getMemberByEmail(parameters.reservationMadeBy);
+        Member resMadeBy = bmsEngine.getMemberByEmail(userManager);
         bmsEngine.addNewReservation(participantRower,trainingDate,activity,resBoatTypes,wantedMembers,resMadeAt,resMadeBy,false);
     }
 }
