@@ -375,11 +375,11 @@ public class Engine implements BmsEngine, Serializable {
                     deleteReservation(reservation); // in that case, if the main rower is deleted then its reservation is also deleted
                 else {
                     // removed member was a part of a reservation
-                    if (reservation.getIsApproved() == null || !reservation.getIsApproved()) { // if the res pending
-                        removeMemberFromReservationGeneral(removedMember.getEmailAddress(), reservation); // remove from wanted
+                    if (reservation.getIsApproved() == null || !reservation.getIsApproved()) {// if the res pending
+                        removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
 
                     } else if (reservation.getIsApproved()) { // if the res approved
-                        removeMemberFromReservationGeneral(removedMember.getEmailAddress(), reservation); // remove from wanted
+                        removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
                         removeMemberFromReservationActualList(removedMember.getEmailAddress(), reservation); // remove from actual
                         reservation.reopenReservation();
                     }
@@ -665,8 +665,7 @@ public class Engine implements BmsEngine, Serializable {
     }
 
     // This method removes member from reservation (assuming this member is not owner of the reservation)
-    public boolean removeMemberFromReservationGeneral(String currentMemberEmail, Reservation clientReservation) {
-        Member currentMember = this.members.getMemberByEmail(currentMemberEmail);
+    public boolean removeMemberFromReservationGeneral(Member currentMember, Reservation clientReservation) {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
                 clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
         myReservation.getWantedRowers().remove(currentMember);

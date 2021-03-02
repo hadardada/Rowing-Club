@@ -75,13 +75,13 @@ function createMemberElement(member) {
     boatTypeEl.innerText = member.password;
     el.appendChild(boatTypeEl)
     boatTypeEl.style.position = 'absolute';
-    boatTypeEl.style.left = '400px'
+    boatTypeEl.style.left = '430px'
 
     const ageEl = document.createElement('span');
     ageEl.innerText = member.age;
     el.appendChild(ageEl)
     ageEl.style.position = 'absolute';
-    ageEl.style.left = '500px'
+    ageEl.style.left = '530px'
 
     const phoneEl = document.createElement('span');
     phoneEl.innerText = member.phoneNumber;
@@ -188,11 +188,11 @@ function createMemberList(memberList) {
     idTitle.style.textDecoration = "underline";
 
     passTitle.style.position = 'absolute';
-    passTitle.style.left = '250px'
+    passTitle.style.left = '280px'
     passTitle.style.textDecoration = "underline";
 
     ageTitle.style.position = 'absolute';
-    ageTitle.style.left = '350px'
+    ageTitle.style.left = '380px'
     ageTitle.style.textDecoration = "underline";
 
     phoneTitle.style.position = 'absolute';

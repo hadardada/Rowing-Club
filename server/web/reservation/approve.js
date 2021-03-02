@@ -14,7 +14,7 @@ const wantedRowersListContainerEl = document.querySelector('.wantedRowersList');
 
 //global
 let boatToApprove;
-let boatToApproveMaxRowers;
+let boatToApproveMaxRowers='';
 let wantedRowersOriginal = new Array();
 
 let actualRowers = new Array();
@@ -29,7 +29,7 @@ let date = urlParams.get('date');
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 
-const TOO_MUCH_MEMBERS = "Not enough or too much members selected, the number should be " + boatToApproveMaxRowers;
+
 const NO_ERROR = '';
 
 main()
@@ -87,6 +87,8 @@ function createBoatElement(boat) {
         radioBoatEl.style.left = '5px'
         if (boatCounter === 0){
             radioBoatEl.checked = true;
+            boatToApproveMaxRowers = boat.maxRowers;
+            boatToApprove = boat.idNum;
         }
         boatCounter++;
         el.append(radioBoatEl);
@@ -185,14 +187,14 @@ function createMemberElement(member) {
     return el
 }
 
-
 //////////////////////////////////////////////////////////////////// submit Form  /////////////////////////////////////////////////////////////
 function ApprovedJson() {
     this.BoatId = boatToApprove;
     this.ActualMembers = actualRowers;
 }
-
+const TOO_MUCH_MEMBERS = "Not enough or too much members selected, the number should be " + boatToApproveMaxRowers;
 function validateForm(event) {
+
     if (actualRowers.length+1 !== parseInt(boatToApproveMaxRowers)){
         event.preventDefault();
         showError(TOO_MUCH_MEMBERS);
@@ -227,6 +229,6 @@ async function submitApproveReservation()
 function showError(errorMsg) {
     let initMsg = "";
     if (errorMsg !== NO_ERROR)
-        initMsg ="Cannot Approve Member: ";
+        initMsg ="Cannot Approve Reservation: ";
     formErrorEl.textContent = initMsg+ errorMsg;
 }

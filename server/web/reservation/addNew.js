@@ -77,6 +77,7 @@ function createDateElement(dates) {
 
     radioDateEl.style.position = 'absolute';
     radioDateEl.style.left = '5px'
+    radioDateEl.required = true;
     el.append(radioDateEl);
 
     const nameEl = document.createElement('span');
@@ -166,6 +167,7 @@ function createMemberElement(member,mainOrAdditonal) {
             radioMemberEl.addEventListener('change', mainMember);
             radioMemberEl.style.position = 'absolute';
             radioMemberEl.style.left = '5px'
+            radioMemberEl.required = true;
             el.append(radioMemberEl);
         }
         else {
@@ -190,7 +192,7 @@ function createMemberElement(member,mainOrAdditonal) {
         idEl.innerText = "Email: " + member.email;
         el.appendChild(idEl)
         idEl.style.position = 'absolute';
-        idEl.style.left = '200px'
+        idEl.style.left = '250px'
 
     return el
 }
@@ -242,6 +244,7 @@ function createActivityElement(activity) {
 
     radioActivityEl.style.position = 'absolute';
     radioActivityEl.style.left = '5px'
+    radioActivityEl.required = true;
     el.append(radioActivityEl);
 
     const nameEl = document.createElement('span');
@@ -254,20 +257,20 @@ function createActivityElement(activity) {
     startEl.innerText = "Start Time: " + activity.startTime;
     el.appendChild(startEl)
     startEl.style.position = 'absolute';
-    startEl.style.left = '150px'
+    startEl.style.left = '200px'
 
     const endEl = document.createElement('span');
     endEl.innerText = "End Time: " + activity.endTime;
     el.appendChild(endEl)
     endEl.style.position = 'absolute';
-    endEl.style.left = '300px'
+    endEl.style.left = '350px'
 
     if (!(activity.boatName === '')){
         const boatNameEl = document.createElement('span');
         boatNameEl.innerText = "Boat Type: " + activity.boatName;
         el.appendChild(boatNameEl)
         boatNameEl.style.position = 'absolute';
-        boatNameEl.style.left = '450px'
+        boatNameEl.style.left = '500px'
     }
     return el;
 }

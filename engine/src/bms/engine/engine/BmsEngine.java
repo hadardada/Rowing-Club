@@ -237,7 +237,7 @@ public interface BmsEngine {
     public boolean removeMemberFromReservationActualList(String currentMemberEmail, Reservation clientReservation) ;
 
     // This method removes member from reservation (assuming this member is not owner of the reservation)
-    public boolean removeMemberFromReservationGeneral(String currentMemberEmail, Reservation clientReservation) ;
+    public boolean removeMemberFromReservationGeneral(Member currentMember, Reservation clientReservation) ;
 
 
     public boolean addMemberToWantedRowers(String currentMemberEmail, Reservation clientReservation);

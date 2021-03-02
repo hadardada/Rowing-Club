@@ -48,10 +48,12 @@ public class ApproveResServlet extends HttpServlet {
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
         originalRes = reservation;
 
+        List<Member> newWanted = new ArrayList<>();
         List<Member> wanted = reservation.getWantedRowers();
-        wanted.add(reservation.getParticipantRower());
+        newWanted.addAll(wanted);
+        newWanted.add(reservation.getParticipantRower());
         List<MemberParameters> memberParametersList = new ArrayList<>();
-        for (Member member : wanted) {
+        for (Member member : newWanted) {
             memberParametersList.add(convertMemberToParameters(member));
         }
         PrintWriter out = resp.getWriter();
@@ -101,5 +103,6 @@ public class ApproveResServlet extends HttpServlet {
         Boat boat = this.bmsEngine.getBoatById(parameters.BoatId);
         this.bmsEngine.assignBoatToReservation(originalRes,boat,false);
         this.bmsEngine.assignApprovedRowersToReservation(actual,originalRes,false);
+        this.bmsEngine.updateApprovedStatus(originalRes);
     }
 }

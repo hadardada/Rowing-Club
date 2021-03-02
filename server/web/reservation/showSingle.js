@@ -39,21 +39,37 @@ async function editRes()
 
 async function deleteRes()
 {
-    const response = await fetch('/reservation/delete?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
-        method: 'post',
-        headers: new Headers({
-            'Content-Type': 'application/json;charset=utf-8'
-        }),
-    });
-    window.location.href = "/menu/reservation.html";
+    window.location.href = '/reservation/delete.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 async function mergeRes(){
     window.location.href = '/reservation/merge.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
+async function rejectRes(){
+    window.location.href = '/reservation/reject.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+}
+
 async function approveRes() {
     window.location.href = '/reservation/approve.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+}
+
+async function reopenRes(){
+    const response = await fetch('/reservation/reopen?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+        method: 'get',
+        headers: new Headers({
+            'Content-Type': 'application/json;charset=utf-8'
+        }),
+    });
+    if (response.status === 200)
+    {
+        formErrorEl.textContent = "The Reservation reopened Successfully!"
+        formErrorEl.style.color = "green";
+    }
+    else{
+        formErrorEl.textContent = "ERROR! " + await response.text();
+        formErrorEl.style.color = "red";
+    }
 }
 
 async function copyRes(){
@@ -83,6 +99,8 @@ function createRes(res) {
         const typeEl = document.createElement("span");
         typeEl.innerText = type;
         boatTypeEl.appendChild(typeEl)
+        const newLineEl = document.createElement("br");
+        boatTypeEl.appendChild(newLineEl)
     });
 
     res.wantedMemberEmails.forEach((member)=>{
@@ -100,19 +118,25 @@ function createRes(res) {
         statusEl.innerText = "APPROVED";
         const boatTitleEl = document.createElement('p');
         boatTitleEl.innerText = "Booked Boat:";
+        boatTitleEl.style.fontWeight = 'bold';
         statusEl.append(boatTitleEl);
+        const newLineEl = document.createElement("br");
+        boatTitleEl.appendChild(newLineEl)
         const boat = document.createElement('span');
         boat.innerText = res.boat;
         boatTitleEl.append(boat);
 
         const rowersTitleEl = document.createElement('p');
         rowersTitleEl.innerText = "Participant Rowers:";
+        rowersTitleEl.style.fontWeight = 'bold';
         statusEl.append(rowersTitleEl);
 
         res.actualMemberEmails.forEach((memberP)=>{
             const memberPEl = document.createElement("span");
+            const newLineEl = document.createElement("br");
+            rowersTitleEl.appendChild(newLineEl)
             memberPEl.innerText = memberP;
-            wantedRowersEl.appendChild(memberPEl)
+            rowersTitleEl.appendChild(memberPEl)
         });
     }
 
@@ -133,35 +157,50 @@ function createRes(res) {
         actionsEl.append(mergeAction);
         mergeAction.addEventListener('click', mergeRes);
 
+        const editAction = document.createElement('button');
+        editAction.innerText = 'Edit'
+        editAction.style.position = 'absolute';
+        editAction.style.left = '124px'
+        actionsEl.append(editAction);
+        editAction.addEventListener('click', editRes);
+
+        const rejectAction = document.createElement('button');
+        rejectAction.innerText = 'Reject'
+        rejectAction.style.position = 'absolute';
+        rejectAction.style.left = '265px'
+        actionsEl.append(rejectAction);
+        rejectAction.addEventListener('click', rejectRes);
     }
-    const editAction = document.createElement('button');
-    editAction.innerText = 'Edit'
-    editAction.style.position = 'absolute';
-    editAction.style.left = '124px'
-    actionsEl.append(editAction);
-    editAction.addEventListener('click', editRes);
 
-    const copyAction = document.createElement('button');
-    copyAction.innerText = 'Copy'
-    copyAction.style.position = 'absolute';
-    copyAction.style.left = '163px'
-    actionsEl.append(copyAction);
-    copyAction.addEventListener('click', copyRes);
+    if (res.status===1 || res.status===2) {
+        const copyAction = document.createElement('button');
+        copyAction.innerText = 'Copy'
+        copyAction.style.position = 'absolute';
+        copyAction.style.left = '163px'
+        actionsEl.append(copyAction);
+        copyAction.addEventListener('click', copyRes);
 
-    const deleteAction = document.createElement('button');
-    deleteAction.innerText = 'Delete'
-    deleteAction.className = 'deleteButtons';
-    deleteAction.addEventListener('click', deleteRes);
-    deleteAction.style.position = 'absolute';
-    deleteAction.style.left = '210px'
-    actionsEl.append(deleteAction);
+        const deleteAction = document.createElement('button');
+        deleteAction.innerText = 'Delete'
+        deleteAction.className = 'deleteButtons';
+        deleteAction.addEventListener('click', deleteRes);
+        deleteAction.style.position = 'absolute';
+        deleteAction.style.left = '210px'
+        actionsEl.append(deleteAction);
 
-    if (res.status===2){
-        const reopenAction = document.createElement('button');
-        reopenAction.innerText = 'Re-open'
-        reopenAction.style.position = 'absolute';
-        reopenAction.style.left = '57px'
-        actionsEl.append(reopenAction);
-        deleteAction.addEventListener('click', reopenRes);
+        if (res.status === 2) {
+            const reopenAction = document.createElement('button');
+            reopenAction.innerText = 'Reopen'
+            reopenAction.style.position = 'absolute';
+            reopenAction.style.left = '5px'
+            actionsEl.append(reopenAction);
+            reopenAction.addEventListener('click', reopenRes);
+
+            copyAction.style.left = '68px'
+            deleteAction.style.left = '115px'
+        }
+    }
+    if (res.status === 3){
+        statusEl.innerText = "REJECTED";
     }
 }
