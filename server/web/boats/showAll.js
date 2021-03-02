@@ -30,6 +30,11 @@ async function deleteBoat(){
     refreshListUsesAsyncAwait()
 }
 
+async function editBoat(){
+    window.location.href = '/boats/edit.html?id=';
+
+}
+
 function createBoatElement(boat) {
 
     const el = document.createElement("p");
@@ -49,6 +54,8 @@ function createBoatElement(boat) {
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
     editAction.style.left = '57px'
+    editAction.addEventListener('click', editBoat);
+
     el.append(editAction);
 
     const number = document.createElement("span")

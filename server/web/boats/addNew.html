@@ -57,16 +57,16 @@
         <input type="checkbox" id="checkPrivate">
     </p>
     <p style="display:none" id="boatOwnerform">Boat owner's Email Address: <input type="text"  id="boatOwner" name="boatOwner"/></p>
-
     <input type="submit" value="Add Boat"/>
     <span style="color:red" class="error" id = "errorSpan" > </span>
-        <a href="/menu/boats.html" style="position: absolute; top: 500px; left: 5px; font-size: small">Go Back</a>
-        <form method="post" action="/logout">
-            <input type="submit" value="Logout" style="position: absolute; top: 10px; left: 500px;"/>
-        </form>
     </div>
 </form>
 <span class="added" style="color:green" id = "addedMsgSpan"> </span>
+<br>
+<a href="/menu/boats.html">Go Back</a>
+<form method="post" action="/logout">
+    <input type="submit" value="Logout" style="position: absolute; top: 10px; right: 10px;"/>
+</form>
 <script src="/boats/addNew.js"></script>
 </body>
 </html>

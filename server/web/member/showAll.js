@@ -30,6 +30,10 @@ async function deleteMember(){
     refreshListUsesAsyncAwait()
 }
 
+async function editMember(){
+    window.location.href = '/member/edit.html?id=';
+}
+
 
 function createMemberElement(member) {
 
@@ -50,6 +54,7 @@ function createMemberElement(member) {
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
     editAction.style.left = '57px'
+    editAction.addEventListener('click', editMember);
     el.append(editAction);
 
     const number = document.createElement("span")

@@ -30,6 +30,9 @@ async function deleteActivity(){
     refreshListUsesAsyncAwait()
 }
 
+async function editActivity(){
+    window.location.href = '/activity/edit.html?id=';
+}
 function createActivityElement(activity) {
 
     const el = document.createElement("p");
@@ -48,7 +51,8 @@ function createActivityElement(activity) {
     const editAction = document.createElement('button');
     editAction.innerText = 'edit'
     editAction.style.position = 'absolute';
-    editAction.style.left = '57px'
+    editAction.style.left = '57px';
+    editAction.addEventListener('click', editActivity);
     el.append(editAction);
 
     const number = document.createElement("span")
