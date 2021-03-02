@@ -92,6 +92,9 @@ function createMemberElement(member) {
 
     const phoneEl = document.createElement('span');
     phoneEl.innerText = member.phoneNumber;
+    if (member.phoneNumber === undefined){
+        phoneEl.innerText = '-';
+    }
     el.appendChild(phoneEl)
     phoneEl.style.position = 'absolute';
     phoneEl.style.left = '600px'
@@ -150,6 +153,9 @@ function createMemberElement(member) {
 
     const notesEl = document.createElement('span');
     notesEl.innerText = member.notes;
+    if (member.notes === undefined){
+        notesEl.innerText = '-';
+    }
     el.appendChild(notesEl)
     notesEl.style.position = 'absolute';
     notesEl.style.left = '1300px'

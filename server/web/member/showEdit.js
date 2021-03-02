@@ -41,6 +41,9 @@ async function injectParameters(){
         const memberJson = await response.json();
         currNameEl.textContent = memberJson.name;
         currEmailEl.textContent = memberJson.email;
+        if (memberId==='me'){
+            memberId = memberJson.email;
+        }
         currPasswordEl.textContent = memberJson.password;
         currAgeEl.textContent = memberJson.age;
         currPhoneEl.textContent = memberJson.phoneNumber;

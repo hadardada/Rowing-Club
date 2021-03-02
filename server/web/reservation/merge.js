@@ -130,6 +130,8 @@ function createResList(resList) {
         const nameTitle = document.createElement("br");
         MergeResListContainerEl.append(nameTitle);
     });
+    const newLine = document.createElement("br");
+    MergeResListContainerEl.append(newLine);
 }
 
 async function resToMerge(res) ///to complete
