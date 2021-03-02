@@ -51,7 +51,7 @@ public class pendingResSameActivityServlet extends HttpServlet {
     }
 
     private ReservationParameters convertReservationToParameters(Reservation res) {
-        ReservationParameters resParameters = new ReservationParameters(res);
+        ReservationParameters resParameters = new ReservationParameters(res,true);
         return resParameters;
     }
 }

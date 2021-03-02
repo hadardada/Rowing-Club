@@ -44,7 +44,7 @@ public class AddNewResServlet extends HttpServlet {
         }
         catch (ParticipentRowerIsOnListException e){
             resp.setStatus(404);
-            out.print("Main Rower is in Rowers List");
+            out.print("Main Rower is in wanted Rowers List");
         }
     }
     private void addNewReservation(ReservationParameters parameters) throws ParticipentRowerIsOnListException {

@@ -1,4 +1,5 @@
 const reservationFormEl = document.querySelector('#mergeRes');
+const addTitleEl = document.querySelector('#selectAddRow');
 
 const MergeResListContainerEl = document.querySelector('.mergeRes');
 const wantedRowersMergeListContainerEl = document.querySelector('.wantedRowersMergedList');
@@ -114,14 +115,13 @@ function createMemberElement(member) {
 //////////////////////////////////////////////////////////////////// Display Match Reservations  /////////////////////////////////////////////////////////////
 
 async function showAllMatchRes() {
-    const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'?&createdOn='+createdOnId+'&date='+date);
+    const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
     const resJson = await response.json();
     createResList(resJson);
-    await showAllDate();
 }
 
 function createResList(resList) {
-    BoatListContainerEl.innerHTML = '';
+    MergeResListContainerEl.innerHTML = '';
 
     // Create Elements on from data
     resList.forEach((res) => {
@@ -176,31 +176,34 @@ function createResElement(res) {
     mainRowerEl.style.position = 'absolute';
     mainRowerEl.style.left = '30px'
 
+    const newLine = document.createElement('br');
+    el.append(newLine);
+
     const additionalRowers = document.createElement('span');
     additionalRowers.innerText = "Additional Rowers: ";
     el.appendChild(additionalRowers)
     let distanceNum = 100;
     let distance = distanceNum + 'px';
     res.wantedMemberEmails.forEach((member) => {
-
+        const newLine = document.createElement('br');
+        additionalRowers.append(newLine);
         const memberEmailEl = document.createElement('span');
-        memberEmailEl.innerText = "Email: " + member;
+        memberEmailEl.innerText = member;
         additionalRowers.append(memberEmailEl);
         memberEmailEl.style.position = 'absolute';
-        memberEmailEl.style.left = distance;
-        distanceNum+=10;
+        memberEmailEl.style.left = '60px';
+
     });
     additionalRowers.style.position = 'absolute';
-    additionalRowers.style.left = '100px';
+    additionalRowers.style.left = '30px';
 
     const showAction = document.createElement('button');
     showAction.innerText = 'Show More'
     showAction.className = 'deleteButtons';
     showAction.id = showAction.email;
-    showAction.addEventListener('click', showMore);
-
     showAction.style.position = 'absolute';
-    showAction.style.left = distanceNum;
+    showAction.style.left = '300px';
+    showAction.addEventListener('click', showMore);
     el.append(showAction);
 
     return el

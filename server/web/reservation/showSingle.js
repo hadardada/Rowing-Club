@@ -140,8 +140,7 @@ function createRes(res) {
         });
     }
 
-    if (res.status===1){
-        statusEl.innerText = "PENDING";
+    if (res.status===1 && res.isManager) {
         const approveAction = document.createElement('button');
         approveAction.innerText = 'Approve'
         approveAction.style.position = 'absolute';
@@ -157,13 +156,6 @@ function createRes(res) {
         actionsEl.append(mergeAction);
         mergeAction.addEventListener('click', mergeRes);
 
-        const editAction = document.createElement('button');
-        editAction.innerText = 'Edit'
-        editAction.style.position = 'absolute';
-        editAction.style.left = '124px'
-        actionsEl.append(editAction);
-        editAction.addEventListener('click', editRes);
-
         const rejectAction = document.createElement('button');
         rejectAction.innerText = 'Reject'
         rejectAction.style.position = 'absolute';
@@ -171,8 +163,28 @@ function createRes(res) {
         actionsEl.append(rejectAction);
         rejectAction.addEventListener('click', rejectRes);
     }
+    if (res.status===1) {
+        statusEl.innerText = "PENDING";
+        const editAction = document.createElement('button');
+        editAction.innerText = 'Edit'
+        editAction.style.position = 'absolute';
+        editAction.style.left = '124px'
+        actionsEl.append(editAction);
+        editAction.addEventListener('click', editRes);
 
-    if (res.status===1 || res.status===2) {
+    if (!(res.isManager)) {
+        editAction.style.left = '5px'
+        const deleteAction = document.createElement('button');
+        deleteAction.innerText = 'Delete'
+        deleteAction.className = 'deleteButtons';
+        deleteAction.addEventListener('click', deleteRes);
+        deleteAction.style.position = 'absolute';
+        deleteAction.style.left = '60px'
+        actionsEl.append(deleteAction);
+    }
+    }
+
+    if ((res.status === 1 || res.status === 2) && res.isManager) {
         const copyAction = document.createElement('button');
         copyAction.innerText = 'Copy'
         copyAction.style.position = 'absolute';
@@ -188,7 +200,7 @@ function createRes(res) {
         deleteAction.style.left = '210px'
         actionsEl.append(deleteAction);
 
-        if (res.status === 2) {
+        if (res.status === 2 && res.isManager) {
             const reopenAction = document.createElement('button');
             reopenAction.innerText = 'Reopen'
             reopenAction.style.position = 'absolute';

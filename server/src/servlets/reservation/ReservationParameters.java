@@ -21,8 +21,9 @@ public class ReservationParameters {
     List<String> actualMemberEmails;
     int status;
     String boat;
+    boolean isManager;
 
-public ReservationParameters(Reservation reservation){
+public ReservationParameters(Reservation reservation,boolean isManager){
     this.participantRowerEmail = reservation.getParticipantRower().getEmailAddress();
     this.trainingDate = reservation.getTrainingDate().toString();
     this.activityID = reservation.getActivity().getId();
@@ -62,5 +63,6 @@ public ReservationParameters(Reservation reservation){
     this.activityTime = reservation.getActivity().toString();
     this.getReservationMadeAt = reservation.getReservationDateTime().toString();
     this.reservationMadeBy = reservation.getReservationMember().getEmailAddress();
+    this.isManager = isManager;
 }
 }

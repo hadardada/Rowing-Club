@@ -147,7 +147,7 @@ function additionalMembers()
         additionalRowers.push(this.id.substring('add'.length));
     }
     else {
-        const index = additionalRowers.indexOf(this.id);
+        const index = additionalRowers.indexOf(this.id.substring('add'.length));
         if (index > -1) {
             additionalRowers.splice(index, 1);
         }
