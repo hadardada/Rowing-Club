@@ -2,16 +2,27 @@ const END_BEFORE_START = "End Time before Start Time ";
 const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
 const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
 const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
+const START_TIME_IN_FORMAT = 'Start time is not in the right format';
+const END_TIME_IN_FORMAT = 'End time is not in the right format';
 const NO_ERROR = '';
 
 
 
 function validateForm(event) {
-
     if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
         if (validateTimes(startTime, endTime))
             event.preventDefault();}
-    if (oneRowerRadioEl.checked && oneOarRadioEl.checked) {
+     if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
+    {
+        event.preventDefault();
+        showError(START_TIME_IN_FORMAT);
+    }
+    else if(!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
+    {
+        event.preventDefault();
+        showError(END_TIME_IN_FORMAT);
+    }
+    else if (oneRowerRadioEl.checked && oneOarRadioEl.checked) {
         //A boat with only one rower cannot be with single oar
         event.preventDefault();
         showError(ONE_ROWER_ONE_OAR);

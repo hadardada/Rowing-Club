@@ -23,7 +23,7 @@ const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 memberFormEl.addEventListener('submit', validateForm);
 
-const EMAIL_FORMAT = "Email Address is wrong";
+const EMAIL_FORMAT = "Email Format is Wrong";
 const MEMBER_AGE = "Members age is from 10 to 120";
 const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
 const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
@@ -60,7 +60,6 @@ function validateForm(event) {
         submitMember(memberName.value,memberNotes.value,memberEmail.value,memberPassword.value,memberAge.value,memberPhoneNum.value,privateCheckBoxEl.checked,serNum,level,managerYesEl.checked);
     }
     event.preventDefault();
-
 }
 
 async function submitMember (name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager)
