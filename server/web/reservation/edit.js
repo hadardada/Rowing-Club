@@ -207,8 +207,10 @@ function createBoatTypeElement(type) {
     checkBoxBoatTypeEl.id = type;
     checkBoxBoatTypeEl.addEventListener('change', boatTypeChecked);
     el.append(checkBoxBoatTypeEl);
-    if (boatTypesOnRes.includes(type))
+    if (boatTypesOnRes.includes(type)){
         checkBoxBoatTypeEl.checked = true;
+        boatTypeChecked();
+    }
     const nameEl = document.createElement('span');
     nameEl.innerText = type;
     el.append(nameEl);
@@ -329,6 +331,7 @@ let contentType;
         contentType = "text/plain;charset=UTF-8";
         whatToUpdate = "trainingDate";
         data =dateChosen;
+        date = dateChosen;
     }
     else if (this === updateRowersButton){
         data = JSON.stringify(additionalRowersChosen);
@@ -360,6 +363,6 @@ let contentType;
         errorSpanEl.textContent = await response.text();
     }
     location.replace('/reservation/edit.html?creator='+creator+"&createdOn="
-        +createdOnId+"&date="+dateChosen);
+        +createdOnId+"&date="+date);
 
 }
