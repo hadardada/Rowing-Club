@@ -88,8 +88,8 @@ public class ApproveResServlet extends HttpServlet {
         ShortApproveReservation newMergeParameters = gson.fromJson(newMergeJsonString, ShortApproveReservation.class);
         try {
             approveRes(newMergeParameters);
-       //     notificationsMng.addNewAutoNotification(Notification.APPROVED,originalRes);
             resp.setStatus(200);
+            notificationsMng.addNewAutoNotification(Notification.APPROVED,originalRes);
         }
         catch (ApprovedReservationWithNoBoatException e){
 
