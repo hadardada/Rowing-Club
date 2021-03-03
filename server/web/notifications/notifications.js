@@ -16,6 +16,7 @@ const deletebuttonEl = document.querySelector('#deleteBut');
 
 if (queryStringOnNotifications !== "/notifications/manage.html") { // if we are not in the managing page
     window.addEventListener('load', () => {
+        fetchNotificationsCounter();
         setManagerSentButton();
         //The users list is refreshed automatically every 3 seconds
         setInterval(fetchNotificationsCounter, refreshRate);

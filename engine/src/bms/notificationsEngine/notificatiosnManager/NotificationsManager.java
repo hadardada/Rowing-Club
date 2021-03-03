@@ -69,7 +69,10 @@ public class NotificationsManager {
     }
 
     public void addNewAutoNotification(int msgType, Reservation res){
-        List <Member> reservationMembers = res.getWantedRowers();
+        List <Member> reservationMembers = new ArrayList<>();
+        reservationMembers.addAll(res.getWantedRowers());
+        reservationMembers.add(res.getParticipantRower());
+        reservationMembers.add(res.getReservationMember());
         String resDateStr = res.getTrainingDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
         String fromStr = res.getActivity().getStarts().format(DateTimeFormatter.ISO_LOCAL_TIME);
         String toStr = res.getActivity().getEnds().format(DateTimeFormatter.ISO_LOCAL_TIME);
