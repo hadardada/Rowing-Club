@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
@@ -25,17 +26,14 @@ public class DeleteResServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
-        BufferedReader reader = req.getReader();
-        String newActivityJsonString = reader.lines().collect(Collectors.joining());
-        String memberEmail = gson.fromJson(newActivityJsonString,String.class);
 
         String resMadeAtParameter = req.getParameter("createdOn");
-        String creator = req.getParameter("creator");
+        String resMadeByParameter = req.getParameter("creator");
         String resTrainingDateParameter = req.getParameter("date");
 
-        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
-        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
-        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt,creator,trainingDate);
+        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter, DateTimeFormatter.ISO_LOCAL_DATE);
+        Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
 
         deleteReservation(reservation);
         resp.setStatus(200);

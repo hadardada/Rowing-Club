@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
-@WebServlet(name = "deleteActivityServlet", urlPatterns = {"/activity/delete"})
+@WebServlet(name = "DeleteActivityServlet", urlPatterns = {"/activity/delete"})
 
 public class DeleteActivityServlet extends HttpServlet {
     private Gson gson = new Gson();

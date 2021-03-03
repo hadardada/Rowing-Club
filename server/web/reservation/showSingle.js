@@ -7,6 +7,9 @@ const wantedRowersEl = document.querySelector('#WantedRowers');
 const resMadeByEl = document.querySelector('#resMadeBy');
 const resMadeAtEl = document.querySelector('#resMadeAt');
 const actionsEl = document.querySelector('#Actions');
+const errorEl = document.querySelector('#errorSpan');
+
+
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -81,12 +84,12 @@ async function copyRes(){
     });
     if (response.status === 200)
     {
-        formErrorEl.textContent = "The Reservation Copied Successfully !"
-        formErrorEl.style.color = "green";
+        errorEl.textContent = "The Reservation Copied Successfully !"
+        errorEl.style.color = "green";
     }
     else{
-        formErrorEl.textContent = "ERROR! " + await response.text();
-        formErrorEl.style.color = "red";
+        errorEl.textContent = "ERROR! " + await response.text();
+        errorEl.style.color = "red";
     }
 }
 

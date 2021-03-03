@@ -1,5 +1,9 @@
 const reservationFormEl = document.querySelector('#mergeRes');
 const addTitleEl = document.querySelector('#selectAddRow');
+const noResEl = document.querySelector('#selectMergeRes');
+const backEl = document.querySelector('#backButton');
+const divFormBlock = document.querySelector('#formBlock');
+
 
 const MergeResListContainerEl = document.querySelector('.mergeRes');
 const wantedRowersMergeListContainerEl = document.querySelector('.wantedRowersMergedList');
@@ -9,7 +13,6 @@ const mergeAction = document.createElement('button');
 mergeAction.innerText = 'Merge Reservation'
 mergeAction.style.position = 'absolute';
 mergeAction.style.left = '5px'
-mergeAction.style.backgroundColor = 'green'
 reservationFormEl.append(mergeAction);
 mergeAction.addEventListener('click', submitMergeReservation);
 
@@ -19,7 +22,6 @@ let wantedRowersOriginal = new Array();
 let wantedRowersMerged = new Array();
 
 let membersCount = 0;
-let resCounter = 0;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -27,6 +29,7 @@ let createdOnId = urlParams.get('createdOn');
 let creator = urlParams.get('creator');
 let date = urlParams.get('date');
 
+backEl.href = '/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
@@ -42,7 +45,7 @@ async function main(){
 //////////////////////////////////////////////////////////////////// display wanted Original  ///////////////////////////////
 
 async function showWantedRowersOriginal(){
-    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -73,7 +76,7 @@ function additionalMembers()
         wantedRowersOriginal.push(this.id.substring('ORG'.length));
     }
     else {
-        const index = wantedRowersOriginal.indexOf(this.id);
+        const index = wantedRowersOriginal.indexOf(this.id.substring('ORG'.length));
         if (index > -1) {
             wantedRowersOriginal.splice(index, 1);
         }
@@ -117,7 +120,14 @@ function createMemberElement(member) {
 async function showAllMatchRes() {
     const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
     const resJson = await response.json();
-    createResList(resJson);
+    if (resJson.length===0){
+        noResEl.innerText = "No Match Reservation To Merge with, Can't Merge!"
+        noResEl.style.color = "red"
+        mergeAction.disabled = true;
+    }
+    else {
+        createResList(resJson);
+    }
 }
 
 function createResList(resList) {
@@ -141,21 +151,9 @@ async function resToMerge(res) ///to complete
 }
 
 
-
-async function showMore()
-{
-        let id = this.id;
-        const response = await fetch('/reservation/showSingle?creator='+creator+'createdOn='+createdOnId+'date='+date, {
-            method: 'get',
-            headers: new Headers({
-                'Content-Type': 'application/json;charset=utf-8'
-            }),
-        });
-}
-
 function createResElement(res) {
 
-    const el = document.createElement("p");
+    const el = document.createElement("div");
 
     //add action button to each element
     const radioResEl = document.createElement('input');
@@ -166,48 +164,31 @@ function createResElement(res) {
     radioResEl.addEventListener('change', function() {resToMerge(res);},false);
     radioResEl.style.position = 'absolute';
     radioResEl.style.left = '5px'
-    if (resCounter === 0){
-        radioResEl.defaultChecked;
-    }
-    resCounter++;
-    el.append(radioResEl);
+    radioResEl.required = true;
+    el.appendChild(radioResEl);
 
     const mainRowerEl = document.createElement('span');
     mainRowerEl.innerText = "Main Rower: " + res.participantRowerEmail;
-    el.append(mainRowerEl);
+    el.appendChild(mainRowerEl);
     mainRowerEl.style.position = 'absolute';
     mainRowerEl.style.left = '30px'
 
     const newLine = document.createElement('br');
-    el.append(newLine);
+    el.appendChild(newLine);
 
     const additionalRowers = document.createElement('span');
     additionalRowers.innerText = "Additional Rowers: ";
     el.appendChild(additionalRowers)
-    let distanceNum = 100;
-    let distance = distanceNum + 'px';
     res.wantedMemberEmails.forEach((member) => {
-        const newLine = document.createElement('br');
-        additionalRowers.append(newLine);
         const memberEmailEl = document.createElement('span');
-        memberEmailEl.innerText = member;
+        memberEmailEl.innerText = member + '  ';
         additionalRowers.append(memberEmailEl);
-        memberEmailEl.style.position = 'absolute';
-        memberEmailEl.style.left = '60px';
+      //  memberEmailEl.style.position = 'absolute';
+     //   memberEmailEl.style.left = '80px';
 
     });
     additionalRowers.style.position = 'absolute';
     additionalRowers.style.left = '30px';
-
-    const showAction = document.createElement('button');
-    showAction.innerText = 'Show More'
-    showAction.className = 'deleteButtons';
-    showAction.id = showAction.email;
-    showAction.style.position = 'absolute';
-    showAction.style.left = '300px';
-    showAction.addEventListener('click', showMore);
-    el.append(showAction);
-
     return el
 }
 
@@ -217,6 +198,11 @@ function createWantedList(emailList,nameList) {
     wantedRowersMergeListContainerEl.innerHTML = '';
 
     // Create Elements on from data
+    const memberEl = createMemberResElement(resObjMerged.participantRowerEmail,resObjMerged.participantRowerName);
+    wantedRowersMergeListContainerEl.append(memberEl);
+    const nameTitle = document.createElement("br");
+    wantedRowersMergeListContainerEl.append(nameTitle);
+
     let numOfRow = emailList.length;
     for (let i = 0;i < numOfRow; i++) {
         const memberEl = createMemberResElement(emailList[i],nameList[i]);
@@ -232,7 +218,7 @@ function additionalMergeMembers()
         wantedRowersMerged.push(this.id.substring('MRG'.length));
     }
     else {
-        const index = wantedRowersMerged.indexOf(this.id);
+        const index = wantedRowersMerged.indexOf(this.id.substring('MRG'.length));
         if (index > -1) {
             wantedRowersMerged.splice(index, 1);
         }
@@ -291,7 +277,7 @@ async function submitMergeReservation()
     if (response.status === 200)
     {
         divFormBlock.style.display = "none";
-        addedMsgEl.textContent = "A new Member was successfully added to the club!"
+        addedMsgEl.textContent = "Reservations Merged successfully"
     }
     else{
         formErrorEl.textContent = "ERROR! " + await response.text();
@@ -302,6 +288,6 @@ async function submitMergeReservation()
 function showError(errorMsg) {
     let initMsg = "";
     if (errorMsg !== NO_ERROR)
-        initMsg ="Cannot Approve Member: ";
+        initMsg ="Cannot Merge Reservation: ";
     formErrorEl.textContent = initMsg+ errorMsg;
 }

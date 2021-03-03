@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ReservationParameters {
     String participantRowerEmail;
+    String participantRowerName;
     String trainingDate;
     int activityID;
     String activityTime;
@@ -64,5 +65,6 @@ public ReservationParameters(Reservation reservation,boolean isManager){
     this.getReservationMadeAt = reservation.getReservationDateTime().toString();
     this.reservationMadeBy = reservation.getReservationMember().getEmailAddress();
     this.isManager = isManager;
+    this.participantRowerName = reservation.getParticipantRower().getName();
 }
 }

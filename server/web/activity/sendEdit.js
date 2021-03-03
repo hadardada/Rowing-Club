@@ -34,13 +34,19 @@ function createUpdateReqObj(){
         const newNameEl = document.querySelector('#newName');
         data = new updateReq(UPDATE_NAME, newNameEl.value, activityId);
     }
-    else if (this === updateStartButtonEl){
+    else if (this === updateStartButtonEl) {
         const newStartTime = document.querySelector('#starts');
-        data = new updateReq(UPDATE_STARTS, newStartTime.value, activityId);
+        let newActivityUpdate = validateForm();
+        if (typeof newActivityUpdate !== 'undefined') {
+            data = new updateReq(UPDATE_STARTS, newStartTime.value, activityId);
+        }
     }
-    else if (this === updateEndsButtonEl){
+    else if (this === updateEndsButtonEl) {
         const newEndTime = document.querySelector('#ends');
-        data = new updateReq(UPDATE_ENDS, newEndTime.value, activityId);
+        let newActivityUpdate = validateForm();
+        if (typeof newActivityUpdate !== 'undefined') {
+            data = new updateReq(UPDATE_ENDS, newEndTime.value, activityId);
+        }
     }
 
     else if(this === updateNoTypeBttnEl){

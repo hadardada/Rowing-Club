@@ -11,6 +11,8 @@ const divFormBlock = document.querySelector('#formBlock');
 const memberAge = document.querySelector('#Activity');
 const memberEmail = document.querySelector('#BoatsTypes');
 const memberPhoneNum = document.querySelector('#additionalRowers');
+const buttonAddResEl = document.querySelector('#addRes');
+
 
 //global
 let mainRowerEmail;
@@ -207,8 +209,16 @@ async function showAllActivities() {
         }),
     });
     const value = await response.json();
-    createActivityList(value);
+    if (value.length === 0){
+        formErrorEl.textContent = "ERROR! No Activities in the club, reservation can't be added";
+        formErrorEl.style.color = "red";
+        buttonAddResEl.disabled = true;
+    }
+    else {
+        createActivityList(value);
+    }
     await showAllBoatType();
+
 }
 
 function createActivityList(activityList) {

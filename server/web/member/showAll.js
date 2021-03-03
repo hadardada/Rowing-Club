@@ -195,6 +195,7 @@ function createMemberList(memberList) {
     nameTitle.style.position = 'absolute';
     nameTitle.style.left = '150px'
     nameTitle.style.textDecoration = "underline";
+    nameTitle.style.top = '100px'
 
     idTitle.style.position = 'absolute';
     idTitle.style.left = '100px'

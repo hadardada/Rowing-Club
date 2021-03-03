@@ -1,5 +1,6 @@
 const reservationFormEl = document.querySelector('#ApproveAction');
 const selectBoatEl = document.querySelector('#selectBoat');
+const backEl = document.querySelector('#backButton');
 
 const approveAction = document.createElement('button');
 approveAction.innerText = 'Approve Reservation'
@@ -14,7 +15,7 @@ const wantedRowersListContainerEl = document.querySelector('.wantedRowersList');
 
 //global
 let boatToApprove;
-let boatToApproveMaxRowers='';
+let boatToApproveMaxRowers;
 let wantedRowersOriginal = new Array();
 
 let actualRowers = new Array();
@@ -25,6 +26,9 @@ const urlParams = new URLSearchParams(queryString);
 let createdOnId = urlParams.get('createdOn');
 let creator = urlParams.get('creator');
 let date = urlParams.get('date');
+
+backEl.href = '/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+
 
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
@@ -49,6 +53,7 @@ async function showAllBoats() {
     else {
         selectBoatEl.innerText = "No Available Boats For This Reservation!"
         selectBoatEl.style.color = 'red';
+        approveAction.disabled = true;
     }
     await showWantedRowersOriginal()
 }
@@ -192,8 +197,8 @@ function ApprovedJson() {
     this.BoatId = boatToApprove;
     this.ActualMembers = actualRowers;
 }
-const TOO_MUCH_MEMBERS = "Not enough or too much members selected, the number should be " + boatToApproveMaxRowers;
 function validateForm(event) {
+    let TOO_MUCH_MEMBERS = "Not enough or too much members selected, the number should be " + boatToApproveMaxRowers;
 
     if (actualRowers.length+1 !== parseInt(boatToApproveMaxRowers)){
         event.preventDefault();

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,14 +38,17 @@ public class MergeResServlet extends HttpServlet {
         String resMadeByParameter = req.getParameter("creator");
         String resTrainingDateParameter = req.getParameter("date");
 
-        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter);
-        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter);
+        LocalDateTime resMadeAt = LocalDateTime.parse(resMadeAtParameter, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDate trainingDate = LocalDate.parse(resTrainingDateParameter, DateTimeFormatter.ISO_LOCAL_DATE);
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
         originalRes = reservation;
+
+        List<Member> newWanted = new ArrayList<>();
         List<Member> wanted = reservation.getWantedRowers();
-        wanted.add(reservation.getParticipantRower());
+        newWanted.addAll(wanted);
+        newWanted.add(reservation.getParticipantRower());
         List<MemberParameters> memberParametersList = new ArrayList<>();
-        for (Member member : wanted) {
+        for (Member member : newWanted) {
             memberParametersList.add(convertMemberToParameters(member));
         }
         PrintWriter out = resp.getWriter();
@@ -86,9 +90,12 @@ public class MergeResServlet extends HttpServlet {
         for (String member: parameters.wantedOriginal){
             originalWanted.add(this.bmsEngine.getMemberByEmail(member));
         }
+        originalWanted.add(originalRes.getParticipantRower());
+
         for (String member: parameters.wantedMerge){
             mergeWanted.add(this.bmsEngine.getMemberByEmail(member));
         }
+
         LocalDateTime resMergeMadeAt = LocalDateTime.parse(parameters.createdOnMerge);
         Reservation mergedRes = this.bmsEngine.findResByResMadeAt(resMergeMadeAt,parameters.createdByMerge,originalRes.getTrainingDate());
         this.bmsEngine.mergeReservations(originalWanted,mergeWanted,originalRes,mergedRes);

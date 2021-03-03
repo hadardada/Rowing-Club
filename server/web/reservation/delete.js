@@ -8,7 +8,7 @@ let date = urlParams.get('date');
 deleteRes()
 async function deleteRes() {
     const response = await fetch('/reservation/delete?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date, {
-        method: 'get',
+        method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
         }),
