@@ -1,5 +1,6 @@
 package servlets.notifications;
 
+import bms.notificationsEngine.notification.Notification;
 import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
 import utilities.ServletUtils;
@@ -30,8 +31,8 @@ public class NotificationServlet extends HttpServlet {
             out.print(gson.toJson(newNotifications));
         }
         else if (content.equals("club")){
-            String allClubMsgs = notificationsMng.getAllManualNotiesForUser(usernameFromSession);
-            out.print(allClubMsgs);
+            List<Notification> clubNotificationss = notificationsMng.getAllManualNotiesForUser();
+            out.print(gson.toJson(clubNotificationss));
 
         }
         else{ // get new messages counter
@@ -44,8 +45,23 @@ public class NotificationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(req);
         NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
-        String newMsg =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        notificationsMng.addNewManualNotification(newMsg);
+        String numberParameter= req.getParameter("notificationsRadios");
+        if ( numberParameter!= null){ //delete
+            int serNumber = Integer.parseInt(numberParameter);
+            notificationsMng.deleteNotificationBySerNum(serNumber);
+        }
+        else{
+            String newMsg =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            notificationsMng.addNewManualNotification(newMsg);
+        }
 
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
+        String numberParameter= req.getParameter("notificationsRadios");
+        int serNumber = Integer.getInteger(numberParameter);
+        notificationsMng.deleteNotificationBySerNum(serNumber);
     }
 }

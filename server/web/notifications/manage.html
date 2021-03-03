@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification Management</title>
+</head>
+<body>
+<h2>Manage Manual Notifications:</h2><br>
+<h3>Post a new club notification:</h3>
+<button id="postMsg">Post a new Message</button>
+<h3>Delete a club notification:</h3>
+<p>Select a notification to delete:</p>
+<form id="deleteMsgForm" action="/notifications" method="post">
+    <p id ="isThere"></p>
+    <span id="rediosSpan"></span>
+    <br><input type="submit" value="Delete"/>
+</form>
+
+
+
+
+<script src="notifications.js"></script>
+</body>
+</html>

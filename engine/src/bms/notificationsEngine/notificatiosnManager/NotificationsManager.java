@@ -95,11 +95,10 @@ public class NotificationsManager {
         return newNoties;
     }
 
-    public String getAllManualNotiesForUser(String email){
-        String manualNoties="";
-        UserNotification user = usersNoties.get(email);
+    public List<Notification> getAllManualNotiesForUser(){
+        List<Notification> manualNoties = new ArrayList<>();
         for (Integer msgNum: allManualNoties){
-            manualNoties= manualNoties + (allNoties.get(msgNum).getContent())+"\n";
+            manualNoties.add(allNoties.get(msgNum));
         }
         return manualNoties;
     }
@@ -108,6 +107,10 @@ public class NotificationsManager {
         UserNotification user = usersNoties.get(email);
         return user.newNotiesCounter;
 
+    }
+
+    public void deleteNotificationBySerNum (int serNum){
+        allManualNoties.remove(serNum);
     }
 
 }
