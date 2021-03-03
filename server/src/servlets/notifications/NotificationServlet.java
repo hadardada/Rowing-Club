@@ -31,8 +31,8 @@ public class NotificationServlet extends HttpServlet {
             out.print(gson.toJson(newNotifications));
         }
         else if (content.equals("club")){
-            List<Notification> clubNotificationss = notificationsMng.getAllManualNotiesForUser();
-            out.print(gson.toJson(clubNotificationss));
+            List<Notification> clubNotifications = notificationsMng.getAllManualNotiesForUser();
+            out.print(gson.toJson(clubNotifications));
 
         }
         else{ // get new messages counter
@@ -49,6 +49,7 @@ public class NotificationServlet extends HttpServlet {
         if ( numberParameter!= null){ //delete
             int serNumber = Integer.parseInt(numberParameter);
             notificationsMng.deleteNotificationBySerNum(serNumber);
+            resp.sendRedirect("/notifications/manage.html");
         }
         else{
             String newMsg =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
@@ -57,11 +58,4 @@ public class NotificationServlet extends HttpServlet {
 
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
-        String numberParameter= req.getParameter("notificationsRadios");
-        int serNumber = Integer.getInteger(numberParameter);
-        notificationsMng.deleteNotificationBySerNum(serNumber);
-    }
 }

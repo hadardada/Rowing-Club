@@ -9,11 +9,12 @@ const manageButtonEl = document.querySelector('#goToManager');
 const sendNotificationButtonEl = document.querySelector('#postMsg');
 const deleteMsgFormEl = document.querySelector('#deleteMsgForm');
 const noNotoficationMsg = document.querySelector('#isThere');
-const queryString = window.location.pathname;
+
+const queryStringOnNotifications = window.location.pathname;
 const deletebuttonEl = document.querySelector('#deleteBut');
 
 
-if (queryString !== "/notifications/manage.html") { // if we are not in the managing page
+if (queryStringOnNotifications !== "/notifications/manage.html") { // if we are not in the managing page
     window.addEventListener('load', () => {
         setManagerSentButton();
         //The users list is refreshed automatically every 3 seconds

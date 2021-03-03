@@ -604,7 +604,7 @@ public class Engine implements BmsEngine, Serializable {
     public List<Member> updateReservationAdditinalWantedRowers(List<Member> wantedRowers, Reservation clientReservation) throws ParticipentRowerIsOnListException {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
                 clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
-        return Collections.unmodifiableList(reservations.updateReservationAdditinalActualRowers(newMemberServerList(wantedRowers), myReservation));
+        return Collections.unmodifiableList(reservations.updateReservationAdditinalWantedRowers(newMemberServerList(wantedRowers), myReservation));
     }
 
 
