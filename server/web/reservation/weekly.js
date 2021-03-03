@@ -15,8 +15,8 @@ function shortReservation (){
 }
 
 //get required status reservation (scheduling / all)
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
+const queryStringWeekly = window.location.search;
+const urlParams = new URLSearchParams(queryStringWeekly);
 const status = urlParams.get('status');
 
 if (status ==="all")
@@ -98,7 +98,8 @@ async function getReservationsOnDate(reqDate) {
     let reservations = await response.json();
     return reservations;
 }
-
+//this functions fills out the columns of the dates by goings over 8 days loop and pullin the data for
+//each day from server
 async function fillOutResOnDate(index) {
     let nextDayDate = new Date();
     nextDayDate.setDate(nextDayDate.getDate() + index-1);
@@ -137,10 +138,8 @@ async function fillOutResOnDate(index) {
                     }
                     else {
                         currRow = currRow.nextSibling;
-                        //if(maxResPerActivity[activityRowIndx]>1)
-                        resCellEl = currRow.getElementsByTagName('td')[index - 1];
-                        //else
-                        //resCellEl = currRow.getElementsByTagName('td')[index];}
+                        if(currRow!= null)
+                            resCellEl = currRow.getElementsByTagName('td')[index - 1];
                     }
                }
 

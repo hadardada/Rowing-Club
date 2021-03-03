@@ -184,6 +184,10 @@ public class ReservationsManagement implements Serializable {
             throw new ParticipentRowerIsOnListException();
         }
         myReservation.setWantedRowers(wantedRowers);
+        for (Member rower : wantedRowers) { //add the updated reservation to the involve rowers
+            if (!rower.getMyReservations().contains(myReservation))
+                rower.getMyReservations().add(myReservation);
+        }
         return myReservation.getWantedRowers();
     }
 

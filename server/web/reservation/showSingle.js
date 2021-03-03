@@ -30,30 +30,25 @@ async function showSingle() {
     createRes(value);
 }
 
-async function editRes()
+function editRes()
 {
-    const response = await fetch('/reservation/show', {
-        method: 'post',
-        headers: new Headers({
-            'Content-Type': 'application/json;charset=utf-8'
-        }),
-    });
+    window.location.href = '/reservation/edit.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
-async function deleteRes()
+function deleteRes()
 {
     window.location.href = '/reservation/delete.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
-async function mergeRes(){
+function mergeRes(){
     window.location.href = '/reservation/merge.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
-async function rejectRes(){
+function rejectRes(){
     window.location.href = '/reservation/reject.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
-async function approveRes() {
+function approveRes() {
     window.location.href = '/reservation/approve.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
