@@ -50,5 +50,4 @@ public class ShowSingleServlet extends HttpServlet {
         ReservationParameters resParameters = new ReservationParameters(res,isManager);
         return resParameters;
     }
-
 }

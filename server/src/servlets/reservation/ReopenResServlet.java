@@ -38,7 +38,7 @@ public class ReopenResServlet extends HttpServlet {
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
 
         reopenRes(reservation);
-        notificationsMng.addNewAutoNotification(Notification.REOEPNED,reservation);
+     //   notificationsMng.addNewAutoNotification(Notification.REOEPNED,reservation);
 
         resp.setStatus(200);
     }

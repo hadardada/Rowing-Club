@@ -126,6 +126,7 @@ function createBoatList(boatList) {
     titlesEl.append(nameTitle);
     nameTitle.style.position = 'absolute';
     nameTitle.style.left = '150px'
+    nameTitle.style.top = '100px'
     nameTitle.style.textDecoration = "underline";
     idTitle.style.position = 'absolute';
     idTitle.style.left = '100px'

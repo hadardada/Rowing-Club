@@ -1,6 +1,8 @@
 const reservationFormEl = document.querySelector('#ApproveAction');
 const selectBoatEl = document.querySelector('#selectBoat');
 const backEl = document.querySelector('#backButton');
+const divFormBlock = document.querySelector('#formBlock');
+
 
 const approveAction = document.createElement('button');
 approveAction.innerText = 'Approve Reservation'

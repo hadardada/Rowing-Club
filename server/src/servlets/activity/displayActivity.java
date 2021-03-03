@@ -39,10 +39,10 @@ public class displayActivity extends HttpServlet {
         boolean hasBoat = false;
         String boatName = "";
         String boatSize = "";
-        boolean singleOar = false;
-        boolean wide = false;
-        boolean helmsman = false;
-        boolean coastal = false;
+        Boolean singleOar = false;
+        Boolean wide = false;
+        Boolean helmsman = false;
+        Boolean coastal = false;
 
         if (!(activity.getSpecifiedType() == null)){
             hasBoat = true;

@@ -8,19 +8,19 @@ public class activityParameters {
     String startTime;
     String endTime;
     String rowersNum;
-    boolean singleOar;
-    boolean wide;
-    boolean helmsman;
-    boolean coastal;
-    boolean hasBoat;
+    Boolean singleOar;
+    Boolean wide;
+    Boolean helmsman;
+    Boolean coastal;
+    Boolean hasBoat;
     String boatName;
     String id;
 
     public activityParameters(){}
     public activityParameters(String activityName, String startTime,
                               String endTime, String rowersNum,
-                              boolean singleOar, boolean wide,
-                              boolean helmsman,boolean coastal, boolean hasBoat, String boatName,String id)
+                              Boolean singleOar, Boolean wide,
+                              Boolean helmsman,Boolean coastal, Boolean hasBoat, String boatName,String id)
     {
         this.activityName = activityName;
         this.startTime = startTime;
