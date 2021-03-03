@@ -69,12 +69,15 @@ public class NotificationsManager {
     }
 
     public void addNewAutoNotification(int msgType, Reservation res){
-        List <Member> reservationMembers = res.getWantedRowers();
-        String resDateStr = res.getTrainingDate().format(DateTimeFormatter.ISO_LOCAL_TIME);
+        Set <Member> reservationMembers = new HashSet<>();
+        reservationMembers.addAll(res.getWantedRowers());
+        reservationMembers.add(res.getParticipantRower());
+        reservationMembers.add(res.getReservationMember());
+        String resDateStr = res.getTrainingDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
         String fromStr = res.getActivity().getStarts().format(DateTimeFormatter.ISO_LOCAL_TIME);
         String toStr = res.getActivity().getEnds().format(DateTimeFormatter.ISO_LOCAL_TIME);
         Notification newAutoNoti = new Notification(msgType, resDateStr, fromStr, toStr);
-        allManualNoties.add(newAutoNoti.getSerialNum());
+        allNoties.put(newAutoNoti.getSerialNum(), newAutoNoti);
         for (Member resMember: reservationMembers){
             UserNotification user = usersNoties.get(resMember.getEmailAddress());
             user.myNewNoties.add(newAutoNoti.getSerialNum());
@@ -88,7 +91,7 @@ public class NotificationsManager {
         UserNotification user = usersNoties.get(email);
         for (Integer msgNum: user.myNewNoties){
             newNoties.add(allNoties.get(msgNum).getContent());
-            //now deletes autoMsg for user (because this function is being calld when member is viewing his msg)
+            //now deletes autoMsg for user (because this function is being called when member is viewing his msg)
         }
         user.myNewNoties.clear();
         user.newNotiesCounter = 0;

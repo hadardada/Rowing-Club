@@ -56,24 +56,22 @@ public class Engine implements BmsEngine, Serializable {
         this.activities = new ActivitiesManagement();
         this.reservations = new ReservationsManagement();
         this.reservations = new ReservationsManagement();
-        this.members = new MembersManagement( this.boats);
+        this.members = new MembersManagement(this.boats);
         this.stateSaver = new XmlStateExport(this);
         this.loader = new XmlStateImport(this);
         this.schemaXml = new XMLImportAndExport(this);
         try {
             addNewMember("Admin", "none", "Admin123@gmail.com", "123456", 45, "0526676697", false, -1, 3, true, LocalDate.of(2020, 4, 8), LocalDate.of(2021, 4, 7), true);
-        } catch (EmailAddressAlreadyExistsException | BoatDoesNotExistException| ExpiryDateIsBeforeSignUpException e) {
+        } catch (EmailAddressAlreadyExistsException | BoatDoesNotExistException | ExpiryDateIsBeforeSignUpException e) {
             System.out.println(e.getMessage());
         }
         this.loader.loadState();
     }
 
-    public boolean setBoatsManagement(){
+    public boolean setBoatsManagement() {
         this.members.setBaotsManagement(this.boats);
         return true;
     }
-
-
 
 
     ///////////////////////////////////////////////////////////////////////////////////// Boat ////////////////////////////////////////////////////////////////////////////
@@ -88,7 +86,7 @@ public class Engine implements BmsEngine, Serializable {
         return true;
     }
 
-    public Boat getBoatById(Integer serNum){
+    public Boat getBoatById(Integer serNum) {
         return this.boats.getBoatBySerialNum(serNum);
     }
 
@@ -154,7 +152,7 @@ public class Engine implements BmsEngine, Serializable {
     // true if succeeded
     public boolean changeBoatsSerialNumber(Integer serNum, int newNum) {
         Boat boat = boats.getBoatBySerialNum(serNum);
-        boolean succeeded =  boats.changeBoatsSerialNumber(boat, newNum);
+        boolean succeeded = boats.changeBoatsSerialNumber(boat, newNum);
         if (succeeded)
             this.stateSaver.saveStateToXml();
         return succeeded;
@@ -173,7 +171,7 @@ public class Engine implements BmsEngine, Serializable {
 
     //This method deletes all boats from boats list, therefore realses all future approved reservations
     public boolean removeAllBoats() {
-        Set <Boat> boatsTemp = new HashSet<>();
+        Set<Boat> boatsTemp = new HashSet<>();
         boatsTemp.addAll(boats.getBoats().values());
         for (Boat boat : boatsTemp)
             deleteBoat(boat);
@@ -189,11 +187,11 @@ public class Engine implements BmsEngine, Serializable {
 
     //This method releases boat from reservation and deletes the activity from boat's scheduling
     // (since it's now available again at that time)
-    public boolean releaseBoatFromReservation (Boat boat, Reservation clientReservation) {
+    public boolean releaseBoatFromReservation(Boat boat, Reservation clientReservation) {
         Reservation reservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         reservation.releaseBoatFromReservation();
-        return boats.deleteSingleActivityFromBoatsScheduling(boat,reservation.getActivity(), reservation.getTrainingDate());
+        return boats.deleteSingleActivityFromBoatsScheduling(boat, reservation.getActivity(), reservation.getTrainingDate());
     }
 
     //This method removes days that have passed from scheduling map of a given boat
@@ -210,7 +208,9 @@ public class Engine implements BmsEngine, Serializable {
 
     ///////////////////////////////////////////////////////////////////////////////////// getters ////////////////////////////////////////////////////////////////////////////
 
-    public XMLImportAndExport getXMLSchema(){return this.schemaXml;}
+    public XMLImportAndExport getXMLSchema() {
+        return this.schemaXml;
+    }
 
     public Map<String, Member> getMembers() {
         return Collections.unmodifiableMap(members.getMembers());
@@ -229,30 +229,29 @@ public class Engine implements BmsEngine, Serializable {
         return Collections.unmodifiableMap(boats.getBoats());
     }
 
-    public List<Reservation> getOpenReservation(){
+    public List<Reservation> getOpenReservation() {
         return Collections.unmodifiableList(reservations.getOpenReservation());
     }
 
-    public List<Reservation> getOpenReservationForDate (LocalDate date){
+    public List<Reservation> getOpenReservationForDate(LocalDate date) {
         return reservations.getOpenReservationForDate(date);
     }
 
-    public List<Reservation> getClosedReservation(){
+    public List<Reservation> getClosedReservation() {
         return Collections.unmodifiableList(reservations.getClosedReservation());
     }
 
-    public List<Reservation> getClosedReservationForDate (LocalDate date){
+    public List<Reservation> getClosedReservationForDate(LocalDate date) {
         return reservations.getClosedReservationForDate(date);
     }
 
 
     ///////////////////////////////////////////////////////////////////////////////////// Member ////////////////////////////////////////////////////////////////////////////
 
-    public Member getMemberByEmail(String email){
+    public Member getMemberByEmail(String email) {
 
         return this.members.getMembers().get(email);
     }
-
 
 
     //this function set the member age
@@ -349,8 +348,8 @@ public class Engine implements BmsEngine, Serializable {
                                 LocalDate expirationDate, boolean loadProcess)
             throws EmailAddressAlreadyExistsException, BoatDoesNotExistException, ExpiryDateIsBeforeSignUpException {
 
-        this.members.addNewMember(name,notes,email,password,age,phoneNumber,havePrivateBoat,
-                privateBoatSerialNumber,rowingLevel,isManager,signUpDate,expirationDate);
+        this.members.addNewMember(name, notes, email, password, age, phoneNumber, havePrivateBoat,
+                privateBoatSerialNumber, rowingLevel, isManager, signUpDate, expirationDate);
         if (!loadProcess)// first insert : admin
             this.stateSaver.saveStateToXml();
 
@@ -371,25 +370,25 @@ public class Engine implements BmsEngine, Serializable {
         if (removedMember.getPrivateBoatStatus())
             deleteBoat(boats.getBoatBySerialNum(removedMember.getPrivateBoatSerialNumber()));
         for (Reservation reservation : removedMember.getMyReservations()) {
-                if (reservation.getParticipantRower() == removedMember) // meaning the deleted member was the main rower in that reservation
-                    deleteReservation(reservation); // in that case, if the main rower is deleted then its reservation is also deleted
-                else {
-                    // removed member was a part of a reservation
-                    if (reservation.getIsApproved() == null || !reservation.getIsApproved()) {// if the res pending
-                        removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
+            if (reservation.getParticipantRower() == removedMember) // meaning the deleted member was the main rower in that reservation
+                deleteReservation(reservation); // in that case, if the main rower is deleted then its reservation is also deleted
+            else {
+                // removed member was a part of a reservation
+                if (reservation.getIsApproved() == null || !reservation.getIsApproved()) {// if the res pending
+                    removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
 
-                    } else if (reservation.getIsApproved()) { // if the res approved
-                        removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
-                        removeMemberFromReservationActualList(removedMember.getEmailAddress(), reservation); // remove from actual
-                        reservation.reopenReservation();
-                    }
+                } else if (reservation.getIsApproved()) { // if the res approved
+                    removeMemberFromReservationGeneral(removedMember, reservation); // remove from wanted
+                    removeMemberFromReservationActualList(removedMember.getEmailAddress(), reservation); // remove from actual
+                    reservation.reopenReservation();
+                }
             }
         }
         return true;
     }
 
     public boolean removeAllMembers(String loggedManagerEmail) {
-        Set<String > emailKeys = new HashSet<>();
+        Set<String> emailKeys = new HashSet<>();
         emailKeys.addAll(this.members.getMembers().keySet());
         for (String key : emailKeys)
             if (!key.equals(loggedManagerEmail))
@@ -402,11 +401,11 @@ public class Engine implements BmsEngine, Serializable {
     }
 
     public List<Member> getMembersMaxRowing(int listSize, String memberEmail) {
-        return this.members.getMembersMaxRowing(listSize,this.members.getMemberByEmail(memberEmail));
+        return this.members.getMembersMaxRowing(listSize, this.members.getMemberByEmail(memberEmail));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////// Activity ////////////////////////////////////////////////////////////////////////////
-    public Activity findActivityById(int id){
+    public Activity findActivityById(int id) {
         return activities.findActivityById(id);
     }
 
@@ -414,7 +413,7 @@ public class Engine implements BmsEngine, Serializable {
     //This Method creates and add a new activity (=time window) to the activities list
     // if optionalType is not offered, should be received as NULL
     public Activity addNewActivity(LocalTime starts, LocalTime ends, String activityName, Boat.BoatType optionalType, boolean loadingProcess) throws EndTimeIsLowerException {
-        Activity newActivity = activities.addNewActivity(starts,ends,activityName,optionalType);
+        Activity newActivity = activities.addNewActivity(starts, ends, activityName, optionalType);
         if (!loadingProcess)
             this.stateSaver.saveStateToXml();
         return newActivity;
@@ -445,7 +444,7 @@ public class Engine implements BmsEngine, Serializable {
 
     public boolean changeActivityBoatType(Integer id, Boat.BoatType newType) {
         Activity activity = this.activities.findActivityById(id);
-        boolean succeed = activities.changeActivityBoatType(activity,newType);
+        boolean succeed = activities.changeActivityBoatType(activity, newType);
         this.stateSaver.saveStateToXml();
         return succeed;
     }
@@ -474,9 +473,10 @@ public class Engine implements BmsEngine, Serializable {
 
     public boolean removeAllActivities() {
         Set<Integer> activitiesID = new HashSet<>();
-        for (Activity activity : activities.getActivities()){
-            activitiesID.add(activity.getId());}
-        for (Integer activityID : activitiesID){
+        for (Activity activity : activities.getActivities()) {
+            activitiesID.add(activity.getId());
+        }
+        for (Integer activityID : activitiesID) {
             this.removeActivityFromList(activityID);
         }
         this.stateSaver.saveStateToXml();
@@ -489,56 +489,55 @@ public class Engine implements BmsEngine, Serializable {
     //if trainingDate is before today, reservation is not created and exception is thrown
     //if participantRower (reservation owner) is in the additional rowers reservation is not created and exception is thrown.
     public Reservation addNewReservation(Member participantRower, LocalDate trainingDate, Activity trainingTime,
-                                     List<Boat.BoatType> boatTypes, List<Member> wantedAdditionalRowers, LocalDateTime reservationDateTime, Member reservationMember, boolean loadProcess) throws ParticipentRowerIsOnListException {
+                                         List<Boat.BoatType> boatTypes, List<Member> wantedAdditionalRowers, LocalDateTime reservationDateTime, Member reservationMember, boolean loadProcess) throws ParticipentRowerIsOnListException {
 
         Member participantRowerOnList = members.getMemberByEmail(participantRower.getEmailAddress());
         Reservation newReservation = reservations.addNewReservation(participantRowerOnList, trainingDate,
                 trainingTime, boatTypes, newMemberServerList(wantedAdditionalRowers), reservationDateTime, reservationMember);
 
         //reservation is approved Automatically if Boat is private
-        if ((participantRowerOnList.getPrivateBoatStatus())&&(!loadProcess)) {
+        if ((participantRowerOnList.getPrivateBoatStatus()) && (!loadProcess)) {
             approveResAutomatically(participantRowerOnList, newReservation, loadProcess);
         }
 
         if (!loadProcess)
             this.stateSaver.saveStateToXml();
-            this.stateSaver.saveStateToXml();
+        this.stateSaver.saveStateToXml();
         return newReservation;
     }
 
-    public List<Member> newMemberServerList(List<Member> clientList){
+    public List<Member> newMemberServerList(List<Member> clientList) {
         List<Member> newMemberList = new ArrayList<>();
 
-        for (Member member: clientList){
+        for (Member member : clientList) {
             newMemberList.add(getMemberByEmail(member.getEmailAddress()));
         }
 
         return newMemberList;
     }
 
-    public Reservation findResByResMadeAt (LocalDateTime madeAt, String email, LocalDate trainingDate){
-        return this.reservations.findByResMadeAtByWho(madeAt,email,trainingDate);
+    public Reservation findResByResMadeAt(LocalDateTime madeAt, String email, LocalDate trainingDate) {
+        return this.reservations.findByResMadeAtByWho(madeAt, email, trainingDate);
     }
 
     //This reservation approves a reservation, if reservation owner has a private bms.engine.boatsManagement.boat
     //that its type matches the ones on the requested bms.engine.boatsManagement.boat types.
     public boolean approveResAutomatically(Member participantRower, Reservation clientReservation, boolean loadProcess) {
         Reservation reservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         Boat privateBoat = boats.getBoatBySerialNum(participantRower.getPrivateBoatSerialNumber());
-       if (reservations.approveResAutomatically(participantRower,reservation,privateBoat)) {
-           if (!loadProcess)
-               this.stateSaver.saveStateToXml();
-           return true;
-       }
-       else
-           return false;
+        if (reservations.approveResAutomatically(participantRower, reservation, privateBoat)) {
+            if (!loadProcess)
+                this.stateSaver.saveStateToXml();
+            return true;
+        } else
+            return false;
     }
 
 
     public Member updateReservatioParticipantRower(Member participantRower, Reservation clientReservation) throws ParticipentRowerIsOnListException {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         Boat privateBoat = boats.getBoatBySerialNum(participantRower.getPrivateBoatSerialNumber());
         reservations.updateReservatioParticipantRower(participantRower, myReservation, privateBoat);
         this.stateSaver.saveStateToXml();
@@ -547,7 +546,7 @@ public class Engine implements BmsEngine, Serializable {
 
     public LocalDate updateReservatioTrainingDate(LocalDate trainingDate, Reservation clientReservation) {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         reservations.updateReservatioTrainingDate(trainingDate, myReservation);
         this.stateSaver.saveStateToXml();
         return myReservation.getTrainingDate();
@@ -555,7 +554,7 @@ public class Engine implements BmsEngine, Serializable {
 
     public Activity updateReservatioActivity(Activity trainingTime, Reservation clientReservation) {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         reservations.updateReservatioActivity(trainingTime, myReservation);
         this.stateSaver.saveStateToXml();
         return myReservation.getActivity();
@@ -563,8 +562,8 @@ public class Engine implements BmsEngine, Serializable {
 
     public boolean updateReservatioBoatTypesRemove(Boat.BoatType boatType, Reservation clientReservation) {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
-        if (reservations.updateReservatioBoatTypesRemove(boatType, myReservation)){
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
+        if (reservations.updateReservatioBoatTypesRemove(boatType, myReservation)) {
             this.stateSaver.saveStateToXml();
             return true;
         }
@@ -573,13 +572,18 @@ public class Engine implements BmsEngine, Serializable {
 
     public boolean updateReservatioBoatTypesAdd(Boat.BoatType boatType, Reservation clientReservation) {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
-                clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
+                clientReservation.getReservationMember().getEmailAddress(), clientReservation.getTrainingDate());
         if (reservations.updateReservatioBoatTypesAdd(boatType, myReservation)) {
             this.stateSaver.saveStateToXml();
             return true;
-        }
-        else
+        } else
             return false;
+    }
+
+
+    public void setReservationBoatTypes (ArrayList<Boat.BoatType> types, Reservation res){
+        res.setBoatType(types);
+        this.stateSaver.saveStateToXml();
     }
 
     public LocalDateTime updateReservationDateTime(LocalDateTime reservationDateTime, Reservation clientReservation) {
@@ -604,7 +608,9 @@ public class Engine implements BmsEngine, Serializable {
     public List<Member> updateReservationAdditinalWantedRowers(List<Member> wantedRowers, Reservation clientReservation) throws ParticipentRowerIsOnListException {
         Reservation myReservation = this.reservations.findByResMadeAtByWho(clientReservation.getReservationDateTime(),
                 clientReservation.getReservationMember().getEmailAddress(),clientReservation.getTrainingDate());
-        return Collections.unmodifiableList(reservations.updateReservationAdditinalWantedRowers(newMemberServerList(wantedRowers), myReservation));
+        List<Member> val = reservations.updateReservationAdditinalWantedRowers(newMemberServerList(wantedRowers), myReservation);
+        this.stateSaver.saveStateToXml();
+        return Collections.unmodifiableList(val);
     }
 
 

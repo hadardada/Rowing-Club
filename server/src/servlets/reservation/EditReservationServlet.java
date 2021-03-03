@@ -6,6 +6,7 @@ import bms.engine.boatsManagement.boat.Boat;
 import bms.engine.membersManagement.member.Member;
 import bms.engine.reservationsManagment.reservation.Reservation;
 import bms.engine.reservationsManagment.reservation.reservationsExceptions.ParticipentRowerIsOnListException;
+import bms.notificationsEngine.notification.Notification;
 import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
 import utilities.ServletUtils;
@@ -82,13 +83,14 @@ public class EditReservationServlet   extends HttpServlet {
                     resp.setStatus(400);
                     out.print(e.getMessage());
                 }
+
             }
         }
         else{// boats
             String boatTypeString = req.getReader().lines().collect(Collectors.joining());
             List<String> boatTypeFromUpdate = (List<String>)gson.fromJson(boatTypeString, ArrayList.class);
             List<Boat.BoatType> boatTypes = bmsEngine.getCurrentBoatTypes();
-            List<Boat.BoatType> resBoatTypes = new ArrayList<>();
+            ArrayList<Boat.BoatType> resBoatTypes = new ArrayList<>();
             for (String boatTypeName: boatTypeFromUpdate) {
                 for (Boat.BoatType boatType : boatTypes) {
                    if (boatTypeName.equals(boatType.getShortName())) {
@@ -96,10 +98,9 @@ public class EditReservationServlet   extends HttpServlet {
                     }
                 }
             }
-            //bmsEngine.updateReservatioBoatTypesAdd(resBoatTypes, reservation);
-
+            bmsEngine.setReservationBoatTypes(resBoatTypes, reservation);
         }
-
+        notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
     }
 
 
