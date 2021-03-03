@@ -10,6 +10,8 @@ const sendNotificationButtonEl = document.querySelector('#postMsg');
 const deleteMsgFormEl = document.querySelector('#deleteMsgForm');
 const noNotoficationMsg = document.querySelector('#isThere');
 const queryString = window.location.pathname;
+const deletebuttonEl = document.querySelector('#deleteBut');
+
 
 if (queryString !== "/notifications/manage.html") { // if we are not in the managing page
     window.addEventListener('load', () => {
@@ -54,7 +56,7 @@ async function postNotification(){
         if (response.ok)
             alert("Message has been post to all club members");
     }
-    showClubList();
+    await showClubList();
 
 }
 async function fetchNotificationsCounter(){
@@ -102,8 +104,9 @@ function showNotificationsAlert(notifications, isNewMsges){
         for (i; i < notifications.length; i++) {
             allClubMsgs = allClubMsgs+notifications[i].content +"\n\r";
         }
-        if (i ===0)
+        if (i ===0){
             alert(NO_NOTIES);
+        }
         alert(allClubMsgs);
     }
 }
@@ -131,6 +134,13 @@ async function showClubList (){
         formRadiosElements.appendChild(document.createElement("br"));
 
     }
-    if (i ===0)
+    if (i===1){
+        newNotiRadioEl.checked = true;
+        deletebuttonEl.disabled = false;
+
+    }
+    if (i ===0){
         noNotoficationMsg.textContent = NO_NOTIES;
+        deletebuttonEl.disabled = true;
+    }
 }

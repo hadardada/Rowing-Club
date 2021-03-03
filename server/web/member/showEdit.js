@@ -11,6 +11,8 @@ const currPasswordEl = document.querySelector('#currPassword');
 const currSignUpEl = document.querySelector('#currSignUp');
 const currExpirationEl = document.querySelector('#currExpire');
 const errorMsgEl =document.querySelector('#errorSpan');
+const backEl =document.querySelector('#back');
+
 
 //buttons and checkboxes:
 const updateNameButtonEl = document.querySelector('#updateName');
@@ -33,6 +35,16 @@ let memberId = urlParams.get('email');
 //listeners
 window.addEventListener('DOMContentLoaded',injectParameters);
 privateCheckboxEl.addEventListener('change', privateChecked);
+
+setDifferentBackForNoneManager()
+
+async function setDifferentBackForNoneManager(){
+    const response = await fetch('/isUserManager', {method: 'get'});
+    const isManager = await response.text();
+    if (isManager==='false'){
+        backEl.href = "/menu/mainMember.html";
+    }
+}
 
 async function injectParameters(){
 
