@@ -209,7 +209,7 @@ function createBoatTypeElement(type) {
     el.append(checkBoxBoatTypeEl);
     if (boatTypesOnRes.includes(type)){
         checkBoxBoatTypeEl.checked = true;
-        boatTypeChecked();
+        boatTypesChosen.push(type);
     }
     const nameEl = document.createElement('span');
     nameEl.innerText = type;
