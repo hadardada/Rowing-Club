@@ -4,7 +4,12 @@ window.addEventListener('DOMContentLoaded',setName);
 
 async function setName(){
     const response = await fetch('/userManagement/name', {method: 'get'});
-    const name = await response.text();
-    memberNameEl.textContent = name+'!';
+    if (response.ok) {
+        const name = await response.text();
+        memberNameEl.textContent = name + '!';
+    }
+    else{
+        memberNameEl.textContent = 'You!';
+    }
 }
 

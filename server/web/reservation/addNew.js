@@ -28,10 +28,6 @@ const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
 reservationFormEl.addEventListener('submit', validateForm);
 
-const EMAIL_FORMAT = "Email Address is wrong";
-const MEMBER_AGE = "Members age is from 10 to 120";
-const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
-const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
 const NO_ERROR = '';
 
 main()

@@ -3,8 +3,11 @@ import bms.engine.Engine;
 import bms.engine.membersManagement.member.Member;
 
 import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.notificationsEngine.notification.Notification;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
 import servlets.member.MemberParameters;
+import utilities.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,6 +36,7 @@ public class MergeResServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         bmsEngine = (Engine) req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
 
         String resMadeAtParameter = req.getParameter("createdOn");
         String resMadeByParameter = req.getParameter("creator");
@@ -53,6 +57,7 @@ public class MergeResServlet extends HttpServlet {
         }
         PrintWriter out = resp.getWriter();
         out.print(gson.toJson(memberParametersList));
+        notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
         resp.setStatus(200);
     }
 

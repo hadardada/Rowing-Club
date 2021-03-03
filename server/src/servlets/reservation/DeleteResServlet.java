@@ -2,7 +2,10 @@ package servlets.reservation;
 
 import bms.engine.Engine;
 import bms.engine.reservationsManagment.reservation.Reservation;
+import bms.notificationsEngine.notification.Notification;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
+import utilities.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +29,7 @@ public class DeleteResServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         bmsEngine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
 
         String resMadeAtParameter = req.getParameter("createdOn");
         String resMadeByParameter = req.getParameter("creator");
@@ -36,6 +40,8 @@ public class DeleteResServlet extends HttpServlet {
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
 
         deleteReservation(reservation);
+        notificationsMng.addNewAutoNotification(Notification.DELETED,reservation);
+
         resp.setStatus(200);
     }
 

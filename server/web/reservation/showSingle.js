@@ -9,7 +9,9 @@ const resMadeAtEl = document.querySelector('#resMadeAt');
 const actionsEl = document.querySelector('#Actions');
 const errorEl = document.querySelector('#errorSpan');
 
-
+const PENDING = 1;
+const APPROVED =2;
+const REJECTED = 3;
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -112,7 +114,7 @@ function createRes(res) {
     resMadeByEl.innerText = res.reservationMadeBy;
     resMadeAtEl.innerText = res.getReservationMadeAt;
 
-    if (res.status===2){
+    if (res.status===APPROVED){
         statusEl.innerText = "APPROVED";
         const boatTitleEl = document.createElement('p');
         boatTitleEl.innerText = "Booked Boat:";
@@ -138,7 +140,7 @@ function createRes(res) {
         });
     }
 
-    if (res.status===1 && res.isManager) {
+    if (res.status===PENDING && res.isManager) {
         const approveAction = document.createElement('button');
         approveAction.innerText = 'Approve'
         approveAction.style.position = 'absolute';
@@ -161,7 +163,7 @@ function createRes(res) {
         actionsEl.append(rejectAction);
         rejectAction.addEventListener('click', rejectRes);
     }
-    if (res.status===1) {
+    if (res.status===PENDING) {
         statusEl.innerText = "PENDING";
         const editAction = document.createElement('button');
         editAction.innerText = 'Edit'
@@ -182,7 +184,7 @@ function createRes(res) {
     }
     }
 
-    if ((res.status === 1 || res.status === 2) && res.isManager) {
+    if ((res.status === PENDING || res.status === APPROVED) && res.isManager) {
         const copyAction = document.createElement('button');
         copyAction.innerText = 'Copy'
         copyAction.style.position = 'absolute';
@@ -198,7 +200,7 @@ function createRes(res) {
         deleteAction.style.left = '210px'
         actionsEl.append(deleteAction);
 
-        if (res.status === 2 && res.isManager) {
+        if (res.status === APPROVED && res.isManager) {
             const reopenAction = document.createElement('button');
             reopenAction.innerText = 'Reopen'
             reopenAction.style.position = 'absolute';
@@ -210,7 +212,7 @@ function createRes(res) {
             deleteAction.style.left = '115px'
         }
     }
-    if (res.status === 3){
+    if (res.status === REJECTED){
         statusEl.innerText = "REJECTED";
     }
 }
