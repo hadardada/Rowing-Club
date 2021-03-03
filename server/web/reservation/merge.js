@@ -15,6 +15,7 @@ mergeAction.style.position = 'absolute';
 mergeAction.style.left = '5px'
 reservationFormEl.append(mergeAction);
 mergeAction.addEventListener('click', submitMergeReservation);
+mergeAction.disabled = true;
 
 //global
 let resObjMerged;
@@ -123,7 +124,6 @@ async function showAllMatchRes() {
     if (resJson.length===0){
         noResEl.innerText = "No Match Reservation To Merge with, Can't Merge!"
         noResEl.style.color = "red"
-        mergeAction.disabled = true;
     }
     else {
         createResList(resJson);
@@ -148,6 +148,7 @@ async function resToMerge(res) ///to complete
 {
     resObjMerged = res;
     createWantedList(res.wantedMemberEmails,res.wantedMemberNames);
+    mergeAction.disabled = false;
 }
 
 

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
-@WebServlet(name = "addNewActivityServlet", urlPatterns = {"/activity/addNew"})
+@WebServlet(name = "addNewActivity", urlPatterns = {"/activity/addNew"})
 public class addNewActivity extends HttpServlet {
     private Gson gson = new Gson();
     Engine bmsEngine;
@@ -32,7 +32,7 @@ public class addNewActivity extends HttpServlet {
         activityParameters newActivityParameters = gson.fromJson(newActivityJsonString, activityParameters.class);
 
         try {
-            addNewActivity(newActivityParameters);
+            addNewActivityFunc(newActivityParameters);
             resp.setStatus(200);
         }
         catch (EndTimeIsLowerException e){
@@ -40,7 +40,7 @@ public class addNewActivity extends HttpServlet {
         }
 
     }
-    private void addNewActivity(activityParameters parameters) throws EndTimeIsLowerException  {
+    private void addNewActivityFunc(activityParameters parameters) throws EndTimeIsLowerException  {
         Boat.BoatType newBoatType = null;
         if (parameters.hasBoat) {
             Boat.BoatType.BoatSize size = Boat.BoatType.BoatSize.valueOf(parameters.rowersNum.toUpperCase());

@@ -63,12 +63,12 @@ async function reopenRes(){
     });
     if (response.status === 200)
     {
-        formErrorEl.textContent = "The Reservation reopened Successfully!"
-        formErrorEl.style.color = "green";
+        errorEl.textContent = "The Reservation reopened Successfully, reload the page the see it"
+        errorEl.style.color = "green";
     }
     else{
-        formErrorEl.textContent = "ERROR! " + await response.text();
-        formErrorEl.style.color = "red";
+        errorEl.textContent = "ERROR! " + await response.text();
+        errorEl.style.color = "red";
     }
 }
 

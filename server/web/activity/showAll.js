@@ -74,20 +74,20 @@ function createActivityElement(activity) {
     startEl.innerText = activity.startTime;
     el.appendChild(startEl)
     startEl.style.position = 'absolute';
-    startEl.style.left = '250px'
+    startEl.style.left = '300px'
 
     const endEl = document.createElement('span');
     endEl.innerText = activity.endTime;
     el.appendChild(endEl)
     endEl.style.position = 'absolute';
-    endEl.style.left = '340px'
+    endEl.style.left = '390px'
 
     if (!(activity.boatName === '')){
         const boatNameEl = document.createElement('span');
         boatNameEl.innerText = activity.boatName;
         el.appendChild(boatNameEl)
         boatNameEl.style.position = 'absolute';
-        boatNameEl.style.left = '450px'
+        boatNameEl.style.left = '500px'
     }
     return el;
 }

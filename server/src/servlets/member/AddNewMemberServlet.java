@@ -44,7 +44,7 @@ public class AddNewMemberServlet extends HttpServlet {
             }
             catch (BoatDoesNotExistException e){
                 resp.setStatus(404);
-                out.print("Boat Serial Num Doesn't belong to any Boat in the Club");
+                out.print("Boat Serial Num Doesn't belong to any Boat in the Club, the member was added but without private boat");
             }
             catch (ExpiryDateIsBeforeSignUpException e){
                 resp.setStatus(404);
