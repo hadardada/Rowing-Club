@@ -6,8 +6,8 @@
 </head>
 <body>
 <h2>Edit Reservation Details:</h2>
-
-</body>
+<p>Grey fields cannot be changed</p>
+<p><a href="/menu/reservation.html" id="backButton">Go Back</a></p>
 <div id = "notificationsDiv" style="position: absolute; top: 10px; right: 90px;
 padding: 15px 26px; border: 2px solid red;">
     <span>You have </span>
@@ -21,6 +21,52 @@ padding: 15px 26px; border: 2px solid red;">
         <script src="/notifications/notifications.js"></script>
     </div>
 </div>
+<div>
+<p style="font-weight: bold">Main Rower: <span class = "field" id="mainMember"></span></p>
+<p><input type="checkbox" id="changeMainRower">Change Main Rower</p>
+    <div class="checkBoxList" style="display: none">
+        <ol  class="rowersInClub" id="mainRowerList"></ol>
+        <button id="updateMAinRower">Update</button>
+    </div>
+
+<p style="font-weight: bold">Reservation Date:<span class = "field" id="date"></span></p>
+    <p><input type="checkbox" id="changeReservationDate"> Change Reservation Date</p>
+    <div class="checkBoxList" style="display: none">
+        <ol class="reservationDateList" id="reservationDateList"></ol>
+        <button id="updateDate">Update</button>
+    </div>
+
+<p style="font-weight: bold">Reservation Time:<span style="color: grey" class = "field" ></span></p>
+
+    <p><span style="font-weight: bold">Boat Types: </span><span>check 'change' to view list</span></p>
+    <p><input type="checkbox" id="changeReservationBoats"> Change Reservation Boat Types</p>
+    <div class="checkBoxList" style="display: none">
+        <p style="color: grey">The checked boats are already on this reservation.<br/>
+            You can uncheck what you wish to delete, and check what you wish to add</p>
+        <ol class="reservationTypeeList" id="boatTypeList"></ol>
+        <button id="updateBoats">Update</button>
+    </div>
+
+    <p><span style="font-weight: bold">Additional Rowers: </span><span>check 'change' to view list</span></p>
+    <p><input type="checkbox" id="changeAdditionalRowers"> Change Additional Rowers</p>
+    <div class="checkBoxList" style="display: none">
+        <p id="WantedRowersMsg" style="color: grey">Additional Rowers that are already on reservation are checked
+        with "-".<br/>You can uncheck who you wish to delete them from reservation, and check who you wish to add</p>
+        <ol class="rowersInClub" id="additionalList"></ol>
+        <button id="updateAdditionalRowers">Update</button>
+    </div>
+
+<p style="font-weight: bold">Reservation Made By: <span style="color: grey" id="resMadeBy" class = "field"></span> </p>
+
+<p style="font-weight: bold">Reservation Made At: <span style="color: grey" id="resMadeAt" class = "field"></span> </p>
+
+<span style="color:#ff0000" class="error" id = "errorSpan" > </span>
+</div>
+<form method="post" action="/logout">
+    <input type="submit" value="Logout" style="position: absolute; top: 10px; right: 10px;"/>
+</form>
+
 
 <script src ="edit.js"></script>
+</body>
 </html>
