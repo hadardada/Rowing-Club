@@ -25,6 +25,7 @@ if (queryStringOnNotifications !== "/notifications/manage.html") { // if we are 
     });
 }
 else {
+
     window.addEventListener('DOMContentLoaded',showClubList);
     deleteMsgFormEl.addEventListener('submit', ()=>{
         setTimeout(showClubList, refreshList);
@@ -57,6 +58,14 @@ async function postNotification(){
         if (response.ok)
             alert("Message has been post to all club members");
     }
+
+    let radioParentEl = document.querySelector('#radioParent');
+    let formRadiosElements = document.querySelector('#rediosSpan');
+    radioParentEl.removeChild(formRadiosElements);
+    formRadiosElements = document.createElement("span");
+    formRadiosElements.setAttribute("id","rediosSpan");
+    radioParentEl.appendChild(formRadiosElements);
+
     await showClubList();
 
 }
@@ -120,6 +129,7 @@ async function showClubList (){
     let i = 0;
     let formRadiosElements = document.querySelector('#rediosSpan');
     noNotoficationMsg.textContent = '';
+
     for (i ; i < notifications.length; i++) {
         newNotiRadioEl = document.createElement("input");
         formRadiosElements.appendChild(newNotiRadioEl);
