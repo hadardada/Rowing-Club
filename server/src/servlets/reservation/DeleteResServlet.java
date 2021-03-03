@@ -40,7 +40,7 @@ public class DeleteResServlet extends HttpServlet {
         Reservation reservation = this.bmsEngine.findResByResMadeAt(resMadeAt, resMadeByParameter, trainingDate);
 
         deleteReservation(reservation);
-        notificationsMng.addNewAutoNotification(Notification.DELETED,reservation);
+     //   notificationsMng.addNewAutoNotification(Notification.DELETED,reservation);
 
         resp.setStatus(200);
     }

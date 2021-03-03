@@ -271,6 +271,8 @@ public class ReservationsManagement implements Serializable {
         for (Member member : reservationToDelete.getWantedRowers()) {
             removeReservationFromMember(member, reservationToDelete);
         }
+        removeReservationFromMember(reservationToDelete.getParticipantRower(),reservationToDelete);
+        removeReservationFromMember(reservationToDelete.getReservationMember(), reservationToDelete);
         return true;
     }
 

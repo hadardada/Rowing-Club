@@ -106,6 +106,7 @@ function createActivityList(activityList) {
     titlesEl.append(nameTitle);
     nameTitle.style.position = 'absolute';
     nameTitle.style.left = '150px'
+    nameTitle.style.top = '100px'
     nameTitle.style.textDecoration = "underline";
     fromeTitle.style.position = 'absolute';
     fromeTitle.style.left = '100px'
