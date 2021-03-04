@@ -7,10 +7,8 @@ async function setName(){
     let today = new Date();
     for (i = 0; i < 8; i++) {
         let date = new Date()
-        date.setFullYear(today.getFullYear());
-        date.setMonth(today.getMonth());
         date.setDate((today.getDate()+i));
-        let dateForEl = date.toISOString().substring(0, 10)
+        let dateForEl = formatDate(date);
 
         const el = document.createElement("a");
         el.innerText = dateForEl;
@@ -21,5 +19,19 @@ async function setName(){
         const newLine1 = document.createElement("br");
         dateContainerEl.append(newLine1);
     }
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 

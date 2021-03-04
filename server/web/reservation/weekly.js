@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', createTable);
         let nextDayDate = new Date();
         nextDayDate.setDate(today.getDate() + i);
             if (!weekly){// if we are interested in showing only one day
-                if (nextDayDate.toISOString().substring(0,10) ===date){
+                if (formatDate(nextDayDate) ===date){
                     dateIndex = i+1; // keeps the index of the query date
                     nextDay.textContent = nextDayDate.getDate() + '.' + (nextDayDate.getMonth() + 1);
                     firstRow.appendChild(nextDay);
@@ -142,7 +142,7 @@ async function getReservationsOnDate(reqDate) {
 async function fillOutResOnDate(index) {
     let nextDayDate = new Date();
     nextDayDate.setDate(nextDayDate.getDate() + index-1);
-    let reqDate = nextDayDate.toISOString().substring(0, 10); //now formatted as YYYY-MM-DD
+    let reqDate = formatDate(nextDayDate); //now formatted as YYYY-MM-DD
     let reservations = await getReservationsOnDate(reqDate);
     if (reservations.length !== 0){ // it might be that there are no reservations at all for that date
         for (let i=0;i<reservations.length; i++){
@@ -235,3 +235,17 @@ function createNewRow(){
      for (let i=fromIndx+1; i<=numOfActivities;i++)
         activitiesIdsMap.set(i.toString(), (activitiesIdsMap.get(i.toString())+1));
  }
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
