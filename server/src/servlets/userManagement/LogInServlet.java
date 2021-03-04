@@ -23,30 +23,26 @@ import static constants.Constants.PASSWORD;
 public class LogInServlet  extends HttpServlet {
     private Gson gson = new Gson();
 
-    private final String MANAGER_MENU = "/menu/main.html";
-    private final String MEMBER_MENU = "/menu/mainMember.html";
+    private final String MANAGER_MENU = "menu/main.html";
+    private final String MEMBER_MENU = "menu/mainMember.html";
     private final String SIGN_UP_URL = "login.html";
     PasswordError errorLogin = new PasswordError();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);
         UserManager userManager = ServletUtils.getUserManager(getServletContext());
-        errorLogin.errorMsg = "";
-        //user is already logged in
-        if (usernameFromSession != null) {
-            //if user is manager, redirect to manager main menu
-            if(userManager.isUserManager(usernameFromSession))
-                response.sendRedirect(MANAGER_MENU);
-            else // redirect to non-manager member menu
-                response.sendRedirect(MEMBER_MENU);
-            return;
-        }
-
         //user is not logged in yet
         String usernameFromParameter = request.getParameter(USERNAME).trim();
         String passwordFromParameter = request.getParameter(PASSWORD);
+        errorLogin.errorMsg = "";
+        if (usernameFromSession != null) {
+            //user is already logged in
+            errorLogin.errorMsg = "already";
+            response.sendRedirect(SIGN_UP_URL);
+        }
 
-        if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
+
+        else if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
             //no username in session and no username in parameter -
             //redirect back to the index page
             //this returns an HTTP code and URL back to the browser telling it to load the URL

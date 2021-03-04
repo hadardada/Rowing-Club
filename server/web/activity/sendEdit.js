@@ -12,8 +12,8 @@ const updateStartButtonEl = document.querySelector('#updateStarts');
 const updateEndsButtonEl = document.querySelector('#updateEnds');
 
 //inputs:
-const startTime = document.querySelector('#starts');
-const EndTime = document.querySelector('#ends');
+let startTime = document.querySelector('#starts');
+let endTime = document.querySelector('#ends');
 
 
 //listeners:
@@ -57,7 +57,7 @@ function createUpdateReqObj(event){
 
     else if (this === boatTypeFormEl){
         event.preventDefault();
-        let newActivityUpdate = validateForm(boatTypeFormEl);
+        let newActivityUpdate = validateForm();
         if (typeof newActivityUpdate !== 'undefined'){
             data = new updateReq(UPDATE_TYPE, 'boatType', activityId );
             data.parameters = newActivityUpdate;

@@ -4,7 +4,7 @@ const passwordErrEl = document.querySelector("#passwordError");
 const userNameFieldEl = document.querySelector('#username');
 
 async function showErrorFromServer(){
-    const response = await fetch('/loginToServer', {
+    const response = await fetch('/boathouse/loginToServer', {
         method: 'get'})
     const errMsgObject = await response.json();
     let userNameStr = errMsgObject.sentUserName;
@@ -24,5 +24,9 @@ function showError(errMsgObject){
     else if (errMsgObject.errorMsg === "passwordErr") {
         passwordErrEl.textContent = "Wrong Password! Please try again";
         userNameFieldEl.value =errMsgObject.sentUserName;
+    }
+    else if (errMsgObject.errorMsg === "passwordErr"){
+        userNameErrEl.textContent = "User "+  errMsgObject.sentUserName +" is already logged in!";
+
     }
 }
