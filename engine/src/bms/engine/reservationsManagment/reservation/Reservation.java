@@ -134,7 +134,7 @@ public class Reservation implements Serializable {
         this.setIsApproved(null); // making this reservation back to pending
         this.wantedRowers = this.actualRowers;
         this.wantedRowers.remove(this.participantRower);
-        this.actualRowers = null; // since reservation is not approved, there aren't acutal rowers
+        this.actualRowers = new ArrayList<>(); // since reservation is not approved, there aren't acutal rowers
         return true;
     }
 

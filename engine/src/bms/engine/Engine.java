@@ -702,10 +702,12 @@ public class Engine implements BmsEngine, Serializable {
 
     //This Method delete a reservation permanently from all reservation lists.
     public boolean deleteReservation(Reservation clientReservationToDelete) {
+        Boolean status = clientReservationToDelete.getIsApproved();
        Reservation reservationToDelete = this.reservations.findByResMadeAtByWho(clientReservationToDelete.getReservationDateTime(),
                 clientReservationToDelete.getReservationMember().getEmailAddress(),clientReservationToDelete.getTrainingDate());
         if (reservationToDelete.getReservationBoat() != null) // if a boat was assigned to this reservation
             releaseBoatFromReservation(reservationToDelete.getReservationBoat(), reservationToDelete);
+        reservationToDelete.setIsApproved(status);
         reservations.deleteReservation(reservationToDelete);
         this.stateSaver.saveStateToXml();
         return true;

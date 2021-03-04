@@ -483,8 +483,10 @@ public class ReservationsManagement implements Serializable {
             throw new BoatSizeMismatchException(approvedRowers.size(), reservation.getReservationBoat().getMaxNumOfRowers());
         }
 
-        if (reservation.getActualRowers().isEmpty())
+        if (reservation.getActualRowers().isEmpty()){
             reservation.setActualRowers(approvedRowers);
+        }
+
         else // then add list to the actual rower list
             reservation.addRowersToActual(approvedRowers);
         //Premission to edit and view reservation now should be taken from members that were originaly

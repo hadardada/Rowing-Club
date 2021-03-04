@@ -8,6 +8,9 @@ const resMadeByEl = document.querySelector('#resMadeBy');
 const resMadeAtEl = document.querySelector('#resMadeAt');
 const actionsEl = document.querySelector('#Actions');
 const errorEl = document.querySelector('#errorSpan');
+let backEl = document.querySelector('#back');
+
+
 
 const PENDING = 1;
 const APPROVED =2;
@@ -215,5 +218,8 @@ function createRes(res) {
     }
     if (res.status === REJECTED){
         statusEl.innerText = "REJECTED";
+    }
+    if (!res.isManager){
+        backEl.href = '/boathouse/menu/reservation.html';
     }
 }
