@@ -107,15 +107,16 @@ function createActivityList(activityList) {
     titlesEl.append(nameTitle);
     nameTitle.style.position = 'absolute';
     nameTitle.style.left = '150px'
+    nameTitle.style.top = '100px'
     nameTitle.style.textDecoration = "underline";
     fromeTitle.style.position = 'absolute';
-    fromeTitle.style.left = '100px'
+    fromeTitle.style.left = '150px'
     fromeTitle.style.textDecoration = "underline";
     toTitle.style.position = 'absolute';
-    toTitle.style.left = '200px'
+    toTitle.style.left = '250px'
     toTitle.style.textDecoration = "underline";
     boatTitle.style.position = 'absolute';
-    boatTitle.style.left = '300px'
+    boatTitle.style.left = '350px'
     boatTitle.style.textDecoration = "underline";
     guestListContainerEl.style.position = 'absolute';
     guestListContainerEl.style.top = '100px'

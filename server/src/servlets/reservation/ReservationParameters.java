@@ -48,8 +48,10 @@ public ReservationParameters(Reservation reservation,boolean isManager){
         this.boat = reservation.getReservationBoat().toString();
     }
     List<String> actual = new ArrayList<>();
-    for (Member member : reservation.getActualRowers()){
-        actual.add(member.getEmailAddress());
+    if (reservation.getActualRowers() != null){
+        for (Member member : reservation.getActualRowers()){
+            actual.add(member.getEmailAddress());
+        }
     }
     this.actualMemberEmails = actual;
     if (reservation.getIsApproved()==null){
