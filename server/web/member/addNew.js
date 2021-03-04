@@ -1,5 +1,5 @@
 
-const checkPrivate = document.querySelector('#checkPrivate');
+const privateCheckBoxEl = document.querySelector('#checkPrivate');
 privateCheckBoxEl.addEventListener('change', privateChecked);
 
 //radios consts
