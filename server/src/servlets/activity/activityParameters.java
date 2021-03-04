@@ -31,7 +31,7 @@ public class activityParameters {
         this.helmsman = helmsman;
         this.coastal = coastal;
         this.hasBoat = hasBoat;
-        this.boatName = boatName; //TODO why?
+        this.boatName = boatName;
         this.id = id;
     }
 

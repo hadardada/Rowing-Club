@@ -23,9 +23,9 @@ import static constants.Constants.PASSWORD;
 public class LogInServlet  extends HttpServlet {
     private Gson gson = new Gson();
 
-    private final String MANAGER_MENU = "menu/main.html";
-    private final String MEMBER_MENU = "menu/mainMember.html";
-    private final String SIGN_UP_URL = "login.html";
+    private final String MANAGER_MENU = "/boathouse/menu/main.html";
+    private final String MEMBER_MENU = "/boathouse/menu/mainMember.html";
+    private final String SIGN_UP_URL = "/boathouse/login.html";
     PasswordError errorLogin = new PasswordError();
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -17,7 +17,7 @@ import java.io.IOException;
 
 
 public class LogOutServlet extends HttpServlet {
-    private String SIGN_UP_URL = "login.html";
+    private String SIGN_UP_URL = "/sendRedirect/login.html";
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String usernameFromSession = SessionUtils.getUsername(request);

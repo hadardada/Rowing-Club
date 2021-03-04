@@ -64,7 +64,7 @@ public class EditReservationServlet   extends HttpServlet {
             String date =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
             LocalDate newDate = LocalDate.parse(date,  DateTimeFormatter.ISO_LOCAL_DATE);
             bmsEngine.updateReservatioTrainingDate(newDate, reservation);
-            resp.sendRedirect("/reservation/edit.html?creator="+resMadeByParameter+"&createdOn="+resMadeAtParameter+
+            resp.sendRedirect("/boathouse/reservation/edit.html?creator="+resMadeByParameter+"&createdOn="+resMadeAtParameter+
                     "&date="+date);
         }
         else if (whatToEditParameter.equals("rowers")){

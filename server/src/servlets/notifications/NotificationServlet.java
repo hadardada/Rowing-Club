@@ -49,7 +49,7 @@ public class NotificationServlet extends HttpServlet {
         if ( numberParameter!= null){ //delete
             int serNumber = Integer.parseInt(numberParameter);
             notificationsMng.deleteNotificationBySerNum(serNumber);
-            resp.sendRedirect("/notifications/manage.html");
+            resp.sendRedirect("/boathouse/notifications/manage.html");
         }
         else{
             String newMsg =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));

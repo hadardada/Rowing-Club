@@ -26,7 +26,7 @@ import static constants.Constants.ENGINE_ATTRIBUTE_NAME;
 
 public class ImportXmlServlet extends HttpServlet {
 
-    public static final String FILE_MENU = "/import-export/files.html";
+    public static final String FILE_MENU = "/boathouse/import-export/files.html";
     Engine bmsEngine;
     String errorMsg = "";
 

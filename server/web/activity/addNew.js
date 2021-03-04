@@ -1,6 +1,7 @@
 const boatTypeCheckBoxEl = document.querySelector('#checkBoatType');
 boatTypeCheckBoxEl.addEventListener('change', boatTypeChecked);
 
+
 const addNewActivityFormEl = document.querySelector('#addNewActivityForm');
 
 const activityName = document.querySelector('#activityName');
@@ -17,7 +18,6 @@ const widthRadioEl = document.querySelector('#wide');
 
 const errorMsgEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
-
 
 addNewActivityFormEl.addEventListener('submit', validateForm);
 
