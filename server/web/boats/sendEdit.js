@@ -32,9 +32,7 @@ updateStatusButtonEl.addEventListener('click',createUpdateReqObj );
 updateCoastalButtonEl.addEventListener('click', createUpdateReqObj);
 updateOarsButtonEl.addEventListener('click', createUpdateReqObj);
 updateCoxswainButtonEl.addEventListener('click', createUpdateReqObj);
-updatePrivateCheckEl.addEventListener('check', showOwnerForm);
 updatePrivateButtonEl.addEventListener('click', createUpdateReqObj);
-
 //const queryString = window.location.search;
 //const urlParams = new URLSearchParams(queryString);
 //const boatSerialNumber = urlParams.get('boatId');
@@ -115,6 +113,11 @@ async function sendUpdateReq (data) {
 
     }
     else if (data.whatToUpdate == UPDATE_PRIVATE){
+        privateStatusEl.style = "color:green";
+        if (updatedReq.updateTo === 'true')
+            privateStatusEl.textContent = 'Private Boat';
+        else
+            privateStatusEl.textContent = "Club's Property";
 
     }
 
@@ -166,8 +169,4 @@ function showError(errorMsg) {
         errorMsgEl.textContent='';
     else
         errorMsgEl.textContent = "Cannot Update Boat: "+ errorMsg;
-}
-
-function showOwnerForm(){
-    boatOwnerEl.boatOwnerEl.style="display:block";
 }

@@ -10,21 +10,26 @@ const NO_ERROR = '';
 
 function validateForm(event) {
   //  if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
+
     if (validateTimes(startTime, endTime))
-        if (event !== undefined)
-            event.preventDefault();
+    {  if (event !== undefined)
+            event.preventDefault();}
+    else
+        return undefined;
 //}
-     if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
-    {
-        if (event !== undefined)
-            event.preventDefault();
-        showError(START_TIME_IN_FORMAT);
+    if(startTime.value !== "") {
+        if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
+            if (event !== undefined)
+                event.preventDefault();
+            showError(START_TIME_IN_FORMAT);
+        }
     }
-    else if(!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
-    {
-        if (event !== undefined)
-            event.preventDefault();
-        showError(END_TIME_IN_FORMAT);
+    else if (endTime.value !== undefined) {
+        if (!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
+            if (event !== undefined)
+                event.preventDefault();
+            showError(END_TIME_IN_FORMAT);
+        }
     }
     else if (oneRowerRadioEl.checked && oneOarRadioEl.checked) {
         //A boat with only one rower cannot be with single oar
@@ -73,11 +78,14 @@ function activityJson(name, startTime, endTime, boatSize, oneOar,width,coxswain,
 }
 
 function validateTimes (starts, ends){
-    if (starts.value > ends.value)
+    if (((ends==='')||(ends===undefined))||((starts==='')||(starts===undefined)))
+        return false;
+    if (starts.value.substring (0,2) > ends.value.substring (0,2))
     {
         showError(END_BEFORE_START);
         return false;
     }
+
     return true;
 }
 
