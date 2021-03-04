@@ -29,7 +29,7 @@ async function injectParameters(){
 
     //const editUrl = new URLSearchParams();
     //editUrl.append('serialNum', boatSerialNumber);
-    const response = await fetch('/boats/edit?boatId='+boatSerialNumber);
+    const response = await fetch('/boathouse/boats/edit?boatId='+boatSerialNumber);
     const boatJson = await response.json();
 
     serialNumEl.textContent = boatJson.idNum;

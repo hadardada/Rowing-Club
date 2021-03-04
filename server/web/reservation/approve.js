@@ -29,7 +29,7 @@ let createdOnId = urlParams.get('createdOn');
 let creator = urlParams.get('creator');
 let date = urlParams.get('date');
 
-backEl.href = '/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+backEl.href = '/boathouse/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 
 
 const formErrorEl = document.querySelector('#errorSpan');
@@ -47,7 +47,7 @@ async function main(){
 //////////////////////////////////////////////////////////////////// display Boat  ////////////////////
 
 async function showAllBoats() {
-    const response = await fetch('/reservation/getRelevantBoat?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
+    const response = await fetch('/boathouse/reservation/getRelevantBoat?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
     const boatJson = await response.json();
     if (!(boatJson.length ===0)){
         createBoatList(boatJson);
@@ -125,7 +125,7 @@ function createBoatElement(boat) {
 
 
 async function showWantedRowersOriginal(){
-    const response = await fetch('/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/approve?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -214,7 +214,7 @@ function validateForm(event) {
 async function submitApproveReservation()
 {
     const newApproved = new ApprovedJson();
-    const response = await fetch('/reservation/approve', {
+    const response = await fetch('/boathouse/reservation/approve', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

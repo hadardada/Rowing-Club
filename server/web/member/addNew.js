@@ -66,7 +66,7 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
 {
     const newMember = new MemberJson(name, notes, email, password, age, phoneNumber, havePrivateBoat, privateBoatSerialNumber, rowingLevel,isManager);
 
-    const response = await fetch('/member/addNew', {
+    const response = await fetch('/boathouse/member/addNew', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

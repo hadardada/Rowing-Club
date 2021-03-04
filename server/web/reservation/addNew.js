@@ -91,7 +91,7 @@ function createDateElement(dates) {
 //////////////////////////////////////////////////////////////////// display members  ////////////////////
 
 async function showAllMembers(mainOrAdditonal) {
-    const response = await fetch('/member/showAll', {
+    const response = await fetch('/boathouse/member/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -198,7 +198,7 @@ function createMemberElement(member,mainOrAdditonal) {
 //////////////////////////////////////////////////////////////////// display activity  ////////////////////////////////////////////////////////////////
 
 async function showAllActivities() {
-    const response = await fetch('/activity/showAll', {
+    const response = await fetch('/boathouse/activity/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -284,7 +284,7 @@ function createActivityElement(activity) {
 //////////////////////////////////////////////////////////////////// display BoatTypes  ////////////////////////////////////////////////////////////////
 
 async function showAllBoatType() {
-    const response = await fetch('/boatsType/showAll', {
+    const response = await fetch('/boathouse/boatsType/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -374,7 +374,7 @@ async function submitReservation(participantRowerEmail,trainingDate,activityID,b
 {
     const reservation = new ReservationJson(participantRowerEmail,trainingDate,activityID,boatTypes,wantedMemberEmails);
 
-    const response = await fetch('/reservation/addNew', {
+    const response = await fetch('/boathouse/reservation/addNew', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

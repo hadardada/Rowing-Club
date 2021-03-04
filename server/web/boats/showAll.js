@@ -7,7 +7,7 @@ let counter = 1;
 refreshListUsesAsyncAwait()
 
 async function refreshListUsesAsyncAwait() {
-    const response = await fetch('/boats/showAll', {
+    const response = await fetch('/boathouse/boats/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -19,7 +19,7 @@ async function refreshListUsesAsyncAwait() {
 
 async function deleteBoat(){
     let id = this.id;
-    const response = await fetch('/boats/delete', {
+    const response = await fetch('/boathouse/boats/delete', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

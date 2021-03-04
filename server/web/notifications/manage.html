@@ -10,16 +10,16 @@
 <button id="postMsg">Post a new Message</button>
 <h3>Delete a club notification:</h3>
 <p>Select a notification to delete:</p>
-<form id="deleteMsgForm" action="/notifications" method="post">
+<form id="deleteMsgForm" action="/boathouse/notifications" method="post">
     <p id ="isThere"></p>
     <span id = "radioParent"><span id='rediosSpan'></span></span>
     <br><input type="submit" id= "deleteBut" value="Delete"/>
 </form>
 
 <script src="notifications.js"></script>
-<form method="post" action="/logout">
+<form method="post" action="/boathouse/logout">
     <input type="submit" value="Logout" style="position: absolute; top: 10px; right: 10px;"/>
 </form>
-<a href="/menu/main.html">Go Back</a>
+<a href="/boathouse/menu/main.html">Go Back</a>
 </body>
 </html>

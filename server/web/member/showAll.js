@@ -7,7 +7,7 @@ let counter = 1;
 refreshListUsesAsyncAwait()
 
 async function refreshListUsesAsyncAwait() {
-    const response = await fetch('/member/showAll', {
+    const response = await fetch('/boathouse/member/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -19,7 +19,7 @@ async function refreshListUsesAsyncAwait() {
 
 async function deleteMember(){
     let id = this.id;
-    const response = await fetch('/member/delete', {
+    const response = await fetch('/boathouse/member/delete', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -32,7 +32,7 @@ async function deleteMember(){
 
 async function editMember(){
     let emailId = this.id.substring('edit'.length)
-    window.location.href = '/member/edit.html?email='+emailId;
+    window.location.href = '/boathouse/member/edit.html?email='+emailId;
 }
 
 
@@ -260,7 +260,7 @@ function createMemberList(memberList) {
     backEl.style.position = 'absolute';
     backEl.style.left = '5px';
     backEl.style.fontSize = 'small';
-    backEl.href = "/menu/member.html";
+    backEl.href = "/boathouse/menu/member.html";
     backEl.innerText = "Go Back";
     guestListContainerEl.append(backEl);
 }

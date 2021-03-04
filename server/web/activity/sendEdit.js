@@ -67,7 +67,7 @@ function createUpdateReqObj(event){
 }
 
 async function sendUpdateReq(data){
-    const response = await fetch('/activity/edit',
+    const response = await fetch('/boathouse/activity/edit',
         {
             method: 'post',
             headers: new Headers({

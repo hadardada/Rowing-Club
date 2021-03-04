@@ -21,7 +21,7 @@ const activityId = urlParams.get('id');
 
 async function injectParameters(){
 
-    const response = await fetch('/activity/edit?id='+activityId);
+    const response = await fetch('/boathouse/activity/edit?id='+activityId);
     if (response.status === 200) {
         const activityJson = await response.json();
         activityNameEl.textContent = activityJson.activityName;

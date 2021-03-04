@@ -93,7 +93,7 @@ function createUpdateReqObj() {
 
 async function sendUpdateReq (data) {
 
-    const response = await fetch('/boats/edit',
+    const response = await fetch('/boathouse/boats/edit',
         {
             method: 'post',
             headers: new Headers({

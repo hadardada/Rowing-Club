@@ -7,7 +7,7 @@ let counter = 1;
 refreshListUsesAsyncAwait()
 
 async function refreshListUsesAsyncAwait() {
-    const response = await fetch('/activity/showAll', {
+    const response = await fetch('/boathouse/activity/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -19,7 +19,7 @@ async function refreshListUsesAsyncAwait() {
 
 async function deleteActivity(){
     let id = this.id;
-    const response = await fetch('/activity/delete', {
+    const response = await fetch('/boathouse/activity/delete', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -32,7 +32,7 @@ async function deleteActivity(){
 
 async function editActivity(){
     let activityId = this.id.substring('edit'.length)
-    window.location.href = '/activity/edit.html?id='+activityId;
+    window.location.href = '/boathouse/activity/edit.html?id='+activityId;
 }
 function createActivityElement(activity) {
 
@@ -136,7 +136,7 @@ function createActivityList(activityList) {
     backEl.style.position = 'absolute';
     backEl.style.left = '5px';
     backEl.style.fontSize = 'small';
-    backEl.href = "/menu/activity.html";
+    backEl.href = "/boathouse/menu/activity.html";
     backEl.innerText = "Go Back";
     guestListContainerEl.append(backEl);
 }

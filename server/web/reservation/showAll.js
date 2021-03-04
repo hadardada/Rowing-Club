@@ -20,7 +20,7 @@ else if (status === "history"){
 window.addEventListener('DOMContentLoaded', createList);
 
 async function createList(){
-    const response =  await fetch ('/reservation/weekly?status='+status);
+    const response =  await fetch ('/boathouse/reservation/weekly?status='+status);
     let reservations = await response.json();
     if (reservations.length === 0)
         noResToShow;
@@ -61,7 +61,7 @@ function createListElemnt(reservation){
     newResLine.appendChild(rowerValue);
     rowerValue.textContent = reservation.mainRower+" ";
     let resLink = document.createElement('a');
-    let link = "/reservation/showSingle.html?creator="+reservation.createdBy;
+    let link = "/boathouse/reservation/showSingle.html?creator="+reservation.createdBy;
     link = link + "&createdOn="+ reservation.createdOn;
     link = link + "&date="+reservation.date;
     resLink.href = link;

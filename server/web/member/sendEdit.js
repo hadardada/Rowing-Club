@@ -145,7 +145,7 @@ function createUpdateReqObj(){
 }
 
 async function sendUpdateReq(data){
-    const response = await fetch('/member/edit',
+    const response = await fetch('/boathouse/member/edit',
         {
             method: 'post',
             headers: new Headers({

@@ -7,14 +7,14 @@ const goBackEl = document.querySelector('#goBackMain');
 
 setDifferentLinkForNoneManager()
 async function setDifferentLinkForNoneManager(){
-    const response = await fetch('/isUserManager', {method: 'get'});
+    const response = await fetch('/boathouse/isUserManager', {method: 'get'});
     const isManager = await response.text();
     if (isManager==='false'){
-        ManageExistEl.href = "http://localhost:8080/reservation/showAll.html?status=future";
+        ManageExistEl.href = "http://localhost:8080/boathouse/reservation/showAll.html?status=future";
         ManageExistEl.innerText = 'Manage Future Reservations';
         const history = document.createElement("a")
         history.innerText = "Show Reservations History";
-        history.href = "http://localhost:8080/reservation/showAll.html?status=history";
+        history.href = "http://localhost:8080/boathouse/reservation/showAll.html?status=history";
         genDivEl.append(history)
         goBackEl.href = "mainMember.html";
         addNewEl.style.top = "140px";

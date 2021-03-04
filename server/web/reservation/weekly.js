@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', createTable);
  }
 
 async function getActivities(){
-    const response = await fetch ('/activity/showAll',
+    const response = await fetch ('/boathouse/activity/showAll',
         {
             method: 'get',
             headers: new Headers({
@@ -133,7 +133,7 @@ function createActivityElement(activity){
 }
 
 async function getReservationsOnDate(reqDate) {
-    const response =  await fetch ('/reservation/weekly?date='+reqDate+'&status='+status);
+    const response =  await fetch ('/boathouse/reservation/weekly?date='+reqDate+'&status='+status);
     let reservations = await response.json();
     return reservations;
 }

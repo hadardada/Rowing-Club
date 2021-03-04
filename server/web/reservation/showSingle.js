@@ -22,7 +22,7 @@ let date = urlParams.get('date');
 showSingle()
 
 async function showSingle() {
-    const response = await fetch('/reservation/showSingle?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/showSingle?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -34,28 +34,28 @@ async function showSingle() {
 
 function editRes()
 {
-    window.location.href = '/reservation/edit.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+    window.location.href = '/boathouse/reservation/edit.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 function deleteRes()
 {
-    window.location.href = '/reservation/delete.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+    window.location.href = '/boathouse/reservation/delete.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 function mergeRes(){
-    window.location.href = '/reservation/merge.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+    window.location.href = '/boathouse/reservation/merge.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 function rejectRes(){
-    window.location.href = '/reservation/reject.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+    window.location.href = '/boathouse/reservation/reject.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 function approveRes() {
-    window.location.href = '/reservation/approve.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+    window.location.href = '/boathouse/reservation/approve.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 }
 
 async function reopenRes(){
-    const response = await fetch('/reservation/reopen?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/reopen?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -74,7 +74,7 @@ async function reopenRes(){
 }
 
 async function copyRes(){
-    const response = await fetch('/reservation/copy?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/copy?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

@@ -44,7 +44,7 @@ function boatTypeChecked() {
 async function submitActivity (name, startTime, endTime, boatSize, oneOar,width,coxswain, coastalboat,hasBoat) {
     const newActivity = new activityJson(name, startTime, endTime, boatSize, oneOar,width,coxswain, coastalboat,hasBoat);
 
-    const response = await fetch('/activity/addNew', {
+    const response = await fetch('/boathouse/activity/addNew', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

@@ -89,7 +89,7 @@ function createErrorLines(line){
 }
 
 async function showErrorFromServer(){
-    const response = await fetch('/data/import', {
+    const response = await fetch('/boathouse/data/import', {
         method: 'get'})
     const result = await response.text();
     if (result == "success")

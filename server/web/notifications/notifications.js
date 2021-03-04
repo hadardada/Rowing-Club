@@ -14,7 +14,7 @@ const queryStringOnNotifications = window.location.pathname;
 const deletebuttonEl = document.querySelector('#deleteBut');
 
 
-if (queryStringOnNotifications !== "/notifications/manage.html") { // if we are not in the managing page
+if (queryStringOnNotifications !== "/boathouse/notifications/manage.html") { // if we are not in the managing page
     window.addEventListener('load', () => {
         fetchNotificationsCounter();
         setManagerSentButton();
@@ -37,7 +37,7 @@ else {
 
 
 async function setManagerSentButton (){
-    const response = await fetch ("/isUserManager", {
+    const response = await fetch ("/boathouse/isUserManager", {
         method: "get",
     })
     const isManager = await response.text();
@@ -52,7 +52,7 @@ async function postNotification(){
     let msg = prompt("Please write your message",defaultOpenning);
     if (msg == null || msg == "") {
     } else {
-        const response = await fetch ("/notifications", {
+        const response = await fetch ("/boathouse/notifications", {
             method: "post",
             body: msg,
         })
@@ -71,7 +71,7 @@ async function postNotification(){
 
 }
 async function fetchNotificationsCounter(){
-    const response = await fetch ("/notifications?content=false", {
+    const response = await fetch ("/boathouse/notifications?content=false", {
         method: "get",
     })
     const number = await response.text();
@@ -93,7 +93,7 @@ async function getNotifications(){
     }
     else
         typeOfNoti = "club";
-    const response = await fetch ("/notifications?content="+typeOfNoti, {
+    const response = await fetch ("/boathouse/notifications?content="+typeOfNoti, {
         method: "get",
     })
     let notifications = await response.json();
@@ -102,7 +102,7 @@ async function getNotifications(){
 }
 
 function redirectToManager (){
-    location.replace("/notifications/manage.html");
+    location.replace("/boathouse/notifications/manage.html");
 }
 
 function showNotificationsAlert(notifications, isNewMsges){
@@ -125,7 +125,7 @@ function showNotificationsAlert(notifications, isNewMsges){
 }
 
 async function showClubList (){
-    const response = await fetch ("/notifications?content=club", {
+    const response = await fetch ("/boathouse/notifications?content=club", {
         method: "get",
     })
     const notifications = await response.json();

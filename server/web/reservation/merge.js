@@ -30,7 +30,7 @@ let createdOnId = urlParams.get('createdOn');
 let creator = urlParams.get('creator');
 let date = urlParams.get('date');
 
-backEl.href = '/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+backEl.href = '/boathouse/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 
 const formErrorEl = document.querySelector('#errorSpan');
 const addedMsgEl = document.querySelector('#addedMsgSpan')
@@ -46,7 +46,7 @@ async function main(){
 //////////////////////////////////////////////////////////////////// display wanted Original  ///////////////////////////////
 
 async function showWantedRowersOriginal(){
-    const response = await fetch('/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -119,7 +119,7 @@ function createMemberElement(member) {
 //////////////////////////////////////////////////////////////////// Display Match Reservations  /////////////////////////////////////////////////////////////
 
 async function showAllMatchRes() {
-    const response = await fetch('/reservation/pendingResSameActivity?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
+    const response = await fetch('/boathouse/reservation/pendingResSameActivity?creator='+creator+'&createdOn='+createdOnId+'&date='+date);
     const resJson = await response.json();
     if (resJson.length===0){
         noResEl.innerText = "No Match Reservation To Merge with, Can't Merge!"
@@ -267,7 +267,7 @@ async function submitMergeReservation()
 {
     const newMerge= new MergeJson();
 
-    const response = await fetch('/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/merge?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'

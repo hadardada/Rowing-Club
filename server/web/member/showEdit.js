@@ -39,16 +39,16 @@ privateCheckboxEl.addEventListener('change', privateChecked);
 setDifferentBackForNoneManager()
 
 async function setDifferentBackForNoneManager(){
-    const response = await fetch('/isUserManager', {method: 'get'});
+    const response = await fetch('/boathouse/isUserManager', {method: 'get'});
     const isManager = await response.text();
     if (isManager==='false'){
-        backEl.href = "/menu/mainMember.html";
+        backEl.href = "/boathouse/menu/mainMember.html";
     }
 }
 
 async function injectParameters(){
 
-    const response = await fetch('/member/edit?email='+memberId);
+    const response = await fetch('/boathouse/member/edit?email='+memberId);
     if (response.ok) {
         const memberJson = await response.json();
         currNameEl.textContent = memberJson.name;

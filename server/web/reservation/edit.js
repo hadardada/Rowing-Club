@@ -5,7 +5,7 @@ let createdOnId = urlParams.get('createdOn');
 let creator = urlParams.get('creator');
 let date = urlParams.get('date');
 const backEl = document.querySelector('#backButton');
-backEl.href = '/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
+backEl.href = '/boathouse/reservation/showSingle.html?creator=' + creator + '&createdOn=' + createdOnId + '&date=' + date;
 
 //dom elements
 
@@ -56,7 +56,7 @@ updateBoatTypesButton.addEventListener('click', sendEdit);
 
 
 async function showSingle() {
-    const response = await fetch('/reservation/showSingle?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
+    const response = await fetch('/boathouse/reservation/showSingle?creator='+creator+'&createdOn='+createdOnId+'&date='+date, {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -177,7 +177,7 @@ function createDateElement(date) {
 }
 
 async function showAllBoatType() {
-    const response = await fetch('/boatsType/showAll', {
+    const response = await fetch('/boathouse/boatsType/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -218,7 +218,7 @@ function createBoatTypeElement(type) {
 }
 
 async function showAllMembers() {
-    const response = await fetch('/member/showAll', {
+    const response = await fetch('/boathouse/member/showAll', {
         method: 'get',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -349,7 +349,7 @@ let contentType;
         whatToUpdate = "boats";
         contentType = 'application/json;charset=utf-8';
     }
-    const response = await fetch('/reservation/edit?creator='+creator+"&createdOn="
+    const response = await fetch('/boathouse/reservation/edit?creator='+creator+"&createdOn="
         +createdOnId+"&date="+date+"&what="+whatToUpdate,{
         method: 'post',
         headers: new Headers({
@@ -365,7 +365,7 @@ let contentType;
         errorSpanEl.textContent ='';
         errorSpanEl.textContent = await response.text();
     }
-    location.replace('/reservation/edit.html?creator='+creator+"&createdOn="
+    location.replace('/boathouse/reservation/edit.html?creator='+creator+"&createdOn="
         +createdOnId+"&date="+date);
 
 }

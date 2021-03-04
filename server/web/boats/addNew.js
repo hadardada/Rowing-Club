@@ -83,7 +83,7 @@ async function submitBoat (name, isPrivate, isOutOfOrder, boatSize, oneOar, widt
 {
     const newBoat = new BoatJson(name, isPrivate, isOutOfOrder, boatSize, oneOar, width, coxswain, coastalboat);
 
-    const response = await fetch('/boats/addNew', {
+    const response = await fetch('/boathouse/boats/addNew', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
