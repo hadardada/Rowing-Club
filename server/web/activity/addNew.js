@@ -30,6 +30,11 @@ function boatTypeChecked() {
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true){
         boatType.style.display = "block";
+        oneOarRadioEl.required = true;
+        coxswainRadioEl.required = true;
+        widthRadioEl.required = true;
+        coastalRadioEl.required = true;
+        oneRowerRadioEl.required = true;
 
     } else {
         boatType.style.display = "none";
