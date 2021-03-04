@@ -14,7 +14,6 @@ const noticeMsgEl = document.querySelector('#errorMsg');
 window.addEventListener('DOMContentLoaded',injectParameters);
 setBoatTypeCheckBoxEl.addEventListener('change', showBoatTypeForm);
 noBoatTypeCheckBoxEl.addEventListener('change', showBoatTypeForm);
-
 //get activity Id num from url
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -50,7 +49,16 @@ function showBoatTypeForm(){
     else if (setBoatTypeCheckBoxEl.checked)
     {
         boatTypeFormEl.style.display = "block";
+        updateNoTypeBttnEl.style.display = "none";
     }
-    this.style.display = "block";
+    else  if (noBoatTypeCheckBoxEl.checked){
+        updateNoTypeBttnEl.style.display = "block";
+        boatTypeFormEl.style.display = "none";
+
+    }
+    else{
+    updateNoTypeBttnEl.style.display = "none";
+    boatTypeFormEl.style.display = "none";
+}
 }
 

@@ -165,7 +165,13 @@ public class Engine implements BmsEngine, Serializable {
         if (boats.removeBoatFromList(boatToDelete)) // if removal from list failed
             return false; // return false
         releaseBoatFromAllReservations(boatToDelete);
-        //for ()
+        for (Member member: members.getAllMembers()){
+            if (boat.getSerialNum() == member.getPrivateBoatSerialNumber())
+            {
+                member.setPrivateBoatSerialNumber(-1);
+                member.setPrivateBoatStatus(false);
+            }
+        }
         this.stateSaver.saveStateToXml();
         return true;
     }

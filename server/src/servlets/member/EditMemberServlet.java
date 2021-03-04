@@ -5,6 +5,7 @@ import bms.engine.activitiesManagement.activity.Activity;
 import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatDoesNotExistException;
 import bms.engine.membersManagement.member.Member;
 import bms.engine.membersManagement.member.memberListsExceptions.EmailAddressAlreadyExistsException;
+import bms.engine.membersManagement.member.memberListsExceptions.ExpiryDateIsBeforeSignUpException;
 import com.google.gson.Gson;
 import servlets.activity.activityParameters;
 import utilities.SessionUtils;
@@ -72,10 +73,9 @@ public class EditMemberServlet extends HttpServlet {
                 out.print(gson.toJson(updateReq));
             }
         }
-        catch (BoatDoesNotExistException | EmailAddressAlreadyExistsException e){
+        catch (BoatDoesNotExistException | EmailAddressAlreadyExistsException | ExpiryDateIsBeforeSignUpException e){
             try (PrintWriter out = resp.getWriter()) {
-                out.print(gson.toJson(updateReq));
-                resp.setStatus(404);
+                resp.setStatus(400);
                 out.print(e.getMessage());
             }
         }

@@ -21,7 +21,7 @@ updateNameButtonEl.addEventListener('click', createUpdateReqObj);
 updateEndsButtonEl.addEventListener('click', createUpdateReqObj);
 updateStartButtonEl.addEventListener('click', createUpdateReqObj);
 boatTypeFormEl.addEventListener('submit', createUpdateReqObj);
-updateNoTypeBttnEl.addEventListener('clicked', createUpdateReqObj);
+updateNoTypeBttnEl.addEventListener('click', createUpdateReqObj);
 
 
 function updateReq (whatToUpdate, updateTo, activityId){
@@ -31,7 +31,7 @@ function updateReq (whatToUpdate, updateTo, activityId){
     this.activityId = activityId;
 }
 
-function createUpdateReqObj(){
+function createUpdateReqObj(event){
     //after every click we would like to reset the error message (and show it again if necessary)
     showError(NO_ERROR);
     let data;
@@ -51,12 +51,12 @@ function createUpdateReqObj(){
             data = new updateReq(UPDATE_ENDS, newEndTime.value, activityId);
         }
     }
-
     else if(this === updateNoTypeBttnEl){
             data = new updateReq(UPDATE_TYPE, null, activityId);
     }
 
     else if (this === boatTypeFormEl){
+        event.preventDefault();
         let newActivityUpdate = validateForm(boatTypeFormEl);
         if (typeof newActivityUpdate !== 'undefined'){
             data = new updateReq(UPDATE_TYPE, 'boatType', activityId );

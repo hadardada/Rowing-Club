@@ -3,7 +3,7 @@ let activitiesIdsMap = new Map();
 const FULL_WEEK_DAYS = 8;
 const firstRow = document.getElementsByTagName("tr")[0];
 const activitiesRows = document.getElementsByTagName("tbody")[0];
-const infoMsgEl = document.querySelector('#pageInfo');
+let infoMsgEl = document.querySelector('#pageInfo');
 
 function shortReservation (){
     createdOn;
@@ -18,11 +18,29 @@ function shortReservation (){
 const queryStringWeekly = window.location.search;
 const urlParams = new URLSearchParams(queryStringWeekly);
 const status = urlParams.get('status');
+let date = urlParams.get('date');
+let dateIndex;
+//check if we are intersted with shoing only one day ore the whole week
+let weekly;
+if (date === null)
+    weekly = true;
+else {
+    weekly = false;
+}
 
-if (status ==="all")
-    infoMsgEl.textContent = "Displaying all reservations for this week:";
-else if (status === "approved")
-    infoMsgEl.textContent = "Displaying all approved reservations for this week (AKA: This Week's Scheduling):";
+if (weekly) {
+    if (status === "all")
+        infoMsgEl.textContent = "Displaying all reservations for this week:";
+    else if (status === "approved")
+        infoMsgEl.textContent = "Displaying all approved reservations for this week (AKA: This Week's Scheduling):";
+}
+else{
+    if (status ==="all")
+        infoMsgEl.textContent = "Displaying all reservations on "+date;
+    else if (status === "approved")
+        infoMsgEl.textContent = "Displaying all approved reservations on"+date+ "(AKA: This Week's Scheduling):";
+
+}
 
 
 
@@ -34,19 +52,34 @@ window.addEventListener('DOMContentLoaded', createTable);
     activitiesCul.textContent = '';
     firstRow.appendChild(activitiesCul);
 
+
     //build weeks dates row (first row of the table)
     for (let i = 0; i < FULL_WEEK_DAYS; i++) {
         let nextDay = document.createElement('th');
         let nextDayDate = new Date();
         nextDayDate.setDate(today.getDate() + i);
-        nextDay.textContent = nextDayDate.getDate() + '.' + (nextDayDate.getMonth() + 1);
-        firstRow.appendChild(nextDay);
+            if (!weekly){// if we are interested in showing only one day
+                if (nextDayDate.toISOString().substring(0,10) ===date){
+                    dateIndex = i+1; // keeps the index of the query date
+                    nextDay.textContent = nextDayDate.getDate() + '.' + (nextDayDate.getMonth() + 1);
+                    firstRow.appendChild(nextDay);
+                    nextDay.textContent = nextDayDate.getDate() + '.' + (nextDayDate.getMonth() + 1);
+                    firstRow.appendChild(nextDay);
+                    i=FULL_WEEK_DAYS;
+
+                }
+            }
+            else{
+                nextDay.textContent = nextDayDate.getDate() + '.' + (nextDayDate.getMonth() + 1);
+                firstRow.appendChild(nextDay);
+            }
     }
     //build activities column
     const activities = await getActivities();
     const numOfActivities = activities.length;
     maxResPerActivity.length = numOfActivities;
     for (let i=0;i<numOfActivities;i++){
+
         const activityEl = createActivityElement(activities[i]);
         activitiesRows.appendChild(activityEl);
         activitiesIdsMap.set(activities[i].id, i+1); // sets the key in the map so it is easire to fimd activity's row by it's id
@@ -54,11 +87,16 @@ window.addEventListener('DOMContentLoaded', createTable);
     }
 
 
-    //fill out the table with reservations data
-    for (let i = 1; i <= FULL_WEEK_DAYS; i++) {
-        await fillOutResOnDate(i);
+    if (weekly){
+        //fill out the table with reservations data
+        for (let i = 1; i <= FULL_WEEK_DAYS; i++) {
+            await fillOutResOnDate(i);
+        }
     }
-}
+    else
+        await fillOutResOnDate(dateIndex);
+
+ }
 
 async function getActivities(){
     const response = await fetch ('/activity/showAll',
@@ -88,7 +126,8 @@ function createActivityElement(activity){
     for (let i =0; i<FULL_WEEK_DAYS; i++){
         let emptyRow =  document.createElement('td');
         activityRow.appendChild(emptyRow);
-        //emptyRow.textContent = 'j';
+        if (!weekly)
+            i = FULL_WEEK_DAYS;
     }
     return activityRow;
 }
@@ -121,7 +160,7 @@ async function fillOutResOnDate(index) {
                         updateIndexMap(activityRowIndx,maxResPerActivity.length );
                         activityRowEl.getElementsByTagName('td')[0].rowSpan =maxResPerActivity.get(reservations[i].activityId);
                         let newRow = createNewRow();
-                        if (activityRowIndx !== maxResPerActivity.length-1) {
+                        if (activityRowIndx !== maxResPerActivity.length) {
                             // if we are not at the last activity
                             //activityRowEl = activitiesRows.getElementsByTagName("tr")[activityRowIndx+1];
                             activitiesRows.insertBefore(newRow, currRow);
@@ -185,6 +224,8 @@ function createNewRow(){
     for (let i=0;i<FULL_WEEK_DAYS;i++){
         let newRowText = document.createElement('td');
         newRow.appendChild(newRowText);
+        if (!weekly)
+            i = FULL_WEEK_DAYS;
     }
     return newRow;
 

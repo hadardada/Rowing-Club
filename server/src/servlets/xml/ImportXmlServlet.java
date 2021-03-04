@@ -70,6 +70,8 @@ public class ImportXmlServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (PrintWriter out = resp.getWriter()) {
             out.print(errorMsg);
+            //if message wes pulled one - it gets reset
+            errorMsg = "";
         }
     }
 }

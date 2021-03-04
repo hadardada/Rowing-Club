@@ -18,6 +18,7 @@ const EMAIL_FORMAT = "Email Format is Wrong";
 const MEMBER_AGE = "Members age is from 10 to 120";
 const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
 const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
+const TIME_FORMAT = "Date is not in the requested format (YYYY-MM-DD)";
 
 
 //update-events listeners
@@ -31,6 +32,7 @@ updatePrivateButtonEl.addEventListener('click',createUpdateReqObj );
 updateManagerEl.addEventListener('click',createUpdateReqObj );
 updateNotesEl.addEventListener('click',createUpdateReqObj );
 updateExpireButtonEl.addEventListener('click', createUpdateReqObj);
+
 
 const memberLevel1 = document.querySelector('#Beginner');
 const memberLevel2 = document.querySelector('#Mid');
@@ -121,14 +123,23 @@ function createUpdateReqObj(){
             showError(NO_MANAGER_CHOSEN);
     }
     else if (this === updateNotesEl) {
+
         const notesEl = document.querySelector('#MemberNotes')
         data = new updateReq(UPDATE_NOTES, notesEl.value, memberId);
 
     }
-    else {//expirey date
-        const expiration = document.querySelector('#newExpire')
-        data = new updateReq(UPDATE_EXPIREY, expiration.value, memberId);
-    }
+    else {
+        let dateRegex = "/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/";
+        if (this === updateExpireButtonEl){//expirey date
+            const expiration = document.querySelector('#newExpire')
+            if(expiration.value.match(dateRegex)==null){
+                showError(TIME_FORMAT);
+            }
+            else
+                data = new updateReq(UPDATE_EXPIREY, expiration.value, memberId);
+        }
+        }
+
     if (typeof data !== 'undefined')
         sendUpdateReq(data);
 }
@@ -178,7 +189,7 @@ async function sendUpdateReq(data){
         } else if (data.whatToUpdate === UPDATE_NOTES) {
             currNotesEl.textContent = updatedReq.updateTo;
             currNotesEl.style = "color:green";
-        } else { //date
+        } else if (data.whatToUpdate === UPDATE_EXPIREY) {
             currExpirationEl.textContent = updatedReq.updateTo;
             currExpirationEl.style = "color:green";
         }
@@ -194,6 +205,8 @@ async function sendUpdateReq(data){
 function showError(errorMsg){
     if (errorMsg === NO_ERROR)
         errorMsgEl.textContent = '';
-    else
+    else{
         errorMsgEl.textContent = "Error! "+ errorMsg;
+        alert("Error! "+ errorMsg);
+    }
 }

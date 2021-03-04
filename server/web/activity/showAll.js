@@ -67,6 +67,7 @@ function createActivityElement(activity) {
     const nameEl = document.createElement('span');
     nameEl.innerText = activity.activityName;
     el.append(nameEl);
+    nameEl.style.minWidth= '120px';
     nameEl.style.position = 'absolute';
     nameEl.style.left = '150px'
 

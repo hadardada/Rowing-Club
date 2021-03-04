@@ -14,7 +14,7 @@ async function setName(){
 
         const el = document.createElement("a");
         el.innerText = dateForEl;
-        el.href = "/menu/showDailyAll?date="+dateForEl+"&status=approved";
+        el.href = "/reservation/weekly.html?date="+dateForEl+"&status=approved";
         dateContainerEl.append(el);
         const newLine = document.createElement("br");
         dateContainerEl.append(newLine);

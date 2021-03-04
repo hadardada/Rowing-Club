@@ -163,7 +163,7 @@ public class MembersManagement implements Serializable {
                 privateBoatSerialNumber, phoneNumber, email, password, isManager, signUpDate, expirationDate);
         members.put(email, newMember);
         if (noBoatExceptionFlag)
-            throw new BoatDoesNotExistException();// letting user know it was added but with some changes
+            throw new BoatDoesNotExistException(privateBoatSerialNumber, email);// letting user know it was added but with some changes
 
         return true;
     }

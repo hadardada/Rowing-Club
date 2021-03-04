@@ -117,10 +117,10 @@ function showNotificationsAlert(notifications, isNewMsges){
         for (i; i < notifications.length; i++) {
             allClubMsgs = allClubMsgs+notifications[i].content +"\n\r";
         }
-        if (i ===0){
+        if (i ===0)
             alert(NO_NOTIES);
-        }
-        alert(allClubMsgs);
+        else
+            alert(allClubMsgs);
     }
 }
 
