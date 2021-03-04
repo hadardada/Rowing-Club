@@ -129,10 +129,10 @@ function createUpdateReqObj(){
 
     }
     else {
-        let dateRegex = "/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/";
+        let dateRegex = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
         if (this === updateExpireButtonEl){//expirey date
             const expiration = document.querySelector('#newExpire')
-            if(expiration.value.match(dateRegex)==null){
+            if(!dateRegex.test(expiration.value)){
                 showError(TIME_FORMAT);
             }
             else
