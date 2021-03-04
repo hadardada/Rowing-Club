@@ -74,13 +74,19 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
         body: JSON.stringify(newMember)
     });
 
+    let textResponse = await response.text();
     if (response.status === 200)
     {
         divFormBlock.style.display = "none";
         addedMsgEl.textContent = "A new Member was successfully added to the club!"
+        if (textResponse !== '')
+        {
+            let moreInfoEl = document.querySelector("#moreInfo");
+            moreInfoEl.textContent =textResponse;
+        }
     }
     else{
-        formErrorEl.textContent = "ERROR! " + await response.text();
+        formErrorEl.textContent = "ERROR! " + textResponse;
         formErrorEl.style.color = "red";
     }
 }

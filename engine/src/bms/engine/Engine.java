@@ -355,10 +355,17 @@ public class Engine implements BmsEngine, Serializable {
                                 LocalDate expirationDate, boolean loadProcess)
             throws EmailAddressAlreadyExistsException, BoatDoesNotExistException, ExpiryDateIsBeforeSignUpException {
 
-        this.members.addNewMember(name, notes, email, password, age, phoneNumber, havePrivateBoat,
+        try{
+            this.members.addNewMember(name, notes, email, password, age, phoneNumber, havePrivateBoat,
                 privateBoatSerialNumber, rowingLevel, isManager, signUpDate, expirationDate);
         if (!loadProcess)// first insert : admin
             this.stateSaver.saveStateToXml();
+        }
+        catch (BoatDoesNotExistException e){ // member id still added to club if no such boat exception is thrown
+            this.stateSaver.saveStateToXml();
+            throw e;
+
+        }
 
         return true;
     }

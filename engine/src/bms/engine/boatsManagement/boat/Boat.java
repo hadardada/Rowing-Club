@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class Boat implements Serializable {
-    static int serialNumberCount;
+    static int serialNumberCount = 1;
     private int serialNum;
     private String boatName;
     private boolean privateProperty;

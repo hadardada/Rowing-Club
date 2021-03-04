@@ -43,7 +43,7 @@ public class AddNewMemberServlet extends HttpServlet {
                 out.print("Email Address Already Belong To Another Member");
             }
             catch (BoatDoesNotExistException e){
-                resp.setStatus(404);
+                resp.setStatus(200);
                 out.print("Boat Serial Num Doesn't belong to any Boat in the Club, the member was added but without private boat");
             }
             catch (ExpiryDateIsBeforeSignUpException e){
