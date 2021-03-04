@@ -261,8 +261,11 @@ function createMemberElement(member,main) {
         checkBoxMemberEl.setAttribute("type", "checkBox");
         checkBoxMemberEl.setAttribute("name", "mainMember");
         checkBoxMemberEl.setAttribute("id",'add'+member.email);
-        if (additionalRowers.includes(member.email))
+        if (additionalRowers.includes(member.email)) {
             checkBoxMemberEl.checked = true;
+            additionalRowersChosen.push(member.email);
+
+        }
         checkBoxMemberEl.addEventListener('change', additionalMembers);
         el.append(checkBoxMemberEl);
     }

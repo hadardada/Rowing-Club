@@ -9,17 +9,21 @@ const NO_ERROR = '';
 
 
 function validateForm(event) {
-    if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
-        if (validateTimes(startTime, endTime))
-            event.preventDefault();}
+  //  if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
+    if (validateTimes(startTime, endTime))
+        if (event !== undefined)
+            event.preventDefault();
+//}
      if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
     {
-        event.preventDefault();
+        if (event !== undefined)
+            event.preventDefault();
         showError(START_TIME_IN_FORMAT);
     }
     else if(!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/))
     {
-        event.preventDefault();
+        if (event !== undefined)
+            event.preventDefault();
         showError(END_TIME_IN_FORMAT);
     }
     else if (oneRowerRadioEl.checked && oneOarRadioEl.checked) {
@@ -50,8 +54,10 @@ function validateForm(event) {
         else
             return new activityJson (activityName.value, startTime.value, endTime.value, boatSize, oneOarRadioEl.checked, widthRadioEl.checked, coxswainRadioEl.checked, coastalRadioEl.checked,boatTypeCheckBoxEl.checked);
     }
-    event.preventDefault();
+    if (event !== undefined)
+        event.preventDefault();
 }
+
 function activityJson(name, startTime, endTime, boatSize, oneOar,width,coxswain, coastalboat,hasBoat) {
     this.activityName = name;
     this.startTime = startTime;

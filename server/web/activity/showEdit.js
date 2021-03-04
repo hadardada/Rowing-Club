@@ -10,8 +10,7 @@ const noBoatTypeCheckBoxEl = document.querySelector('#noBoatType');
 const updateNoTypeBttnEl = document.querySelector('#noBoatTypeBttn');
 const boatTypeFormEl = document.querySelector('#boatTypeform');
 
-const errorMsgEl = document.querySelector('#errorMsg');
-
+const noticeMsgEl = document.querySelector('#errorMsg');
 window.addEventListener('DOMContentLoaded',injectParameters);
 setBoatTypeCheckBoxEl.addEventListener('change', showBoatTypeForm);
 noBoatTypeCheckBoxEl.addEventListener('change', showBoatTypeForm);
@@ -32,8 +31,8 @@ async function injectParameters(){
         endTimeEl.textContent = activityJson.endTime;
     }
     else{
-        errorMsgEl.textContent = "Error! "+ await response.text();
-        errorMsgEl.style.color="red";
+        noticeMsgEl.textContent = "Error! "+ await response.text();
+        noticeMsgEl.style.color="red";
 
     }
 }

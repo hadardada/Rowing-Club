@@ -1,3 +1,5 @@
+const errorMsgEl = document.querySelector('#errorSpan');
+
 
 const UPDATE_NAME = 1;
 const UPDATE_STARTS = 2;
@@ -10,6 +12,9 @@ const updateStartButtonEl = document.querySelector('#updateStarts');
 const updateEndsButtonEl = document.querySelector('#updateEnds');
 
 //inputs:
+const startTime = document.querySelector('#starts');
+const EndTime = document.querySelector('#ends');
+
 
 //listeners:
 updateNameButtonEl.addEventListener('click', createUpdateReqObj);
@@ -35,14 +40,12 @@ function createUpdateReqObj(){
         data = new updateReq(UPDATE_NAME, newNameEl.value, activityId);
     }
     else if (this === updateStartButtonEl) {
-        const newStartTime = document.querySelector('#starts');
         let newActivityUpdate = validateForm();
         if (typeof newActivityUpdate !== 'undefined') {
             data = new updateReq(UPDATE_STARTS, newStartTime.value, activityId);
         }
     }
     else if (this === updateEndsButtonEl) {
-        const newEndTime = document.querySelector('#ends');
         let newActivityUpdate = validateForm();
         if (typeof newActivityUpdate !== 'undefined') {
             data = new updateReq(UPDATE_ENDS, newEndTime.value, activityId);
@@ -54,7 +57,7 @@ function createUpdateReqObj(){
     }
 
     else if (this === boatTypeFormEl){
-        let newActivityUpdate = validateForm();
+        let newActivityUpdate = validateForm(boatTypeFormEl);
         if (typeof newActivityUpdate !== 'undefined'){
             data = new updateReq(UPDATE_TYPE, 'boatType', activityId );
             data.parameters = newActivityUpdate;

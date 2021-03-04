@@ -75,8 +75,10 @@ async function fetchNotificationsCounter(){
         method: "get",
     })
     const number = await response.text();
-    numOfNewNoties = number;
-    newMsgCountEl.textContent = " "+numOfNewNoties+" ";
+    if (response.ok) {
+        numOfNewNoties = number;
+        newMsgCountEl.textContent = " " + numOfNewNoties + " ";
+    }
 
 }
 
