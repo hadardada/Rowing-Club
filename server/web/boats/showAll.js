@@ -32,7 +32,7 @@ async function deleteBoat(){
 
 async function editBoat(){
     let boatId = this.id.substring('edit'.length)
-    window.location.href = '/boats/edit.html?boatId='+boatId;
+    window.location.href = '/boathouse/boats/edit.html?boatId='+boatId;
 
 }
 
@@ -157,7 +157,7 @@ function createBoatList(boatList) {
     backEl.style.position = 'absolute';
     backEl.style.left = '5px';
     backEl.style.fontSize = 'small';
-    backEl.href = "/menu/boats.html";
+    backEl.href = "/boathouse/menu/boats.html";
     backEl.innerText = "Go Back";
     guestListContainerEl.append(backEl);
 }
