@@ -48,13 +48,27 @@ async function showAllDate(){
         date.setFullYear(today.getFullYear());
         date.setMonth(today.getMonth());
         date.setDate((today.getDate()+i));
-        let dateForEl = date.toISOString().substring(0, 10)
+        let dateForEl = formatDate(date);
         let dateEl = createDateElement(dateForEl);
         datesListContainerEl.append(dateEl);
         const nameTitle = document.createElement("br");
         datesListContainerEl.append(nameTitle);
     }
     await showAllActivities();
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 function trainingDateFunc()

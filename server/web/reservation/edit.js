@@ -155,10 +155,25 @@ function createDatesList(datesListEl) {
     for (let i =0; i<FULL_WEEK_DAYS; i++){
         let date = new Date()
         date.setDate((date.getDate()+i));
-        let dateForEl = date.toISOString().substring(0, 10)
+        let dateForEl = formatDate(date);
         let dateEl = createDateElement(dateForEl);
         datesListEl.append(dateEl);}
 }
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
 
 function createDateElement(date) {
 
