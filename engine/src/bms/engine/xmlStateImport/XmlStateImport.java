@@ -49,7 +49,7 @@ public class XmlStateImport {
             factory.setIgnoringElementContentWhitespace(true);
 
             DocumentBuilder builder = factory.newDocumentBuilder();
-            File file = new File("state.xml");
+            File file = new File("C:\\temp\\state.xml");
             if (file.length()==0)
                 return;
             InputStream xmlFileInputStream = new FileInputStream(file);

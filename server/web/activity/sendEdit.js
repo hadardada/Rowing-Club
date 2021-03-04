@@ -12,9 +12,10 @@ const updateStartButtonEl = document.querySelector('#updateStarts');
 const updateEndsButtonEl = document.querySelector('#updateEnds');
 
 //inputs:
-let startTime = document.querySelector('#starts');
-let endTime = document.querySelector('#ends');
-
+//let startTime = document.querySelector('#starts');
+//let endTime = document.querySelector('#ends');
+let startTime = startTimeEl;
+let endTime = endTimeEl;
 
 //listeners:
 updateNameButtonEl.addEventListener('click', createUpdateReqObj);
@@ -40,12 +41,14 @@ function createUpdateReqObj(event){
         data = new updateReq(UPDATE_NAME, newNameEl.value, activityId);
     }
     else if (this === updateStartButtonEl) {
+        startTime = document.querySelector('#starts');
         let newActivityUpdate = validateForm();
         if (typeof newActivityUpdate !== 'undefined') {
             data = new updateReq(UPDATE_STARTS, newStartTime.value, activityId);
         }
     }
     else if (this === updateEndsButtonEl) {
+        endTime = document.querySelector('#ends');
         let newActivityUpdate = validateForm();
         if (typeof newActivityUpdate !== 'undefined') {
             data = new updateReq(UPDATE_ENDS, newEndTime.value, activityId);

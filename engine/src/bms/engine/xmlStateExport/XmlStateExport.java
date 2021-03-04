@@ -74,7 +74,7 @@ public class XmlStateExport {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(doc);
-            StreamResult streamResult = new StreamResult(new File("state.xml"));
+            StreamResult streamResult = new StreamResult(new File("C:\\temp\\state.xml"));
             transformer.transform(domSource, streamResult);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();

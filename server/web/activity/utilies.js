@@ -1,4 +1,4 @@
-const END_BEFORE_START = "End Time before Start Time ";
+const END_BEFORE_START = "End Time cannot be before Start Time ";
 const ONE_ROWER_ONE_OAR = "A boat with only one rower must be with two oars";
 const ONE_ROWER_WITH_COXS = "A boat with only one rower must be coxless";
 const EIGHT_ROWERS_NO_COXS = "A boat with eight rowers must be with a coxswain";
@@ -11,18 +11,15 @@ const NO_ERROR = '';
 function validateForm(event) {
   //  if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
 
-    if (validateTimes(startTime, endTime))
-    {  if (event !== undefined)
-            event.preventDefault();}
-    else
-        return undefined;
-//}
-    if(startTime.value !== "") {
-        if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
-            if (event !== undefined)
-                event.preventDefault();
-            showError(START_TIME_IN_FORMAT);
-        }
+    if (!validateTimes(startTime, endTime)) {
+        if (event !== undefined)
+            event.preventDefault();
+        showError(END_BEFORE_START);
+    }
+    else if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
+        if (event !== undefined)
+            event.preventDefault();
+        showError(START_TIME_IN_FORMAT);
     }
     else if (endTime.value !== undefined) {
         if (!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
@@ -77,17 +74,15 @@ function activityJson(name, startTime, endTime, boatSize, oneOar,width,coxswain,
     this.id = '';
 }
 
-function validateTimes (starts, ends){
-    if (((ends==='')||(ends===undefined))||((starts==='')||(starts===undefined)))
-        return false;
-    if (starts.value.substring (0,2) > ends.value.substring (0,2))
-    {
-        showError(END_BEFORE_START);
-        return false;
+function validateTimes (starts, ends) {
+    if (parseInt(ends.value.substring(0, 2)) < parseInt(starts.value.substring(0, 2))) {
+        if (parseInt(starts.value.substring(3)) < parseInt(ends.value.substring(3)))
+            return true;
     }
-
-    return true;
+    return false;
+    showError(END_BEFORE_START);
 }
+
 
 function showError(errorMsg) {
     let initMsg = "";

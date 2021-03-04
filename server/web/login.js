@@ -25,7 +25,7 @@ function showError(errMsgObject){
         passwordErrEl.textContent = "Wrong Password! Please try again";
         userNameFieldEl.value =errMsgObject.sentUserName;
     }
-    else if (errMsgObject.errorMsg === "passwordErr"){
+    else if (errMsgObject.errorMsg === "already"){
         userNameErrEl.textContent = "User "+  errMsgObject.sentUserName +" is already logged in!";
 
     }
