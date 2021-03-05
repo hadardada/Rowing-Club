@@ -8,7 +8,7 @@ async function setName(){
         const name = await response.text();
         memberNameEl.textContent = name + '!';
     }
-    else{
+    else{ // server did not responded
         memberNameEl.textContent = 'You!';
     }
 }

@@ -26,8 +26,9 @@ memberFormEl.addEventListener('submit', validateForm);
 const EMAIL_FORMAT = "Email Format is Wrong";
 const MEMBER_AGE = "Members age is from 10 to 120";
 const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
-const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
+const PHONE_NUM_FORMAT = 'It Looks Like the Phone number is wrong';
 const NO_ERROR = '';
+const BOAT_NUM = "Private boat's serial number must be a NUMBER";
 
 
 function validateForm(event) {
@@ -48,6 +49,11 @@ function validateForm(event) {
         event.preventDefault();
         showError(PHONE_NUM_FORMAT);
     }
+    else if (serNumEl.value.match(/^[0-9]+$/) == null){
+        event.preventDefault();
+        showError(BOAT_NUM);
+    }
+
     else{
         let level = '3';
         let serNum = '-1';
@@ -55,7 +61,7 @@ function validateForm(event) {
             level = memberLevel1.value;
         else if (memberLevel2.checked)
             level = memberLevel2.value;
-        if (privateCheckBoxEl.checked)
+        else if (privateCheckBoxEl.checked)
             serNum = serNumEl.value;
         submitMember(memberName.value,memberNotes.value,memberEmail.value,memberPassword.value,memberAge.value,memberPhoneNum.value,privateCheckBoxEl.checked,serNum,level,managerYesEl.checked);
     }
@@ -82,7 +88,7 @@ async function submitMember (name, notes, email, password, age, phoneNumber, hav
         if (textResponse !== '')
         {
             let moreInfoEl = document.querySelector("#moreInfo");
-            moreInfoEl.textContent =textResponse;
+            moreInfoEl.textContent ="Notice! "+ textResponse;
         }
     }
     else{

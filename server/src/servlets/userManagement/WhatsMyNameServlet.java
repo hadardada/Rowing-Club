@@ -21,7 +21,11 @@ public class WhatsMyNameServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         BmsEngine engine = (Engine)req.getServletContext().getAttribute(ENGINE_ATTRIBUTE_NAME);
         String usernameFromSession = SessionUtils.getUsername(req);
+        String emailParameter = req.getParameter("email");
         PrintWriter out = resp.getWriter();
-        out.print(engine.getMemberByEmail(usernameFromSession).getName());
+        if (emailParameter != null) //asking for email address
+            out.print(engine.getMemberByEmail(usernameFromSession).getEmailAddress());
+        else //asks for name
+            out.print(engine.getMemberByEmail(usernameFromSession).getName());
     }
 }

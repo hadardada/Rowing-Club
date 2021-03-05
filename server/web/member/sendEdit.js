@@ -19,6 +19,7 @@ const MEMBER_AGE = "Members age is from 10 to 120";
 const PHONE_NUM_DIGITS = "Phone number Digits numbers is not 10";
 const PHONE_NUM_FORMAT = 'It Looks Like the Phone number Address is wrong';
 const TIME_FORMAT = "Date is not in the requested format (YYYY-MM-DD)";
+const BOAT_NUM = "Private boat's serial number must be a NUMBER";
 
 
 //update-events listeners
@@ -103,12 +104,17 @@ function createUpdateReqObj(){
     }
     else if (this === updatePrivateButtonEl){
         let privateBoat = -1;
-        if (privateCheckboxEl.checked)
-        {
+        if (privateCheckboxEl.checked) {
             const serialNum = document.querySelector('#boatSerNum');
-            privateBoat =serialNum.value;
+            privateBoat = serialNum.value;
+            if (privateBoat.match(/^[0-9]+$/) == null) {
+                showError(BOAT_NUM);
+            } else
+                data = new updateReq(UPDATE_PRIVATE, privateBoat, memberId);
         }
-        data = new updateReq(UPDATE_PRIVATE, privateBoat, memberId);
+        else
+            data = new updateReq(UPDATE_PRIVATE, privateBoat, memberId);
+
     }
 
     else if(this === updateManagerEl){

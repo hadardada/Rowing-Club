@@ -23,7 +23,6 @@ public class WebAppContextListener implements ServletContextListener {
     context.setAttribute(ENGINE_ATTRIBUTE_NAME,engine);
     context.setAttribute(USER_MANAGER_ATTRIBUTE_NAME, new UserManager(engine));
     context.setAttribute(NOTIFICATIONS_MANAGER_ATTRIBUTE_NAME, new NotificationsManager(engine.getMembers().keySet()));
-    //context.setAttribute(CHAT_MANAGER_ATTRIBUTE_NAME, new ChatManager());
   }
 
   @Override

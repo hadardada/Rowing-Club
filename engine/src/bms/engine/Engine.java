@@ -516,7 +516,6 @@ public class Engine implements BmsEngine, Serializable {
 
         if (!loadProcess)
             this.stateSaver.saveStateToXml();
-        this.stateSaver.saveStateToXml();
         return newReservation;
     }
 

@@ -11,21 +11,26 @@ const NO_ERROR = '';
 function validateForm(event) {
   //  if (this === addNewActivityFormEl){ // if the validity check is for sending a whole new activity
 
-    if (!validateTimes(startTime, endTime)) {
-        if (event !== undefined)
-            event.preventDefault();
-        showError(END_BEFORE_START);
-    }
-    else if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
+
+     if (!startTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
         if (event !== undefined)
             event.preventDefault();
         showError(START_TIME_IN_FORMAT);
+        return undefined;
     }
     else if (!endTime.value.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/)) {
             if (event !== undefined)
                 event.preventDefault();
             else
             showError(END_TIME_IN_FORMAT);
+        return undefined;
+
+    }
+    else if (!validateTimes(startTime, endTime)) {
+        if (event !== undefined)
+            event.preventDefault();
+        showError(END_BEFORE_START);
+        return undefined;
     }
     if (event !== undefined) {
         if (oneRowerRadioEl.checked && oneOarRadioEl.checked) {

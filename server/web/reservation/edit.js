@@ -331,8 +331,12 @@ let contentType;
     if (this === updateMainRowerButton){
         let radiosMainEl = document.getElementsByName("mainMember");
         for (let i=0; i<radiosMainEl.length;i++){
-            if (radiosMainEl[i].checked)
+            if (radiosMainEl[i].checked) {
                 mainRowerEmailChosen = radiosMainEl[i].id.substring('main'.length);
+                if (additionalRowers.includes(mainRowerEmailChosen))
+                    alert("This member is already on additional rowers list. You must uncheck him " +
+                        "from this list before making him the main rower ");
+            }
         }
         mainRowerCheckboeEl.checked = false;
         data = mainRowerEmailChosen;

@@ -70,7 +70,8 @@ public class NotificationsManager {
 
     public void addNewAutoNotification(int msgType, Reservation res){
         Set <Member> reservationMembers = new HashSet<>();
-        reservationMembers.addAll(res.getWantedRowers());
+        if (res.getWantedRowers() != null)
+            reservationMembers.addAll(res.getWantedRowers());
         reservationMembers.add(res.getParticipantRower());
         reservationMembers.add(res.getReservationMember());
         String resDateStr = res.getTrainingDate().format(DateTimeFormatter.ISO_LOCAL_DATE);

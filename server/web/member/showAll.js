@@ -2,9 +2,22 @@ const guestListContainerEl = document.querySelector('.membersList');
 const deleteButtonsElements = document.querySelector('.deleteButtons');
 const titlesEl = document.querySelector('#titles');
 let counter = 1;
+let myEmailAddress;
 
-
+getMyEmailAddress();
 refreshListUsesAsyncAwait()
+
+
+
+async function getMyEmailAddress(){
+    const response = await fetch('/boathouse/userManagement/name?email=true', {method: 'get'});
+    if (response.ok) {
+        myEmailAddress = await response.text();
+    }
+    else{
+        myEmailAddress = '';
+    }
+}
 
 async function refreshListUsesAsyncAwait() {
     const response = await fetch('/boathouse/member/showAll', {
@@ -45,7 +58,10 @@ function createMemberElement(member) {
     deleteAction.innerText = 'delete'
     deleteAction.className = 'deleteButtons';
     deleteAction.id = member.email;
-    deleteAction.addEventListener('click', deleteMember);
+    if (member.email === myEmailAddress)
+        deleteAction.disabled = true;
+    else
+        deleteAction.addEventListener('click', deleteMember);
 
     deleteAction.style.position = 'absolute';
     deleteAction.style.left = '5px'

@@ -144,6 +144,8 @@ async function fillOutResOnDate(index) {
     nextDayDate.setDate(nextDayDate.getDate() + index-1);
     let reqDate = formatDate(nextDayDate); //now formatted as YYYY-MM-DD
     let reservations = await getReservationsOnDate(reqDate);
+    if (!weekly)
+        index = 1;
     if (reservations.length !== 0){ // it might be that there are no reservations at all for that date
         for (let i=0;i<reservations.length; i++){
             let activityRowIndx = activitiesIdsMap.get(reservations[i].activityId);
