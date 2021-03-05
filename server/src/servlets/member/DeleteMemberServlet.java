@@ -1,7 +1,9 @@
 package servlets.member;
 import bms.engine.Engine;
 
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
+import utilities.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,8 +28,11 @@ public class DeleteMemberServlet extends HttpServlet {
         BufferedReader reader = req.getReader();
         String newActivityJsonString = reader.lines().collect(Collectors.joining());
         String memberEmail = gson.fromJson(newActivityJsonString,String.class);
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
         deleteMember(memberEmail);
         resp.setStatus(200);
+        notificationsMng.removeMember(memberEmail);
+
     }
 
     private void deleteMember(String memberEmail){

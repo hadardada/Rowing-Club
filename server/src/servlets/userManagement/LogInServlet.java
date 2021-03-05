@@ -32,23 +32,27 @@ public class LogInServlet  extends HttpServlet {
         String usernameFromSession = SessionUtils.getUsername(request);
         UserManager userManager = ServletUtils.getUserManager(getServletContext());
         //user is not logged in yet
-        String usernameFromParameter = request.getParameter(USERNAME).trim();
+        String usernameFromParameter = request.getParameter(USERNAME).trim().toLowerCase();
         String passwordFromParameter = request.getParameter(PASSWORD);
         errorLogin.errorMsg = "";
-        if (usernameFromSession != null) {
+
+       /* if (usernameFromSession != null) {
+
             //user is already logged in
-            errorLogin.errorMsg = "already";
             response.sendRedirect(SIGN_UP_URL);
         }
 
 
-        else if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
+        */
+
+         if (usernameFromParameter == null || usernameFromParameter.isEmpty()) {
             //no username in session and no username in parameter -
             //redirect back to the index page
             //this returns an HTTP code and URL back to the browser telling it to load the URL
             response.sendRedirect(SIGN_UP_URL);
         } else {
             if (userManager.isUserLogged(usernameFromParameter)) {
+                errorLogin.errorMsg = "already";
                 if (userManager.isUserManager(usernameFromParameter.trim()))
                     response.sendRedirect(MANAGER_MENU);
                 else // redirect to non-manager member menu

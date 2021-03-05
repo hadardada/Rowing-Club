@@ -51,6 +51,8 @@ public class EditReservationServlet   extends HttpServlet {
             Member mainRower = bmsEngine.getMemberByEmail(mainRowerEmail);
                 try {
                     bmsEngine.updateReservatioParticipantRower(mainRower, reservation);
+                    notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
+
                 } catch (ParticipentRowerIsOnListException e) {
                     resp.setStatus(400);
                     try (PrintWriter out = resp.getWriter()) {
@@ -61,11 +63,12 @@ public class EditReservationServlet   extends HttpServlet {
 
         }
         else if (whatToEditParameter.equals("trainingDate")){
-            String date =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-            LocalDate newDate = LocalDate.parse(date,  DateTimeFormatter.ISO_LOCAL_DATE);
+            String dateChanged =req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+            LocalDate newDate = LocalDate.parse(dateChanged,  DateTimeFormatter.ISO_LOCAL_DATE);
             bmsEngine.updateReservatioTrainingDate(newDate, reservation);
-            resp.sendRedirect("/boathouse/reservation/edit.html?creator="+resMadeByParameter+"&createdOn="+resMadeAtParameter+
-                    "&date="+date);
+            notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
+            //resp.sendRedirect("/boathouse/reservation/edit.html?creator="+resMadeByParameter+"&createdOn="+resMadeAtParameter+
+                //    "&date="+dateChanged);
         }
         else if (whatToEditParameter.equals("rowers")){
             String rowersStrings = req.getReader().lines().collect(Collectors.joining());
@@ -75,6 +78,7 @@ public class EditReservationServlet   extends HttpServlet {
             {
                 Member wantedRower = bmsEngine.getMemberByEmail(member);
                 wantedMembers.add(wantedRower);
+
             }
             try {
                 bmsEngine.updateReservationAdditinalWantedRowers( wantedMembers, reservation);
@@ -82,6 +86,8 @@ public class EditReservationServlet   extends HttpServlet {
                 try (PrintWriter out = resp.getWriter()) {
                     resp.setStatus(400);
                     out.print(e.getMessage());
+                    notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
+
                 }
 
             }
@@ -99,8 +105,9 @@ public class EditReservationServlet   extends HttpServlet {
                 }
             }
             bmsEngine.setReservationBoatTypes(resBoatTypes, reservation);
+            notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
+
         }
-        notificationsMng.addNewAutoNotification(Notification.EDIT,reservation);
     }
 
 

@@ -6,8 +6,10 @@ import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatDoesNotExistExce
 import bms.engine.membersManagement.member.Member;
 import bms.engine.membersManagement.member.memberListsExceptions.EmailAddressAlreadyExistsException;
 import bms.engine.membersManagement.member.memberListsExceptions.ExpiryDateIsBeforeSignUpException;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
 import servlets.activity.activityParameters;
+import utilities.ServletUtils;
 import utilities.SessionUtils;
 
 import javax.servlet.annotation.WebServlet;
@@ -64,10 +66,14 @@ public class EditMemberServlet extends HttpServlet {
         BufferedReader reader = req.getReader();
         String updateReqJsonString = reader.lines().collect(Collectors.joining());
         servlets.member.UpdateRequestObject updateReq = gson.fromJson(updateReqJsonString, servlets.member.UpdateRequestObject.class);
+        NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
+
         try{
             updateReq.detectUpdate(bmsEngine);
-            if (updateReq.whatToUpdate == updateReq.UPDATE_EMAIL)
+            if (updateReq.whatToUpdate == updateReq.UPDATE_EMAIL) {
                 req.changeSessionId();
+                notificationsMng.changeEmailForUser(updateReq.memberId, updateReq.updateTo.toLowerCase());
+            }
             resp.setContentType("application/json");
             try (PrintWriter out = resp.getWriter()) {
                 out.print(gson.toJson(updateReq));

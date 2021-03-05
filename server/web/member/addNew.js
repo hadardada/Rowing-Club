@@ -49,7 +49,7 @@ function validateForm(event) {
         event.preventDefault();
         showError(PHONE_NUM_FORMAT);
     }
-    else if (serNumEl.value.match(/^[0-9]+$/) == null){
+    else if ((serNumEl.value.match(/^[0-9]+$/) == null)&&(privateCheckBoxEl.checked)){
         event.preventDefault();
         showError(BOAT_NUM);
     }

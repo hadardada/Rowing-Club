@@ -7,7 +7,9 @@ import bms.engine.boatsManagement.boat.boatsListsExceptions.BoatDoesNotExistExce
 
 import bms.engine.membersManagement.member.memberListsExceptions.EmailAddressAlreadyExistsException;
 import bms.engine.membersManagement.member.memberListsExceptions.ExpiryDateIsBeforeSignUpException;
+import bms.notificationsEngine.notificatiosnManager.NotificationsManager;
 import com.google.gson.Gson;
+import utilities.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,10 +35,13 @@ public class AddNewMemberServlet extends HttpServlet {
             String newMemberJsonString = reader.lines().collect(Collectors.joining());
             MemberParameters newMemberParameters = gson.fromJson(newMemberJsonString, MemberParameters.class);
             PrintWriter out = resp.getWriter();
+            NotificationsManager notificationsMng = ServletUtils.getNotificationsManager(req.getServletContext());
+
 
             try {
                 addNewMember(newMemberParameters);
                 resp.setStatus(200);
+                notificationsMng.addNewMember(newMemberParameters.email.toLowerCase());
             }
             catch (EmailAddressAlreadyExistsException e){
                 resp.setStatus(404);
@@ -44,6 +49,7 @@ public class AddNewMemberServlet extends HttpServlet {
             }
             catch (BoatDoesNotExistException e){
                 resp.setStatus(200);
+                notificationsMng.addNewMember(newMemberParameters.email.toLowerCase());
                 out.print("Boat Serial Num Doesn't belong to any Boat in the Club, the member was added but without private boat");
             }
             catch (ExpiryDateIsBeforeSignUpException e){
@@ -57,8 +63,11 @@ public class AddNewMemberServlet extends HttpServlet {
             LocalDate expirationDate = LocalDate.of(now.getYear()+1,now.getMonth(),now.getDayOfMonth());
 
             bmsEngine.addNewMember(parameters.name,parameters.notes,
-                    parameters.email,parameters.password,parameters.age,
+                    parameters.email.toLowerCase(),parameters.password,parameters.age,
                     parameters.phoneNumber,parameters.havePrivateBoat,
                     parameters.privateBoatSerialNumber,parameters.rowingLevel,parameters.isManager,signUpDate,expirationDate,false);
+
+
         }
+
 }

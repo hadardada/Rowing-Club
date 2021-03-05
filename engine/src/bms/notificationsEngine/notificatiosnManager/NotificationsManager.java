@@ -109,8 +109,25 @@ public class NotificationsManager {
 
     public int getNumberOfNewNoties(String email){
         UserNotification user = usersNoties.get(email);
-        return user.newNotiesCounter;
+        if (user != null)
+            return user.newNotiesCounter;
+        return 0;
 
+    }
+
+    public void addNewMember(String newMemberEmail){
+        UserNotification newUser = new UserNotification(allManualNoties);
+        usersNoties.put(newMemberEmail, newUser);
+    }
+
+    public void removeMember(String removedEmail){
+        usersNoties.remove(removedEmail);
+
+    }
+
+    public void changeEmailForUser(String oldEmail, String newEmail){
+        UserNotification curr = usersNoties.remove(oldEmail);
+        usersNoties.put(newEmail, curr);
     }
 
     public void deleteNotificationBySerNum (int serNum){

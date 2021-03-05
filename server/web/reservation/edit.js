@@ -353,7 +353,7 @@ let contentType;
         contentType = "text/plain;charset=UTF-8";
         whatToUpdate = "trainingDate";
         data =dateChosen;
-        date = dateChosen;
+        //date = dateChosen;
     }
     else if (this === updateRowersButton){
         data = JSON.stringify(additionalRowersChosen);
@@ -384,7 +384,11 @@ let contentType;
         errorSpanEl.textContent ='';
         errorSpanEl.textContent = await response.text();
     }
-    location.replace('/boathouse/reservation/edit.html?creator='+creator+"&createdOn="
-        +createdOnId+"&date="+date);
-
+    else if (this === updateDateButton){
+        location.replace('/boathouse/reservation/edit.html?creator='+creator+"&createdOn="
+            +createdOnId+"&date="+dateChosen);
+    }
+    else
+        location.replace('/boathouse/reservation/edit.html?creator='+creator+"&createdOn="
+            +createdOnId+"&date="+date);
 }
